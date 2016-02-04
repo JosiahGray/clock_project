@@ -25,13 +25,13 @@ public class Clock
 		{
 			if(i%2 == 0)
 			{
-				myGUI.setDisplay(new int[] {10, 1, 2, 3}, false, "");
+				myGUI.setDisplay(new int[] {1, 2, 0, 0}, false, "");
 			}
 			else
 			{
 				myGUI.setDisplay(new int[] {10, 10, 10, 10}, false, "");
 			}
-			try{Thread.sleep(30000);}
+			try{Thread.sleep(1000);}
 			catch(Exception e)
 			{
 				e.printStackTrace();
