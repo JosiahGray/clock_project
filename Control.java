@@ -162,12 +162,75 @@ public class Control extends JFrame implements ActionListener
 	}
 
 	/**
-	*	Turns a 
+	*	Associates a given digit with it's 7 segment display representation as a 2d array of booleans.
+	*	The array is organized as the first three horizontal segments descending and then the vertical segments moving down first then to the right. 
+	*	Anything other than a digit 0-9 will result in the function returning a blank representation (use this to display nothing).
+	*	@param digit the digit to retrieve 7 segment representation of	
+	*	@return a 2dimensional array of booleans representing the 7 segment representation of the given digit
 	*
-	*
-	*private boolean[] digitToArray(int digit)
-	*{
-	*	digit = digit%10;
-	*}
 	*/
+	private boolean[][] digitToArray(int digit)
+	{
+		boolean[][] sevenSeg = new boolean[2][];
+		switch(digit)
+		{
+			case 0:	boolean[][] zero = 	{
+									{true, false, true},
+									{true, true, true, true}
+								};
+				break;
+			case 1:	boolean[][] one = 	{	
+									{false, false, false},
+									{false, false, true, true}
+								};
+				break;
+			case 2:	boolean[][] two = 	{
+									{true, true, true},
+									{false, true, true, false}
+								};
+				break;
+			case 3:	boolean[][] three = 	{
+									{true, true, true},
+									{false, false, true, true}
+								};
+				break;
+			case 4:	boolean[][] four = 	{
+									{false, true, false},
+									{true, false, true, true}
+								};
+				break;
+			case 5:	boolean[][] five = 	{
+									{true, true, true},
+									{true, false, false, true}
+								};
+				break;
+			case 6:	boolean[][] six = 	{
+									{true, true, true},
+									{true, true, false, true}
+								};
+				break;
+			case 7:	boolean[][] seven = 	{
+									{true, false, false},
+									{true, false, true, true}
+								};
+				break;
+			case 8:	boolean[][] eight = 	{
+									{true, true, true},
+									{true, true, true, true}
+								};
+				break;
+			case 9:	boolean[][] nine = 	{
+									{true, true, true},
+									{true, false, true, true}
+								};
+				break;
+			default: boolean[][] other = {
+									{false, false, false},
+									{false, false, false, false}
+								};
+				break;
+		}
+		return sevenSeg;
+	}
+
 }
