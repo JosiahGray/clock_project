@@ -16,6 +16,18 @@ public class Control extends JFrame implements ActionListener
 	//Used for pop up messages
 	JFrame popUpFrame;
 
+	//The clock display panel
+	JPanel displayPanel;
+
+	//Represents the digits in the 7 segment display as a 2 digit array (4 arrays of 7, one for each digit of 7 segments)
+	int m_displayDigits;
+
+	//Represents whether a colon should be displayed or not
+	boolean m_displayColon;
+
+	//Represents the string to draw next to the clock display (am/pm)
+	String m_displayMsg;
+
 	/**
 	*	Initializes the GUI and necessary variables with appropriate settings.
 	*	
@@ -23,6 +35,9 @@ public class Control extends JFrame implements ActionListener
 	public Control()
 	{
 		super("Hyperclock 2000");
+
+		//Set the display variables
+		//m_displayDigits 
 		
 		//Set layout (how panels are organized within frame)
 		setLayout( new BorderLayout() );
@@ -46,14 +61,14 @@ public class Control extends JFrame implements ActionListener
 		//For pop up messages
 		popUpFrame = new JFrame("Dialogue");
 
-		JPanel drawPanel = new JPanel();
-		this.getContentPane().add(drawPanel);
+		displayPanel = new JPanel();
+		this.getContentPane().add(displayPanel);
 	}
 
 	/**
-	*	Draws the clock display based off of the variable m_displayInfo.
+	*	Draws the clock display based off of the display information variables.
 	*	@param g the Graphics object to paint on
-	*	@post the display will be drawn representing the current state of m_displayInfo
+	*	@post the display will be drawn representing the current state of m_displayDigits, m_displayColon, and m_displayMsg
 	*/
 	public void paint(Graphics g)
 	{
@@ -128,4 +143,31 @@ public class Control extends JFrame implements ActionListener
 				break;
 		}
 	}
+
+	/**
+	*	Sets m_displayDigits, m_displayColon, and m_displayMsg and refreshes the clock screen.
+	*	@param digits a four digit number to be displayed on the clock face
+	*	@param colon true if colon should be displayed, false if it should not
+	*	@param msg the message to be displayed next to the digit display (am/pm)
+	*/
+	public void setDisplay(int digits, boolean colon, String msg)
+	{
+		m_displayDigits = digits%10000;
+		m_displayColon = colon;
+		m_displayMsg = msg;
+
+		displayPanel.removeAll();
+		displayPanel.revalidate();
+  		displayPanel.repaint();
+	}
+
+	/**
+	*	Turns a 
+	*
+	*
+	*private boolean[] digitToArray(int digit)
+	*{
+	*	digit = digit%10;
+	*}
+	*/
 }
