@@ -21,5 +21,21 @@ public class Clock
 	public static void main(String[] args)
 	{
 		Control myGUI = new Control();
+		for(int i=0; i<420; i++)
+		{
+			if(i%2 == 0)
+			{
+				myGUI.setDisplay(new int[] {10, 1, 2, 3}, false, "");
+			}
+			else
+			{
+				myGUI.setDisplay(new int[] {10, 10, 10, 10}, false, "");
+			}
+			try{Thread.sleep(30000);}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 }

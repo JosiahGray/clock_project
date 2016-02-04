@@ -19,8 +19,8 @@ public class Control extends JFrame implements ActionListener
 	//The clock display panel
 	JPanel displayPanel;
 
-	//Represents the digits in the 7 segment display as a 2 digit array (4 arrays of 7, one for each digit of 7 segments)
-	int m_displayDigits;
+	//Represents the digits to be displayed (any entry not 0-9 will not be displayed)
+	int[] m_displayDigits;
 
 	//Represents whether a colon should be displayed or not
 	boolean m_displayColon;
@@ -37,7 +37,9 @@ public class Control extends JFrame implements ActionListener
 		super("Hyperclock 2000");
 
 		//Set the display variables
-		//m_displayDigits 
+		m_displayDigits = new int[] {10, 10, 10, 10};
+		m_displayColon = false;
+		m_displayMsg = "";
 		
 		//Set layout (how panels are organized within frame)
 		setLayout( new BorderLayout() );
@@ -67,6 +69,7 @@ public class Control extends JFrame implements ActionListener
 
 	/**
 	*	Draws the clock display based off of the display information variables.
+	*	This page in the Java documentation was referenced in creation of this method: https://docs.oracle.com/javase/tutorial/2d/geometry/arbitrary.html
 	*	@param g the Graphics object to paint on
 	*	@post the display will be drawn representing the current state of m_displayDigits, m_displayColon, and m_displayMsg
 	*/
@@ -88,43 +91,51 @@ public class Control extends JFrame implements ActionListener
 		int xHorzSeg[] = {0,  20, 80, 100, 80, 20};
 		int yHorzSeg[] = {20,  0,  0,  20, 40, 40};
 
-		//Draw the vertical Segments
-		for(int xOffset = 50; xOffset <= 170; xOffset+=120)
+		for(int digit = 0; digit<4; digit++)
 		{
-			for(int yOffset = 80; yOffset<= 200; yOffset+=120)
+			boolean[][] sevenSeg = digitToArray(m_displayDigits[digit]);
+			int digitSpacing = 150 + digit * 225;
+			//Draw the vertical Segments
+			for(int xIter = 0; xIter < 2; xIter++)
 			{
-				GeneralPath polyline = new GeneralPath(GeneralPath.WIND_EVEN_ODD, xVertSeg.length);
-
-				polyline.moveTo (xVertSeg[0]+xOffset, yVertSeg[0]+yOffset);
-
-				for (int i = 1; i < xVertSeg.length; i++) 
+				int xOffset = digitSpacing + xIter * 120;
+				for(int yIter = 0; yIter < 2; yIter++)
 				{
-				         polyline.lineTo(xVertSeg[i]+xOffset, yVertSeg[i]+yOffset);
+					if(sevenSeg[1][xIter*2+yIter])
+					{
+						int yOffset = 80 + yIter*120;
+						GeneralPath segment = new GeneralPath(GeneralPath.WIND_EVEN_ODD, xVertSeg.length);
+
+						segment.moveTo (xVertSeg[0]+xOffset, yVertSeg[0]+yOffset);
+
+						for (int i = 1; i < xVertSeg.length; i++) 
+						{
+						         segment.lineTo(xVertSeg[i]+xOffset, yVertSeg[i]+yOffset);
+						}
+
+						segment.closePath();
+
+						g2.fill(segment);
+					}
 				}
-
-				polyline.closePath();
-
-				g2.fill(polyline);
 			}
-		}
 
-		//Draw the horizontal Segments
-		for(int xOffset = 80; xOffset <= 80; xOffset+=135)
-		{
-			for(int yOffset = 50; yOffset <= 320; yOffset+=120)
+			//Draw the horizontal Segments
+			int xOffset = digitSpacing+30;
+			for(int yIter = 0; yIter < 3; yIter++)
 			{
-				GeneralPath polyline = new GeneralPath(GeneralPath.WIND_EVEN_ODD, xHorzSeg.length);
-
-				polyline.moveTo (xHorzSeg[0]+xOffset, yHorzSeg[0]+yOffset);
-
-				for (int i = 1; i < xHorzSeg.length; i++) 
+				int yOffset = 50 + yIter * 120;
+				if(sevenSeg[0][yIter])
 				{
-				         polyline.lineTo(xHorzSeg[i]+xOffset, yHorzSeg[i]+yOffset);
+					GeneralPath segment = new GeneralPath(GeneralPath.WIND_EVEN_ODD, xHorzSeg.length);
+					segment.moveTo (xHorzSeg[0]+xOffset, yHorzSeg[0]+yOffset);
+					for (int i = 1; i < xHorzSeg.length; i++) 
+					{
+					         segment.lineTo(xHorzSeg[i]+xOffset, yHorzSeg[i]+yOffset);
+					}
+					segment.closePath();
+					g2.fill(segment);
 				}
-
-				polyline.closePath();
-
-				g2.fill(polyline);
 			}
 		}
 	}
@@ -150,9 +161,9 @@ public class Control extends JFrame implements ActionListener
 	*	@param colon true if colon should be displayed, false if it should not
 	*	@param msg the message to be displayed next to the digit display (am/pm)
 	*/
-	public void setDisplay(int digits, boolean colon, String msg)
+	public void setDisplay(int[] digits, boolean colon, String msg)
 	{
-		m_displayDigits = digits%10000;
+		m_displayDigits = digits.clone();
 		m_displayColon = colon;
 		m_displayMsg = msg;
 
@@ -174,57 +185,57 @@ public class Control extends JFrame implements ActionListener
 		boolean[][] sevenSeg = new boolean[2][];
 		switch(digit)
 		{
-			case 0:	boolean[][] zero = 	{
+			case 0:	sevenSeg = new boolean[][] {
 									{true, false, true},
 									{true, true, true, true}
 								};
 				break;
-			case 1:	boolean[][] one = 	{	
+			case 1:	sevenSeg = new boolean[][] {	
 									{false, false, false},
 									{false, false, true, true}
 								};
 				break;
-			case 2:	boolean[][] two = 	{
+			case 2:	sevenSeg = new boolean[][] {
 									{true, true, true},
 									{false, true, true, false}
 								};
 				break;
-			case 3:	boolean[][] three = 	{
+			case 3:	sevenSeg = new boolean[][] {
 									{true, true, true},
 									{false, false, true, true}
 								};
 				break;
-			case 4:	boolean[][] four = 	{
+			case 4:	sevenSeg = new boolean[][] {
 									{false, true, false},
 									{true, false, true, true}
 								};
 				break;
-			case 5:	boolean[][] five = 	{
+			case 5:	sevenSeg = new boolean[][] {
 									{true, true, true},
 									{true, false, false, true}
 								};
 				break;
-			case 6:	boolean[][] six = 	{
+			case 6:	sevenSeg = new boolean[][] {
 									{true, true, true},
 									{true, true, false, true}
 								};
 				break;
-			case 7:	boolean[][] seven = 	{
+			case 7:	sevenSeg = new boolean[][] {
 									{true, false, false},
 									{true, false, true, true}
 								};
 				break;
-			case 8:	boolean[][] eight = 	{
+			case 8:	sevenSeg = new boolean[][] {
 									{true, true, true},
 									{true, true, true, true}
 								};
 				break;
-			case 9:	boolean[][] nine = 	{
+			case 9:	sevenSeg = new boolean[][] {
 									{true, true, true},
 									{true, false, true, true}
 								};
 				break;
-			default: boolean[][] other = {
+			default: sevenSeg = new boolean[][] {
 									{false, false, false},
 									{false, false, false, false}
 								};
