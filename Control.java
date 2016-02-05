@@ -1,8 +1,8 @@
 /**
 *  @author	John McCain <johnm.freestate@gmail.com>
 *  @author
-*  @version 0.1 &nbsp;
-*  @since 2016-02-01
+*  @version 0.2 &nbsp;
+*  @since 2016-02-04
 *
 */
 

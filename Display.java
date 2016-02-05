@@ -1,5 +1,13 @@
+/**
+*  @author	John McCain <johnm.freestate@gmail.com>
+*  @version 0.2 &nbsp;
+*  @since 2016-02-04
+*
+*/
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Font;
 import java.awt.geom.*;
 
 class Display extends JPanel 
@@ -14,16 +22,22 @@ class Display extends JPanel
 	//Represents the string to draw next to the clock display (am/pm)
 	String m_displayMsg;
 
+	/**
+	*	Constructor.  Sets the display variables.
+	*	@post: m_displayDigits is intialized to an array of four 10s, m_display colon is initialized to false, and m_displayMsg is initialized to an empty String.
+	*/
     public Display() 
     {
-        setBorder(BorderFactory.createLineBorder(Color.black));
-
        	//Set the display variables
 		m_displayDigits = new int[] {10, 10, 10, 10};
 		m_displayColon = false;
 		m_displayMsg = "";
     }
 
+    /**
+    *	Returns the preferred size of the Display
+    *	@return the preferred size of the display
+    */
     public Dimension getPreferredSize() 
     {
         return new Dimension(1200, 600);
@@ -57,8 +71,18 @@ class Display extends JPanel
 
 		for(int digit = 0; digit<4; digit++)
 		{
+			if(m_displayColon)
+			{
+				g.fillOval(560, 100, 30, 30);
+				g.fillOval(560, 250, 30, 30);
+			}
+
+			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+
+			g.drawString(m_displayMsg, 1050, 80);
+
 			boolean[][] sevenSeg = digitToArray(m_displayDigits[digit]);
-			int digitSpacing = 150 + digit * 225;
+			int digitSpacing = 160 + digit * 225;
 			//Draw the vertical Segments
 			for(int xIter = 0; xIter < 2; xIter++)
 			{

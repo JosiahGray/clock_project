@@ -1,8 +1,8 @@
 /**
 *  @author	John McCain <johnm.freestate@gmail.com>
 *  @author
-*  @version 0.1 &nbsp;
-*  @since 2016-02-01
+*  @version 0.2 &nbsp;
+*  @since 2016-02-04
 *
 *
 *
@@ -21,17 +21,17 @@ public class Clock
 	public static void main(String[] args)
 	{
 		Control myGUI = new Control();
-		for(int i=0; i<420; i++)
+		for(int i=0; true; i++)
 		{
 			if(i%2 == 0)
 			{
-				myGUI.setDisplay(new int[] {1, 2, 0, 0}, false, "");
+				myGUI.setDisplay(new int[] {1, 2, 0, 0}, true, "am");
 			}
 			else
 			{
 				myGUI.setDisplay(new int[] {10, 10, 10, 10}, false, "");
 			}
-			try{Thread.sleep(1000);}
+			try{Thread.sleep(500);}
 			catch(Exception e)
 			{
 				e.printStackTrace();
