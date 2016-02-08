@@ -32,7 +32,7 @@ public class Control extends JFrame implements ActionListener
 
 		//Sets the size, width px X height px
 		//Note: this includes the ~40px top bar
-		setSize(1200, 600);
+		setSize(1500, 600);
 
 		//Puts the window in the middle of the screen
 		setLocationRelativeTo(null);

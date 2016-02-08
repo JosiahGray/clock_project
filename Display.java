@@ -29,7 +29,7 @@ class Display extends JPanel
     public Display() 
     {
        	//Set the display variables
-		m_displayDigits = new int[] {10, 10, 10, 10};
+		m_displayDigits = new int[] {10, 10, 10, 10, 10, 10};
 		m_displayColon = false;
 		m_displayMsg = "";
     }
@@ -40,7 +40,7 @@ class Display extends JPanel
     */
     public Dimension getPreferredSize() 
     {
-        return new Dimension(1200, 600);
+        return new Dimension(1500, 600);
     }
 
 
@@ -57,7 +57,7 @@ class Display extends JPanel
 
 		//Draw the background
 		g2.setColor(Color.BLACK);
-		g2.fill(new Rectangle2D.Double(0, 0, 1200, 600));
+		g2.fill(new Rectangle2D.Double(0, 0, 1500, 600));
 
 		g2.setColor(Color.RED);
 
@@ -69,20 +69,23 @@ class Display extends JPanel
 		int xHorzSeg[] = {0,  20, 80, 100, 80, 20};
 		int yHorzSeg[] = {20,  0,  0,  20, 40, 40};
 
-		for(int digit = 0; digit<4; digit++)
+		for(int digit = 0; digit<6; digit++)
 		{
 			if(m_displayColon)
 			{
-				g.fillOval(560, 100, 30, 30);
-				g.fillOval(560, 250, 30, 30);
+				g.fillOval(460, 100, 30, 30);
+				g.fillOval(460, 250, 30, 30);
+
+				g.fillOval(920, 100, 30, 30);
+				g.fillOval(920, 250, 30, 30);
 			}
 
 			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
 
-			g.drawString(m_displayMsg, 1050, 80);
+			g.drawString(m_displayMsg, 1400, 80);
 
 			boolean[][] sevenSeg = digitToArray(m_displayDigits[digit]);
-			int digitSpacing = 160 + digit * 225;
+			int digitSpacing = 60 + digit * 225;
 			//Draw the vertical Segments
 			for(int xIter = 0; xIter < 2; xIter++)
 			{

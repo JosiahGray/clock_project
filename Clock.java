@@ -25,11 +25,11 @@ public class Clock
 		{
 			if(i%2 == 0)
 			{
-				myGUI.setDisplay(new int[] {1, 2, 0, 0}, true, "am");
+				myGUI.setDisplay(new int[] {1, 2, 0, 0, 10, 10}, true, "am");
 			}
 			else
 			{
-				myGUI.setDisplay(new int[] {10, 10, 10, 10}, false, "");
+				myGUI.setDisplay(new int[] {1, 2, 0, 0, 0, 0}, false, "");
 			}
 			try{Thread.sleep(500);}
 			catch(Exception e)
