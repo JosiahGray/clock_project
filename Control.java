@@ -27,12 +27,16 @@ public class Control extends JFrame implements ActionListener
 	{
 		super("Hyperclock 2000");
 		
-		//Set layout (how panels are organized within frame)
-		setLayout( new BorderLayout() );
+		//Set layout (how panels are organized within frame) 
+		//Alan, feel free to change this if need be
+		setLayout( new FlowLayout() );
 
 		//Sets the size, width px X height px
 		//Note: this includes the ~40px top bar
 		setSize(1500, 600);
+
+		//Make the background black
+		this.getContentPane().setBackground(Color.BLACK);
 
 		//Puts the window in the middle of the screen
 		setLocationRelativeTo(null);
@@ -43,14 +47,31 @@ public class Control extends JFrame implements ActionListener
 		//Exit the application when the "X" button is pressed
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//Reveal ourselves to the world
+		displayPanel = new Display();
+		this.getContentPane().add(displayPanel);
+
+		/******INTERFACE CODE******/
+
+		//Create the buttons
+	    JButton buttonTest1 = new JButton("Test1"); 
+	    JButton buttonTest2 = new JButton("Test2");
+	    
+	    //Action Listener is an outside class that lets us know when a button is pressed
+	    //This is why we have to implement the "Action Listener"
+	    //It requires us to have an ActionPerformed(ActionEvent) method
+	    //Action Listener calls this when something happens, so it needs to know that we have it so it doesn't trigger an exception
+	    buttonTest1.addActionListener(this);
+	    buttonTest2.addActionListener(this);
+	    
+	    //Add the buttons to our JFrame
+	    add(buttonTest1);
+	    add(buttonTest2);
+
+	    //Reveal ourselves to the world
 		setVisible(true);
 
 		//For pop up messages
 		popUpFrame = new JFrame("Dialogue");
-
-		displayPanel = new Display();
-		this.getContentPane().add(displayPanel);
 	}
 
 	/**
