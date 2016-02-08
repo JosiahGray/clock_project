@@ -19,13 +19,19 @@ public class Control extends JFrame implements ActionListener
 	//The clock display panel
 	Display displayPanel;
 
+	//Instance of the CoolClockTimer for passing UI interaction information
+	CoolClockTimer coolClock;
+
 	/**
 	*	Initializes the GUI and necessary variables with appropriate settings.
 	*	
 	*/
-	public Control()
+	public Control(CoolClockTimer myClock)
 	{
 		super("Hyperclock 2000");
+
+		//Set coolClock
+		coolClock = myClock;
 		
 		//Set layout (how panels are organized within frame) 
 		//Alan, feel free to change this if need be
