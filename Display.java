@@ -40,7 +40,7 @@ class Display extends JPanel
     */
     public Dimension getPreferredSize() 
     {
-        return new Dimension(1500, 600);
+        return new Dimension(1500, 400);
     }
 
 
@@ -57,7 +57,7 @@ class Display extends JPanel
 
 		//Draw the background
 		g2.setColor(Color.BLACK);
-		g2.fill(new Rectangle2D.Double(0, 0, 1500, 600));
+		g2.fill(new Rectangle2D.Double(0, 0, 1500, 400));
 
 		g2.setColor(Color.RED);
 
@@ -69,21 +69,21 @@ class Display extends JPanel
 		int xHorzSeg[] = {0,  20, 80, 100, 80, 20};
 		int yHorzSeg[] = {20,  0,  0,  20, 40, 40};
 
-		for(int digit = 0; digit<6; digit++)
+		if(m_displayColon)
 		{
-			if(m_displayColon)
-			{
-				g.fillOval(460, 100, 30, 30);
-				g.fillOval(460, 250, 30, 30);
+			g.fillOval(462, 100, 30, 30);
+			g.fillOval(462, 250, 30, 30);
 
-				g.fillOval(920, 100, 30, 30);
-				g.fillOval(920, 250, 30, 30);
-			}
+			g.fillOval(912, 100, 30, 30);
+			g.fillOval(912, 250, 30, 30);
+		}
 
 			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
 
 			g.drawString(m_displayMsg, 1400, 80);
 
+		for(int digit = 0; digit<6; digit++)
+		{
 			boolean[][] sevenSeg = digitToArray(m_displayDigits[digit]);
 			int digitSpacing = 60 + digit * 225;
 			//Draw the vertical Segments
@@ -101,7 +101,7 @@ class Display extends JPanel
 
 						for (int i = 1; i < xVertSeg.length; i++) 
 						{
-						         segment.lineTo(xVertSeg[i]+xOffset, yVertSeg[i]+yOffset);
+						   	segment.lineTo(xVertSeg[i]+xOffset, yVertSeg[i]+yOffset);
 						}
 
 						segment.closePath();
