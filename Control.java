@@ -84,7 +84,7 @@ public class Control extends JFrame implements ActionListener
 		switch(event.getActionCommand())
 		{
 			default:
-				JOptionPane.showMessageDialog(popUpFrame, "ERROR: Unrecognized event");
+				displayMessage("ERROR: Unrecognized event");
 				break;
 		}
 	}
@@ -98,5 +98,14 @@ public class Control extends JFrame implements ActionListener
 	public void setDisplay(int[] digits, boolean colon, String msg)
 	{
 		displayPanel.setDisplay(digits, colon, msg);
+	}
+
+	/**
+	*	Displays a message popup for errors or other messages.
+	*	@param msg The string to be displayed in the dialogue window
+	*/
+	public void displayMessage(String msg)
+	{
+		JOptionPane.showMessageDialog(popUpFrame, msg);
 	}
 }
