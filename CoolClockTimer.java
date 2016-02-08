@@ -1,4 +1,7 @@
 //put imports here (timertask and timer)
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 class CoolClockTimer extends TimerTask
 {
@@ -6,29 +9,35 @@ class CoolClockTimer extends TimerTask
 	Control myGUI;
 	boolean hourFormat;
 	boolean pause;
+	boolean flash;
 	public CoolClockTimer()
 	{
 		myGUI = new Control(this);
 		time = 0;
 		hourFormat = true;
-		pause = true;
+		pause = false;
+		flash = true;
+		
 	}
-
-	run()
+	
+	public void run()
 	{
 		if(!pause)
 		{
 			
+			 int[] digits;
 			
+			digits = new int[] {1,2,0,0,0,time};
 			
+			flash = !flash;
 			
 			
 			myGUI.setDisplay(digits, true,""); //new int[] {1,2,0,0,0,0}
 			time++;
 		}
 	}
-
-	changeTime(int change)
+	
+	void changeTime(int change) //Hari's stuff
 	{
 		time = (time+change)%86400;
 	}
