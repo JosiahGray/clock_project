@@ -8,6 +8,9 @@
 *
 */
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Clock
 {
 	/**
@@ -20,22 +23,8 @@ public class Clock
 	*/
 	public static void main(String[] args)
 	{
-		Control myGUI = new Control();
-		for(int i=0; true; i++)
-		{
-			if(i%2 == 0)
-			{
-				myGUI.setDisplay(new int[] {1, 2, 0, 0, 0, 0}, true, "am");
-			}
-			else
-			{
-				myGUI.setDisplay(new int[] {10, 10, 10, 10, 10, 10}, false, "");
-			}
-			try{Thread.sleep(500);}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
+
+		Timer myTimer = new Timer();
+		myTimer.schedule(new CoolClockTimer(), 0, 1000);		
 	}
 }
