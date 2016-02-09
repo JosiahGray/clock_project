@@ -47,7 +47,7 @@ class CoolClockTimer extends TimerTask
 			
 			
 			myGUI.setDisplay(digits, true,ampm); //new int[] {1,2,0,0,0,0}
-			time++;
+			addTime(1);
 		}
 	}
 	
@@ -132,6 +132,11 @@ class CoolClockTimer extends TimerTask
 			return("pm");
 		else
 			return("am");
+	}
+
+	public void addTime(int amt)
+	{
+		time = (time+amt)%86400;
 	}
 	
 }
