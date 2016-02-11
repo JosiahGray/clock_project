@@ -65,16 +65,38 @@ public class Control extends JFrame implements ActionListener
 
 		//Create the buttons
 		//The string "Test1" or "Test2" will be the text displayed on the button and the string used to identify the button in the actionPerformed function
-	    JButton buttonTest1 = new JButton("Test1"); 
-	    JButton buttonTest2 = new JButton("Test2");
+	    JButton buttonTest1 = new JButton("Hour +"); 
+	    JButton buttonTest2 = new JButton("Hour -");
+	    JButton buttonTest3 = new JButton("Seconds +");
+	    JButton buttonTest4 = new JButton("Seconds -");
+	    JButton buttonTest5 = new JButton("Minutes +");
+	    JButton buttonTest6 = new JButton("Minutes -");
+	    JButton buttonTest7 = new JButton("Toggle 24 hour/12 hour format");
+	    JButton buttonTest8 = new JButton("Start/Pause");
+	    JButton buttonTest9 = new JButton("Reset Clock");
+	    
 	    
 	    //Add actionListeners for the buttons
 	    buttonTest1.addActionListener(this);
 	    buttonTest2.addActionListener(this);
+	    buttonTest3.addActionListener(this);
+	    buttonTest4.addActionListener(this);
+	    buttonTest5.addActionListener(this);
+	    buttonTest6.addActionListener(this);
+	    buttonTest7.addActionListener(this);
+	    buttonTest8.addActionListener(this);
+	    buttonTest9.addActionListener(this);
 	    
 	    //Add the buttons to our buttonPanel
 	    buttonPanel.add(buttonTest1);
 	    buttonPanel.add(buttonTest2);
+	    buttonPanel.add(buttonTest3);
+	    buttonPanel.add(buttonTest4);
+	    buttonPanel.add(buttonTest5);
+	    buttonPanel.add(buttonTest6);
+	    buttonPanel.add(buttonTest7);
+	    buttonPanel.add(buttonTest8);
+	    buttonPanel.add(buttonTest9);
 
 	    //Add the buttonPanel to our JFrame
 	    this.getContentPane().add(buttonPanel);
@@ -95,12 +117,33 @@ public class Control extends JFrame implements ActionListener
 	{
 		switch(event.getActionCommand())
 		{
-			case "Test1":
-				displayMessage("You pressed Test1");
+			case "Hour +":
+				coolClock.addTime(3600);
 				break;
-			case "Test2":
-				displayMessage("You pressed Test2");
+			case "Minutes +":
+                                coolClock.addTime(60);
 				break;
+                        case "Seconds +":
+                                coolClock.addTime(1);
+                                break;
+                        case "Start/Pause":
+                                coolClock.togglePause();
+                                break;
+                        case "Toggle 24 hour/12 hour format":
+                                coolClock.toggleHourFormat();
+                                break;
+                        case "Hour -":
+                                coolClock.addTime(-3600);
+                                break;
+                        case "Minutes -":
+                                coolClock.addTime(-60);
+                                break;
+                        case "Seconds -":
+                                coolClock.addTime(-1);
+                                break;
+                        case "Reset Clock":
+                                break;
+                            
 			default:
 				displayMessage("ERROR: Unrecognized event");
 				break;

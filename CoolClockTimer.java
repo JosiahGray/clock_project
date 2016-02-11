@@ -17,7 +17,7 @@ class CoolClockTimer extends TimerTask
 {
 	int time;
 	Control myGUI;
-	boolean hourFormat; //if true then military time, if false then 12 hr time
+	//boolean hourFormat; //if true then military time, if false then 12 hr time
 	boolean amorpm;
 	boolean pause;
 	boolean flash;
@@ -27,7 +27,7 @@ class CoolClockTimer extends TimerTask
 	{
 		myGUI = new Control(this);
 		time = 0;
-		hourFormat = true;
+		//hourFormat = true;
 		pause = false;
 		flash = true;
 		
@@ -37,20 +37,23 @@ class CoolClockTimer extends TimerTask
 	{
 		if(!pause)
 		{
-			
 			int[] digits;
-			
-			digits = ConvertSeconds(time,hourFormat);
+			digits = ConvertSeconds(time);
 			ampm = TwelveHourPm(amorpm);
-			
-			
-			
-			
 			myGUI.setDisplay(digits, true,ampm); //new int[] {1,2,0,0,0,0}
 			addTime(1);
 		}
 	}
 	
+	public void togglePause()
+	{
+		pause = !pause;
+	}
+	
+	public void toggleHourFormat()
+	{
+		military_time = !military_time;
+	}
 	
 
 	static boolean military_time = true;
@@ -67,14 +70,14 @@ class CoolClockTimer extends TimerTask
 	//	System.out.println(TwelveHourPm(afternoon));
 //	}
 	
-	public static int[] ConvertSeconds(int total_seconds, boolean hourFormat )
+	public static int[] ConvertSeconds(int total_seconds)
 	{
 		int[] time = {0,0,0,0,0,0};
 		int seconds;
 		int mins;
 		int hours;
 		
-		if(hourFormat)
+		if(military_time)
 		{
 			hours = total_seconds / 3600;
 			time[0] = hours / 10;
