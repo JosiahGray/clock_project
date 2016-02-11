@@ -17,49 +17,43 @@ class CoolClockTimer extends TimerTask
 {
 	int time;
 	Control myGUI;
-	boolean hourFormat; //if true then military time, if false then 12 hr time
+	//boolean hourFormat; //if true then military time, if false then 12 hr time
 	boolean amorpm;
 	boolean pause;
 	boolean flash;
 	String ampm;
-	/**
-	 * Constructor. sets viariables
-	 * @post hourFormat set to true, pause set to faulse, flash set to true
-	 */
 	
 	public CoolClockTimer()
 	{
 		myGUI = new Control(this);
 		time = 0;
-		hourFormat = true;
+		//hourFormat = true;
 		pause = false;
 		flash = true;
 		
 	}
-	/**
-	 * Timing function, calls the convertseconds function and sends digits to GUI
-	 * @post calls ConvertSeconds
-	 * 
-	 */
 	
 	public void run()
 	{
 		if(!pause)
 		{
-			
 			int[] digits;
-			
-			digits = ConvertSeconds(time,hourFormat);
+			digits = ConvertSeconds(time);
 			ampm = TwelveHourPm(amorpm);
-			
-			
-			
-			
 			myGUI.setDisplay(digits, true,ampm); //new int[] {1,2,0,0,0,0}
 			addTime(1);
 		}
 	}
 	
+	public void togglePause()
+	{
+		pause = !pause;
+	}
+	
+	public void toggleHourFormat()
+	{
+		military_time = !military_time;
+	}
 	
 
 	static boolean military_time = true;
@@ -76,21 +70,14 @@ class CoolClockTimer extends TimerTask
 	//	System.out.println(TwelveHourPm(afternoon));
 //	}
 	
-	/**
-	 * Converts seconds into the clock format
-	 * @param total seconds
-	 * @param hour format (am or pm)
-	 * @return integer array that represents each digit of the clock
-	 */
-	
-	public static int[] ConvertSeconds(int total_seconds, boolean hourFormat )
+	public static int[] ConvertSeconds(int total_seconds)
 	{
 		int[] time = {0,0,0,0,0,0};
 		int seconds;
 		int mins;
 		int hours;
 		
-		if(hourFormat)
+		if(military_time)
 		{
 			hours = total_seconds / 3600;
 			time[0] = hours / 10;
@@ -141,11 +128,7 @@ class CoolClockTimer extends TimerTask
 		return time;
 		
 	}
-	/**
-	 * Takes in a boolean and returns a string am or pm
-	 * @param boolean am or pm
-	 * @return string am or pm
-	 */
+	
 	public static String TwelveHourPm(boolean aft)
 	{
 		if(aft)
@@ -154,15 +137,9 @@ class CoolClockTimer extends TimerTask
 			return("am");
 	}
 
-	/**
-	 * Takes in a change in the time and converts that into seconds
-	 * @param change in time
-	 */
 	public void addTime(int amt)
 	{
 		time = (time+amt)%86400;
 	}
-	
-
 	
 }
