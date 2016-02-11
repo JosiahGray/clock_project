@@ -22,6 +22,10 @@ class CoolClockTimer extends TimerTask
 	boolean pause;
 	boolean flash;
 	String ampm;
+	/**
+	 * Constructor. sets viariables
+	 * @post hourFormat set to true, pause set to faulse, flash set to true
+	 */
 	
 	public CoolClockTimer()
 	{
@@ -32,6 +36,11 @@ class CoolClockTimer extends TimerTask
 		flash = true;
 		
 	}
+	/**
+	 * Timing function, calls the convertseconds function and sends digits to GUI
+	 * @post calls ConvertSeconds
+	 * 
+	 */
 	
 	public void run()
 	{
@@ -66,6 +75,13 @@ class CoolClockTimer extends TimerTask
 	//	ConvertSeconds(n, miltime);
 	//	System.out.println(TwelveHourPm(afternoon));
 //	}
+	
+	/**
+	 * Converts seconds into the clock format
+	 * @param total seconds
+	 * @param hour format (am or pm)
+	 * @return integer array that represents each digit of the clock
+	 */
 	
 	public static int[] ConvertSeconds(int total_seconds, boolean hourFormat )
 	{
@@ -125,7 +141,11 @@ class CoolClockTimer extends TimerTask
 		return time;
 		
 	}
-	
+	/**
+	 * Takes in a boolean and returns a string am or pm
+	 * @param boolean am or pm
+	 * @return string am or pm
+	 */
 	public static String TwelveHourPm(boolean aft)
 	{
 		if(aft)
@@ -133,5 +153,15 @@ class CoolClockTimer extends TimerTask
 		else
 			return("am");
 	}
+	/**
+	 * Takes in a change in the time and converts that into seconds
+	 * @param change in time
+	 */
+	public void addTime(int amt)
+	{
+		time = (time+amt)%86400;
+	}
+	
+	
 	
 }
