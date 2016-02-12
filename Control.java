@@ -64,39 +64,44 @@ public class Control extends JFrame implements ActionListener
 		buttonPanel.setPreferredSize( new Dimension(1500, 150) );
 
 		//Create the buttons
-		//The string "Test1" or "Test2" will be the text displayed on the button and the string used to identify the button in the actionPerformed function
-	    JButton buttonTest1 = new JButton("Hour +"); 
-	    JButton buttonTest2 = new JButton("Hour -");
-	    JButton buttonTest3 = new JButton("Seconds +");
-	    JButton buttonTest4 = new JButton("Seconds -");
-	    JButton buttonTest5 = new JButton("Minutes +");
-	    JButton buttonTest6 = new JButton("Minutes -");
-	    JButton buttonTest7 = new JButton("Toggle 24 hour/12 hour format");
-	    JButton buttonTest8 = new JButton("Start/Pause");
-	    JButton buttonTest9 = new JButton("Reset Clock");
+	    //Top Row
+	    JButton addHour = new JButton("Hour +"); 
+	    JButton addMinute = new JButton("Minutes +");
+	    JButton addSecond = new JButton("Seconds +");
+	    JButton toggleFormat = new JButton("Toggle 24 hour/12 hour format");
+	    //Bottom Row
+	    JButton subHour = new JButton("Hour -");
+	    JButton subMinute = new JButton("Minutes -");
+	    JButton subSecond = new JButton("Seconds -");
+	    JButton togglePause = new JButton("Start/Pause");
 	    
+	    /*	Commented out until reset function is added
+	    JButton buttonTest9 = new JButton("Reset Clock");
+	    */
 	    
 	    //Add actionListeners for the buttons
-	    buttonTest1.addActionListener(this);
-	    buttonTest2.addActionListener(this);
-	    buttonTest3.addActionListener(this);
-	    buttonTest4.addActionListener(this);
-	    buttonTest5.addActionListener(this);
-	    buttonTest6.addActionListener(this);
-	    buttonTest7.addActionListener(this);
-	    buttonTest8.addActionListener(this);
-	    buttonTest9.addActionListener(this);
+	    addHour.addActionListener(this);
+	    addMinute.addActionListener(this);
+		addSecond.addActionListener(this);
+	    toggleFormat.addActionListener(this);
+
+	    subHour.addActionListener(this);
+	    subMinute.addActionListener(this);
+	    subSecond.addActionListener(this);
+	    togglePause.addActionListener(this);
+	    /*buttonTest9.addActionListener(this);*/
 	    
 	    //Add the buttons to our buttonPanel
-	    buttonPanel.add(buttonTest1);
-	    buttonPanel.add(buttonTest2);
-	    buttonPanel.add(buttonTest3);
-	    buttonPanel.add(buttonTest4);
-	    buttonPanel.add(buttonTest5);
-	    buttonPanel.add(buttonTest6);
-	    buttonPanel.add(buttonTest7);
-	    buttonPanel.add(buttonTest8);
-	    buttonPanel.add(buttonTest9);
+	    buttonPanel.add(addHour);
+	    buttonPanel.add(addMinute);
+	    buttonPanel.add(addSecond);
+	    buttonPanel.add(toggleFormat);
+
+	    buttonPanel.add(subHour);
+	    buttonPanel.add(subMinute);
+	   	buttonPanel.add(subSecond);
+	    buttonPanel.add(togglePause);
+	    /*buttonPanel.add(buttonTest9);*/
 
 	    //Add the buttonPanel to our JFrame
 	    this.getContentPane().add(buttonPanel);

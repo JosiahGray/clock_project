@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.Font;
 import java.awt.geom.*;
 
-class Display extends JPanel 
+public class Display extends JPanel 
 {
 
 	//Represents the digits to be displayed (any entry not 0-9 will not be displayed)

@@ -11,7 +11,7 @@
 import java.util.Timer;
 import java.util.TimerTask;
 
-class CoolClockTimer extends TimerTask
+public class CoolClockTimer extends TimerTask
 {
 	int time;
 	Control myGUI;
