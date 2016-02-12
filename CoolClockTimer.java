@@ -16,7 +16,6 @@ class CoolClockTimer extends TimerTask
 	int time;
 	Control myGUI;
 	//boolean hourFormat; //if true then military time, if false then 12 hr time
-	boolean amorpm;
 	boolean pause;
 	boolean flash;
 	String ampm;
@@ -50,7 +49,7 @@ class CoolClockTimer extends TimerTask
 	{
 		int[] digits;
 		digits = ConvertSeconds(time);
-		ampm = TwelveHourPm(amorpm);
+		ampm = TwelveHourPm();
 		myGUI.setDisplay(digits, true, ampm); //new int[] {1,2,0,0,0,0}
 	}
 	
@@ -138,11 +137,11 @@ class CoolClockTimer extends TimerTask
 		
 	}
 	
-	public String TwelveHourPm(boolean aft)
+	public String TwelveHourPm()
 	{
 		if(military_time)
 			return ("");
-		else if(aft)
+		else if(time >= 43200)
 			return("pm");
 		else
 			return("am");
