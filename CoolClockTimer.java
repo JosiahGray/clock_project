@@ -7,9 +7,17 @@
 *
 */
 
+//This is just a joke branch, but here's the resources I used for researching how to play sound/source of the sound files
+//http://stackoverflow.com/questions/19603450/how-can-i-play-an-mp3-file
+//http://soundbible.com/1461-Big-Bomb.html
+
+
 
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class CoolClockTimer extends TimerTask
 {
@@ -21,6 +29,7 @@ public class CoolClockTimer extends TimerTask
 	String ampm;
 	boolean military_time = true;
 	boolean afternoon = false;
+	boolean missionImpossible;
 	
 	public CoolClockTimer()
 	{
@@ -29,15 +38,62 @@ public class CoolClockTimer extends TimerTask
 		//hourFormat = true;
 		pause = false;
 		flash = true;
-		
+		missionImpossible = false;
 	}
 	
 	public void run()
 	{
-		if(!pause)
+		if(!pause && !missionImpossible)
 		{
 			refresh();
 			addTime(1);
+		}
+		else if(missionImpossible)
+		{
+			military_time = true;
+			refresh();
+			if(time>0) time--;
+			else
+			{
+				try
+				{
+				    AudioInputStream audioStream =
+				    AudioSystem.getAudioInputStream(
+				    this.getClass().getResource("boom.wav"));
+				    Clip boom = AudioSystem.getClip();
+				    boom.open(audioStream);
+				    boom.start();
+				    Thread.sleep(3000);
+				    System.exit(0);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void startMissionImpossible()
+	{
+		if(!missionImpossible)
+		{
+			try
+			{
+			    AudioInputStream audioStream =
+			    AudioSystem.getAudioInputStream(
+			    this.getClass().getResource("Mission_Impossible.wav"));
+			    Clip miTheme = AudioSystem.getClip();
+			    miTheme.open(audioStream);
+			    miTheme.start();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			missionImpossible = true;
+			time = 50;
+			refresh();
 		}
 	}
 
@@ -60,8 +116,11 @@ public class CoolClockTimer extends TimerTask
 	
 	public void toggleHourFormat()
 	{
-		military_time = !military_time;
-		refresh();
+		if(!missionImpossible)
+		{
+			military_time = !military_time;
+			refresh();
+		}
 	}
 	
 
@@ -149,15 +208,18 @@ public class CoolClockTimer extends TimerTask
 
 	public void addTime(int amt)
 	{
-		if(amt>=0)
+		if(!missionImpossible)
 		{
-			time = (time + amt) % 86400;
+			if(amt>=0)
+			{
+				time = (time + amt) % 86400;
+			}
+			else 
+			{
+				time = (time + amt + 86400) % 86400;
+			}
+			refresh();
 		}
-		else 
-		{
-			time = (time + amt + 86400) % 86400;
-		}
-		refresh();
 	}
 	
 }

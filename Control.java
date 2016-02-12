@@ -74,6 +74,7 @@ public class Control extends JFrame implements ActionListener
 	    JButton subMinute = new JButton("Minutes -");
 	    JButton subSecond = new JButton("Seconds -");
 	    JButton togglePause = new JButton("Start/Pause");
+	    JButton missionImpossible = new JButton("DO NOT PRESS");
 	    
 	    /*	Commented out until reset function is added
 	    JButton buttonTest9 = new JButton("Reset Clock");
@@ -89,6 +90,7 @@ public class Control extends JFrame implements ActionListener
 	    subMinute.addActionListener(this);
 	    subSecond.addActionListener(this);
 	    togglePause.addActionListener(this);
+	    missionImpossible.addActionListener(this);
 	    /*buttonTest9.addActionListener(this);*/
 	    
 	    //Add the buttons to our buttonPanel
@@ -96,6 +98,7 @@ public class Control extends JFrame implements ActionListener
 	    buttonPanel.add(addMinute);
 	    buttonPanel.add(addSecond);
 	    buttonPanel.add(toggleFormat);
+	    buttonPanel.add(missionImpossible);
 
 	    buttonPanel.add(subHour);
 	    buttonPanel.add(subMinute);
@@ -128,26 +131,29 @@ public class Control extends JFrame implements ActionListener
 			case "Minutes +":
                                 coolClock.addTime(60);
 				break;
-                        case "Seconds +":
-                                coolClock.addTime(1);
-                                break;
-                        case "Start/Pause":
-                                coolClock.togglePause();
-                                break;
-                        case "Toggle 24 hour/12 hour format":
-                                coolClock.toggleHourFormat();
-                                break;
-                        case "Hour -":
-                                coolClock.addTime(-3600);
-                                break;
-                        case "Minutes -":
-                                coolClock.addTime(-60);
-                                break;
-                        case "Seconds -":
-                                coolClock.addTime(-1);
-                                break;
-                        case "Reset Clock":
-                                break;
+            case "Seconds +":
+                    coolClock.addTime(1);
+                    break;
+            case "Start/Pause":
+                    coolClock.togglePause();
+                    break;
+            case "Toggle 24 hour/12 hour format":
+                    coolClock.toggleHourFormat();
+                    break;
+            case "Hour -":
+                    coolClock.addTime(-3600);
+                    break;
+            case "Minutes -":
+                    coolClock.addTime(-60);
+                    break;
+            case "Seconds -":
+                    coolClock.addTime(-1);
+                    break;
+            case "Reset Clock":
+                    break;
+            case "DO NOT PRESS":
+            		coolClock.startMissionImpossible();
+            		break;
                             
 			default:
 				displayMessage("ERROR: Unrecognized event");
