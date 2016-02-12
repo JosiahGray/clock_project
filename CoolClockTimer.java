@@ -37,12 +37,21 @@ class CoolClockTimer extends TimerTask
 	{
 		if(!pause)
 		{
-			int[] digits;
-			digits = ConvertSeconds(time);
-			ampm = TwelveHourPm(amorpm);
-			myGUI.setDisplay(digits, true,ampm); //new int[] {1,2,0,0,0,0}
+			refresh();
 			addTime(1);
 		}
+	}
+
+	/**
+	*	Updates the display according to the current time and display settings
+	*
+	*/
+	public void refresh()
+	{
+		int[] digits;
+		digits = ConvertSeconds(time);
+		ampm = TwelveHourPm(amorpm);
+		myGUI.setDisplay(digits, true, ampm); //new int[] {1,2,0,0,0,0}
 	}
 	
 	public void togglePause()
