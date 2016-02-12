@@ -139,7 +139,14 @@ class CoolClockTimer extends TimerTask
 
 	public void addTime(int amt)
 	{
-		time = (time+amt)%86400;
+		if(amt>=0)
+		{
+			time = (time + amt) % 86400;
+		}
+		else 
+		{
+			time = (time + amt + 86400) % 86400;
+		}
 	}
 	
 }
