@@ -8,10 +8,8 @@
 */
 
 
-//put imports here (timertask and timer)
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Scanner;
 
 class CoolClockTimer extends TimerTask
 {
@@ -22,6 +20,8 @@ class CoolClockTimer extends TimerTask
 	boolean pause;
 	boolean flash;
 	String ampm;
+	boolean military_time = true;
+	boolean afternoon = false;
 	
 	public CoolClockTimer()
 	{
@@ -62,11 +62,11 @@ class CoolClockTimer extends TimerTask
 	public void toggleHourFormat()
 	{
 		military_time = !military_time;
+		refresh();
 	}
 	
 
-	static boolean military_time = true;
-	static boolean afternoon = false;
+
 	
 	//public static void main(String[] args)
 	//{
@@ -79,7 +79,7 @@ class CoolClockTimer extends TimerTask
 	//	System.out.println(TwelveHourPm(afternoon));
 //	}
 	
-	public static int[] ConvertSeconds(int total_seconds)
+	public int[] ConvertSeconds(int total_seconds)
 	{
 		int[] time = {0,0,0,0,0,0};
 		int seconds;
@@ -138,9 +138,11 @@ class CoolClockTimer extends TimerTask
 		
 	}
 	
-	public static String TwelveHourPm(boolean aft)
+	public String TwelveHourPm(boolean aft)
 	{
-		if(aft)
+		if(military_time)
+			return ("");
+		else if(aft)
 			return("pm");
 		else
 			return("am");
@@ -156,6 +158,7 @@ class CoolClockTimer extends TimerTask
 		{
 			time = (time + amt + 86400) % 86400;
 		}
+		refresh();
 	}
 	
 }
