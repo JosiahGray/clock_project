@@ -6,6 +6,8 @@
 *
 */
 
+package cool_clock;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
