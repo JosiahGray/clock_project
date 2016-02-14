@@ -1,6 +1,6 @@
 /**
 *  @author	John McCain <johnm.freestate@gmail.com>
-*  @author
+*  @author	Alan Wang <ultimate801@gmail.com>
 *  @version 0.2 &nbsp;
 *  @since 2016-02-04
 *

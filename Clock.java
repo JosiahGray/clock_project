@@ -1,6 +1,6 @@
 /**
 *  @author	John McCain <johnm.freestate@gmail.com>
-*  @author
+*  @author 	Audrey Evans <audreyevans@ku.edu>
 *  @version 0.2 &nbsp;
 *  @since 2016-02-04
 *

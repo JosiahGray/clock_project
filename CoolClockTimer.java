@@ -22,6 +22,10 @@ public class CoolClockTimer extends TimerTask
 	boolean military_time = true;
 	boolean afternoon = false;
 	
+	/**
+	* 	Constructor. sets variables
+ 	* 	@post hourFormat set to true, pause set to false, flash set to true, new Control instance myGUI instantiated
+    */
 	public CoolClockTimer()
 	{
 		myGUI = new Control(this);
@@ -32,6 +36,11 @@ public class CoolClockTimer extends TimerTask
 		
 	}
 	
+	/**
+ 	* Timing function, calls the convertseconds function and sends digits to GUI
+ 	* @post calls ConvertSeconds
+ 	* 
+ 	*/
 	public void run()
 	{
 		if(!pause)
@@ -64,20 +73,12 @@ public class CoolClockTimer extends TimerTask
 		refresh();
 	}
 	
-
-
-	
-	//public static void main(String[] args)
-	//{
-	//	Scanner reader = new Scanner(System.in);  // Reading from System.in
-	//	System.out.println("Enter a number: ");
-	//	int n = reader.nextInt();
-	//	System.out.println("Enter 0 for 12 hour clock or 1 for military time");
-	//	int miltime = reader.nextInt();
-	//	ConvertSeconds(n, miltime);
-	//	System.out.println(TwelveHourPm(afternoon));
-//	}
-	
+	/**
+ 	 * Converts seconds into the clock format
+ 	 * @param total seconds
+ 	 * @param hour format (am or pm)
+ 	 * @return integer array that represents each digit of the clock
+ 	 */
 	public int[] ConvertSeconds(int total_seconds)
 	{
 		int[] time = {0,0,0,0,0,0};
@@ -137,6 +138,10 @@ public class CoolClockTimer extends TimerTask
 		
 	}
 	
+	/**
+	*	Returns the appropriate string to print on the display based on the current time and hour format (military_time)
+	*	@return the appropriate string to print
+	*/
 	public String TwelveHourPm()
 	{
 		if(military_time)
