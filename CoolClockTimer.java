@@ -176,7 +176,7 @@ public class CoolClockTimer extends TimerTask
 
 	/**
  	* 	Takes in a change in the time and converts that into seconds
- 	* 	@param 	change in time
+ 	* 	@param 	amt the change in time
  	*	@post 	the time is shifted by amt seconds and is still in the valid second range (0-86399)
  	*/
 	public void addTime(int amt)
