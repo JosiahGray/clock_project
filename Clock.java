@@ -1,11 +1,10 @@
 /**
 *  @author	John McCain <johnm.freestate@gmail.com>
 *  @author 	Audrey Evans <audreyevans@ku.edu>
-*  @version 0.2 &nbsp;
-*  @since 2016-02-04
-*
-*
-*
+*  @author Hari Ramanan <hramanan@ku.edu>
+*  @author	Alan Wang <ultimate801@gmail.com>
+*  @version 1.0 &nbsp;
+*  @since 2016-02-14
 */
 
 import java.util.Timer;
@@ -16,10 +15,8 @@ public class Clock
 	/**
 	*  The main method of the Clock program
 	*  <p>
-	*  Creates and starts a Control object, which handles handles all necessary processes and subprocesses.  This is done in order to keep the GUI thread safe.
-	*  @param args command-line arguments
-	*
-	*
+	*  Creates a Timer and schedules it to execute a custom TimerTask (CoolClockTimer) every second.
+	*  @param 	args command-line arguments
 	*/
 	public static void main(String[] args)
 	{

@@ -1,8 +1,8 @@
 /**
 *  @author	John McCain <johnm.freestate@gmail.com>
 *  @author	Alan Wang <ultimate801@gmail.com>
-*  @version 0.2 &nbsp;
-*  @since 2016-02-04
+*  @version 1.0 &nbsp;
+*  @since 2016-02-14
 *
 */
 
@@ -13,18 +13,23 @@ import java.awt.geom.*;
 
 public class Control extends JFrame implements ActionListener
 {
-	//Used for pop up messages
+	/**
+	*	JFrame used for pop up messages.
+	*/
 	JFrame popUpFrame;
 
-	//The clock display panel
+	/**
+	*	The clock digit display JPanel
+	*/
 	Display displayPanel;
 
-	//Instance of the CoolClockTimer for passing UI interaction information
+	/**
+	*	Instance of the CoolClockTimer for passing UI interaction information
+	*/
 	CoolClockTimer coolClock;
 
 	/**
-	*	Initializes the GUI and necessary variables with appropriate settings.
-	*	
+	*	Constructor.  Initializes the GUI, GUI components, and necessary variables with appropriate settings.
 	*/
 	public Control(CoolClockTimer myClock)
 	{
@@ -56,7 +61,7 @@ public class Control extends JFrame implements ActionListener
 		displayPanel = new Display();
 		this.getContentPane().add(displayPanel);
 
-		/******INTERFACE CODE******/
+		//Button Interface Code
 
 		//buttonPanel will hold all of the buttons
 		//the GridLayout will arange the buttons in a 2 row grid, 0 means it can have any number of columns
@@ -75,10 +80,6 @@ public class Control extends JFrame implements ActionListener
 	    JButton subSecond = new JButton("Seconds -");
 	    JButton togglePause = new JButton("Start/Pause");
 	    
-	    /*	Commented out until reset function is added
-	    JButton buttonTest9 = new JButton("Reset Clock");
-	    */
-	    
 	    //Add actionListeners for the buttons
 	    addHour.addActionListener(this);
 	    addMinute.addActionListener(this);
@@ -89,7 +90,6 @@ public class Control extends JFrame implements ActionListener
 	    subMinute.addActionListener(this);
 	    subSecond.addActionListener(this);
 	    togglePause.addActionListener(this);
-	    /*buttonTest9.addActionListener(this);*/
 	    
 	    //Add the buttons to our buttonPanel
 	    buttonPanel.add(addHour);
@@ -101,7 +101,6 @@ public class Control extends JFrame implements ActionListener
 	    buttonPanel.add(subMinute);
 	   	buttonPanel.add(subSecond);
 	    buttonPanel.add(togglePause);
-	    /*buttonPanel.add(buttonTest9);*/
 
 	    //Add the buttonPanel to our JFrame
 	    this.getContentPane().add(buttonPanel);
@@ -145,10 +144,7 @@ public class Control extends JFrame implements ActionListener
                                 break;
                         case "Seconds -":
                                 coolClock.addTime(-1);
-                                break;
-                        case "Reset Clock":
-                                break;
-                            
+                                break;                            
 			default:
 				displayMessage("ERROR: Unrecognized event");
 				break;
@@ -157,9 +153,9 @@ public class Control extends JFrame implements ActionListener
 
 	/**
 	*	Calls setDisplay in displayPanel
-	*	@param digits a four digit number to be displayed on the clock face
-	*	@param colon true if colon should be displayed, false if it should not
-	*	@param msg the message to be displayed next to the digit display (am/pm)
+	*	@param 	digits a four digit number to be displayed on the clock face
+	*	@param 	colon true if colon should be displayed, false if it should not
+	*	@param 	msg the message to be displayed next to the digit display (am/pm)
 	*/
 	public void setDisplay(int[] digits, boolean colon, String msg)
 	{
@@ -168,7 +164,7 @@ public class Control extends JFrame implements ActionListener
 
 	/**
 	*	Displays a message popup for errors or other messages.
-	*	@param msg The string to be displayed in the dialogue window
+	*	@param 	msg The string to be displayed in the dialogue window
 	*/
 	public void displayMessage(String msg)
 	{

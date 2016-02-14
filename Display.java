@@ -1,7 +1,7 @@
 /**
 *  @author	John McCain <johnm.freestate@gmail.com>
-*  @version 0.2 &nbsp;
-*  @since 2016-02-04
+*  @version 1.0 &nbsp;
+*  @since 2016-02-14
 *
 */
 
@@ -13,18 +13,24 @@ import java.awt.geom.*;
 public class Display extends JPanel 
 {
 
-	//Represents the digits to be displayed (any entry not 0-9 will not be displayed)
+	/**
+	*	Represents the digits to be displayed (any entry digit of a value other than 0-9 will not be displayed).
+	*/
 	int[] m_displayDigits;
 
-	//Represents whether a colon should be displayed or not
+	/**
+	*	Represents whether a colon should be displayed or not.
+	*/
 	boolean m_displayColon;
 
-	//Represents the string to draw next to the clock display (am/pm)
+	/**
+	*	Represents the string to draw next to the clock display (am/pm).
+	*/
 	String m_displayMsg;
 
 	/**
 	*	Constructor.  Sets the display variables.
-	*	@post: m_displayDigits is intialized to an array of four 10s, m_display colon is initialized to false, and m_displayMsg is initialized to an empty String.
+	*	@post: 	m_displayDigits is intialized to an array of four 10s, m_display colon is initialized to false, and m_displayMsg is initialized to an empty String.
 	*/
     public Display() 
     {
@@ -47,8 +53,8 @@ public class Display extends JPanel
 	/**
 	*	Draws the clock display based off of the display information variables.
 	*	This page in the Java documentation was referenced in creation of this method: https://docs.oracle.com/javase/tutorial/2d/geometry/arbitrary.html
-	*	@param g the Graphics object to paint on
-	*	@post the display will be drawn representing the current state of m_displayDigits, m_displayColon, and m_displayMsg
+	*	@param 	g the Graphics object to paint on
+	*	@post 	the display will be drawn representing the current state of m_displayDigits, m_displayColon, and m_displayMsg
 	*/
 	public void paintComponent(Graphics g)
 	{
@@ -133,9 +139,9 @@ public class Display extends JPanel
 
 	/**
 	*	Sets m_displayDigits, m_displayColon, and m_displayMsg and refreshes the clock screen.
-	*	@param digits a four digit number to be displayed on the clock face
-	*	@param colon true if colon should be displayed, false if it should not
-	*	@param msg the message to be displayed next to the digit display (am/pm)
+	*	@param 	digits a four digit number to be displayed on the clock face
+	*	@param 	colon true if colon should be displayed, false if it should not
+	*	@param 	msg the message to be displayed next to the digit display (am/pm)
 	*/
 	public void setDisplay(int[] digits, boolean colon, String msg)
 	{
@@ -152,7 +158,7 @@ public class Display extends JPanel
 	*	Associates a given digit with it's 7 segment display representation as a 2d array of booleans.
 	*	The array is organized as the first three horizontal segments descending and then the vertical segments moving down first then to the right. 
 	*	Anything other than a digit 0-9 will result in the function returning a blank representation (use this to display nothing).
-	*	@param digit the digit to retrieve 7 segment representation of	
+	*	@param 	digit the digit to retrieve 7 segment representation of	
 	*	@return a 2dimensional array of booleans representing the 7 segment representation of the given digit
 	*
 	*/

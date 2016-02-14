@@ -2,8 +2,8 @@
 *  @author	John McCain <johnm.freestate@gmail.com>
 *  @author  Audrey Evans <audreyevans@ku.edu>
 *  @author 	Hari Ramanan <hramanan@ku.edu>
-*  @version 0.2 &nbsp;
-*  @since 2016-02-08
+*  @version 1.0 &nbsp;
+*  @since 2016-02-14
 *
 */
 
@@ -13,33 +13,42 @@ import java.util.TimerTask;
 
 public class CoolClockTimer extends TimerTask
 {
+	/**
+	*	The current time in seconds.  Always has a value between 0-86399 (86400 being the number of seconds in a standard 24 hour day).
+	*/
 	int time;
-	Control myGUI;
-	//boolean hourFormat; //if true then military time, if false then 12 hr time
-	boolean pause;
-	boolean flash;
-	String ampm;
-	boolean military_time = true;
-	boolean afternoon = false;
 	
 	/**
-	* 	Constructor. sets variables
- 	* 	@post hourFormat set to true, pause set to false, flash set to true, new Control instance myGUI instantiated
+	*	The instance of the primary GUI class Control, which inherits from JFrame.
+	*/
+	Control myGUI;
+
+	/**
+	*	Represents whether time incrementation should be paused, true indicating a paused state.
+	*/
+	boolean pause;
+
+	/**
+	*	Represents whether time should be displayed in 24 hour (military time) format, or 12 hour am/pm format.  True indicates military format.
+	*/
+	boolean military_time;
+	
+	/**
+	* 	Constructor which sets variables and creates a new instance of Control for display purposes.
+ 	* 	@post 	time is set to 0, military_time is set to true, pause is set to false, new Control instance myGUI instantiated
     */
 	public CoolClockTimer()
 	{
 		myGUI = new Control(this);
 		time = 0;
-		//hourFormat = true;
+		military_time = true;
 		pause = false;
-		flash = true;
-		
 	}
 	
 	/**
- 	* Timing function, calls the convertseconds function and sends digits to GUI
- 	* @post calls ConvertSeconds
- 	* 
+ 	* 	This function is called every second by a Timer.  It calls refresh to update the display to the current state of the clock then adds 1 second to the time.
+ 	* 	@pre 	clock settings and variables have all been set
+ 	*	@post 	the display reflects the status of the clock at the time this function was called and the time has been incremented by 1 second.
  	*/
 	public void run()
 	{
@@ -52,21 +61,28 @@ public class CoolClockTimer extends TimerTask
 
 	/**
 	*	Updates the display according to the current time and display settings
-	*
+	*	@post 	display is refreshed to reflect the current time and settings
 	*/
 	public void refresh()
 	{
 		int[] digits;
-		digits = ConvertSeconds(time);
-		ampm = TwelveHourPm();
-		myGUI.setDisplay(digits, true, ampm); //new int[] {1,2,0,0,0,0}
+		myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm()); //new int[] {1,2,0,0,0,0}
 	}
 	
+	/**
+	*	Switches the pause flag to it's opposite
+	*	@post 	pause is set to the opposite value
+	*/
 	public void togglePause()
 	{
 		pause = !pause;
 	}
 	
+
+	/**
+	*	Switches the military time flag to it's opposite
+	*	@post 	military_time is set to the opposite value
+	*/
 	public void toggleHourFormat()
 	{
 		military_time = !military_time;
@@ -74,14 +90,13 @@ public class CoolClockTimer extends TimerTask
 	}
 	
 	/**
- 	 * Converts seconds into the clock format
- 	 * @param total seconds
- 	 * @param hour format (am or pm)
- 	 * @return integer array that represents each digit of the clock
+ 	 * 	Converts seconds into the clock format
+ 	 * 	@return integer array that represents each digit of the clock
  	 */
-	public int[] ConvertSeconds(int total_seconds)
+	public int[] ConvertSeconds()
 	{
-		int[] time = {0,0,0,0,0,0};
+		int[] digit_time = {0,0,0,0,0,0};
+		int total_seconds = time;
 		int seconds;
 		int mins;
 		int hours;
@@ -89,16 +104,16 @@ public class CoolClockTimer extends TimerTask
 		if(military_time)
 		{
 			hours = total_seconds / 3600;
-			time[0] = hours / 10;
-			time[1] = hours % 10;
+			digit_time[0] = hours / 10;
+			digit_time[1] = hours % 10;
 			total_seconds = total_seconds - (hours * 3600);
 			mins = total_seconds / 60;
-			time[2] = mins / 10;
-			time[3] = mins % 10;
+			digit_time[2] = mins / 10;
+			digit_time[3] = mins % 10;
 			total_seconds = total_seconds - (mins * 60);
 			seconds = total_seconds;
-			time[4] = seconds / 10;
-			time[5] = seconds % 10;
+			digit_time[4] = seconds / 10;
+			digit_time[5] = seconds % 10;
 			
 		}
 		else
@@ -106,26 +121,26 @@ public class CoolClockTimer extends TimerTask
 			hours = total_seconds / 3600;
 			total_seconds = total_seconds - (hours * 3600);
 			mins = total_seconds / 60;
-			time[2] = mins / 10;
-			time[3] = mins % 10;
+			digit_time[2] = mins / 10;
+			digit_time[3] = mins % 10;
 			total_seconds = total_seconds - (mins * 60);
 			seconds = total_seconds;
-			time[4] = seconds / 10;
-			time[5] = seconds % 10;
+			digit_time[4] = seconds / 10;
+			digit_time[5] = seconds % 10;
 			if(hours > 12)
 			{
 				hours = hours - 12;
-				afternoon = true;
 			}
-			time[0] = hours / 10;
-			time[1] = hours % 10;
-			if((time[0] == 0) && (time[1] == 0))
+			digit_time[0] = hours / 10;
+			digit_time[1] = hours % 10;
+			if((digit_time[0] == 0) && (digit_time[1] == 0))
 			{
-				time[0] = 1;
-				time[1] = 2;
+				digit_time[0] = 1;
+				digit_time[1] = 2;
 			}
 		}
 		
+		/* For testing purposes, not needed for production level code.
 		for(int i = 0; i < 6; i++)
 		{
 			System.out.print(time[i]);
@@ -134,7 +149,9 @@ public class CoolClockTimer extends TimerTask
 				System.out.print(":");
 			}
 		}
-		return time;
+		*/
+
+		return digit_time;
 		
 	}
 	
@@ -152,16 +169,15 @@ public class CoolClockTimer extends TimerTask
 			return("am");
 	}
 
+
+	/**
+ 	* 	Takes in a change in the time and converts that into seconds
+ 	* 	@param 	change in time
+ 	*	@post 	the time is shifted by amt seconds and is still in the valid second range (0-86399)
+ 	*/
 	public void addTime(int amt)
 	{
-		if(amt>=0)
-		{
-			time = (time + amt) % 86400;
-		}
-		else 
-		{
-			time = (time + amt + 86400) % 86400;
-		}
+		time = ((time + amt) % 86400 + 86400) % 86400;
 		refresh();
 	}
 	
