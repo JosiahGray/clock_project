@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.Font;
 import java.awt.geom.*;
 
+/**
+*	A custom JPanel that displays the clock time and settings in a format similar to that of a 7 segment display.
+*/
 public class Display extends JPanel 
 {
 

@@ -12,6 +12,9 @@ package cool_clock;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+*	A custom TimerTask that keeps track of the time and settings, running every second.  This class also uses the GUI Control object to display the information and get input from the user.
+*/
 public class CoolClockTimer extends TimerTask
 {
 	/**

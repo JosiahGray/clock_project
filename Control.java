@@ -13,6 +13,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
+/**
+*	A custom JFrame that contains JPanels which display the time information passed into this class and gives input from the user to CoolClockTimer.
+*/
 public class Control extends JFrame implements ActionListener
 {
 	/**

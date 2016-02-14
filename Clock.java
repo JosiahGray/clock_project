@@ -12,6 +12,9 @@ package cool_clock;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+*	The main class of the cool_clock, starts the Timer and TimerTask that carry out the rest of execution.
+*/
 public class Clock
 {
 	/**
