@@ -35,6 +35,7 @@ public class Control extends JFrame implements ActionListener
 
 	/**
 	*	Constructor.  Initializes the GUI, GUI components, and necessary variables with appropriate settings.
+	*	@param myClock an instance of the CoolClockTimer that created this Control object, used for passing UI information (button presses) to the clock controller
 	*/
 	public Control(CoolClockTimer myClock)
 	{

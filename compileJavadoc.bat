@@ -1,0 +1,1 @@
+javadoc -tag pre:cm"Precondition:" -tag post:cm:"Postcondition:" -d "C:\Users\johnm\Documents\EECS 448 Lecture Notes\Project_01\clock_project\documentation" *.java
