@@ -7,8 +7,6 @@
 *  @since 2016-02-14
 */
 
-package cool_clock;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
