@@ -74,15 +74,34 @@ public class Control extends JFrame implements ActionListener
 
 		//Create the buttons
 	    //Top Row
-	    JButton addHour = new JButton("Hour +"); 
-	    JButton addMinute = new JButton("Minutes +");
-	    JButton addSecond = new JButton("Seconds +");
-	    JButton toggleFormat = new JButton("Toggle 24 hour/12 hour format");
+	    JButton addHour = new JButton("Hour +"); //1
+	    JButton addMinute = new JButton("Minutes +"); //2
+	    JButton addSecond = new JButton("Seconds +"); //3
+	    JButton addMonth = new JButton("Month +"); //4
+	    JButton addDay = new JButton("Day +"); //5
+	    JButton zoomIn = new JButton("Zoom In"); //6
+	    
+	    JButton toggleFormat = new JButton("24 hour/12 hour"); //7
+	    
+	    JButton timer = new JButton("Timer"); //8
+	    JButton stopWatch = new JButton("Stopwatch"); //9
+	    
+	    
+	    
+	    
 	    //Bottom Row
-	    JButton subHour = new JButton("Hour -");
-	    JButton subMinute = new JButton("Minutes -");
-	    JButton subSecond = new JButton("Seconds -");
-	    JButton togglePause = new JButton("Start/Pause");
+	    JButton subHour = new JButton("Hour -"); //1
+	    JButton subMinute = new JButton("Minutes -"); //2
+	    JButton subSecond = new JButton("Seconds -"); //3
+	    JButton subMonth = new JButton("Month -"); //4
+	    JButton subDay = new JButton("Day -"); //5
+	    JButton zoomOut = new JButton("Zoom Out"); //6
+	    
+	    JButton toggleDisplay = new JButton("Show/Hide display"); //7 //also switch from stopwatch/timer
+	    JButton togglePause = new JButton("Start/Pause"); //8
+	    JButton resetSW = new JButton("Reset Stopwatch"); //9
+	    
+	    
 	    
 	    //Add actionListeners for the buttons
 	    addHour.addActionListener(this);
@@ -96,15 +115,26 @@ public class Control extends JFrame implements ActionListener
 	    togglePause.addActionListener(this);
 	    
 	    //Add the buttons to our buttonPanel
-	    buttonPanel.add(addHour);
-	    buttonPanel.add(addMinute);
-	    buttonPanel.add(addSecond);
-	    buttonPanel.add(toggleFormat);
-
-	    buttonPanel.add(subHour);
-	    buttonPanel.add(subMinute);
-	   	buttonPanel.add(subSecond);
-	    buttonPanel.add(togglePause);
+	    buttonPanel.add(addHour); //1
+	    buttonPanel.add(addMinute); //2
+	    buttonPanel.add(addSecond); //3
+	    buttonPanel.add(addMonth); //4
+	    buttonPanel.add(addDay); //5
+	    buttonPanel.add(zoomIn); //6
+	    buttonPanel.add(toggleFormat); //7
+	    buttonPanel.add(timer); //8
+	    buttonPanel.add(stopWatch); //9 
+	    
+	     
+	    buttonPanel.add(subHour);//1
+	    buttonPanel.add(subMinute); //2
+	   	buttonPanel.add(subSecond);//3
+	   	buttonPanel.add(subMonth);//4
+	    buttonPanel.add(subDay);//5
+	    buttonPanel.add(zoomOut); //6
+	    buttonPanel.add(toggleDisplay); //7
+	    buttonPanel.add(togglePause); //8
+	    buttonPanel.add(resetSW);//9
 
 	    //Add the buttonPanel to our JFrame
 	    this.getContentPane().add(buttonPanel);
