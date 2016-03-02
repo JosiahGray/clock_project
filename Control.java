@@ -57,7 +57,7 @@ public class Control extends JFrame implements ActionListener
 		setLocationRelativeTo(null);
 		
 		//Make the window not resizable
-		setResizable(false);
+		setResizable(true);
 		
 		//Exit the application when the "X" button is pressed
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -167,7 +167,7 @@ public class Control extends JFrame implements ActionListener
                         case "Start/Pause":
                                 coolClock.togglePause();
                                 break;
-                        case "Toggle 24 hour/12 hour format":
+                        case "24 hour/12 hour":
                                 coolClock.toggleHourFormat();
                                 break;
                         case "Hour -":
