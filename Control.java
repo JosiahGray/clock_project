@@ -114,6 +114,18 @@ public class Control extends JFrame implements ActionListener
 	    subSecond.addActionListener(this);
 	    togglePause.addActionListener(this);
 	    
+	    //clock expansion
+	    timer.addActionListener(this);
+	    stopWatch.addActionListener(this);
+	    zoomIn.addActionListener(this);
+	    zoomOut.addActionListener(this);
+	    toggleDisplay.addActionListener(this);
+	    resetSw.addActionListener(this);
+	    addMonth.addActionListener(this);
+	    addDay.addActionListener(this);
+	    subMonth.addActionListener(this);
+	    subDay.addActionListener(this);
+	    
 	    //Add the buttons to our buttonPanel
 	    buttonPanel.add(addHour); //1
 	    buttonPanel.add(addMinute); //2
@@ -239,6 +251,7 @@ public class Control extends JFrame implements ActionListener
                         	displaySW = true;
                         	displayClock = false;
                         	displayTimer = false;
+                        	displayMessage("HI FRIEND!");
                             //begin to wait for start or pause or reset
                         		break;
                         case "Month +": //10
