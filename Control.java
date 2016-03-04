@@ -41,8 +41,8 @@ public class Control extends JFrame implements ActionListener
 
 		//Set coolClock
 		coolClock = myClock;
-		
-		//Set layout (how panels are organized within frame) 
+
+		//Set layout (how panels are organized within frame)
 		//Alan, feel free to change this if need be
 		setLayout( new FlowLayout() );
 
@@ -55,10 +55,10 @@ public class Control extends JFrame implements ActionListener
 
 		//Puts the window in the middle of the screen
 		setLocationRelativeTo(null);
-		
+
 		//Make the window not resizable
 		setResizable(true);
-		
+
 		//Exit the application when the "X" button is pressed
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -80,15 +80,15 @@ public class Control extends JFrame implements ActionListener
 	    JButton addMonth = new JButton("Month +"); //4
 	    JButton addDay = new JButton("Day +"); //5
 	    JButton zoomIn = new JButton("Zoom In"); //6
-	    
+
 	    JButton toggleFormat = new JButton("24 hour/12 hour"); //7
-	    
+
 	    JButton timer = new JButton("Timer"); //8
 	    JButton stopWatch = new JButton("Stopwatch"); //9
-	    
-	    
-	    
-	    
+
+
+
+
 	    //Bottom Row
 	    JButton subHour = new JButton("Hour -"); //1
 	    JButton subMinute = new JButton("Minutes -"); //2
@@ -96,13 +96,13 @@ public class Control extends JFrame implements ActionListener
 	    JButton subMonth = new JButton("Month -"); //4
 	    JButton subDay = new JButton("Day -"); //5
 	    JButton zoomOut = new JButton("Zoom Out"); //6
-	    
+
 	    JButton toggleDisplay = new JButton("Show/Hide display"); //7 //also switch from stopwatch/timer
 	    JButton togglePause = new JButton("Start/Pause"); //8
 	    JButton resetSW = new JButton("Reset Stopwatch"); //9
-	    
-	    
-	    
+
+
+
 	    //Add actionListeners for the buttons
 	    addHour.addActionListener(this);
 	    addMinute.addActionListener(this);
@@ -126,6 +126,7 @@ public class Control extends JFrame implements ActionListener
 	    subMonth.addActionListener(this);
 	    subDay.addActionListener(this);
 	    
+
 	    //Add the buttons to our buttonPanel
 	    buttonPanel.add(addHour); //1
 	    buttonPanel.add(addMinute); //2
@@ -135,9 +136,9 @@ public class Control extends JFrame implements ActionListener
 	    buttonPanel.add(zoomIn); //6
 	    buttonPanel.add(toggleFormat); //7
 	    buttonPanel.add(timer); //8
-	    buttonPanel.add(stopWatch); //9 
-	    
-	     
+	    buttonPanel.add(stopWatch); //9
+
+
 	    buttonPanel.add(subHour);//1
 	    buttonPanel.add(subMinute); //2
 	   	buttonPanel.add(subSecond);//3
@@ -253,7 +254,6 @@ public class Control extends JFrame implements ActionListener
                         		displayMessage("Error, logic off");
                         	}
                                 break;  
-                                
                         case "Stopwatch": //9
                         	//toggle to stopwatch string
                         	displaySW = true;
@@ -263,52 +263,16 @@ public class Control extends JFrame implements ActionListener
                             //begin to wait for start or pause or reset
                         		break;
                         case "Month +": //10
-                        	if(displayClock && !(displayTimer) && !(displaySW)){
-                        		//do clock stuff
-                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
-                        		//do timer stuff
-                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
-                        		//do stopwatch stuff
-                        	} else{
-                        		displayMessage("Error, logic off");
-                        	}
-                        	//do month stuff
+                        	coolClock.addMonth(1);
                         	break;
                         case "Month -": //11
-                        	if(displayClock && !(displayTimer) && !(displaySW)){
-                        		//do clock stuff
-                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
-                        		//do timer stuff
-                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
-                        		//do stopwatch stuff
-                        	} else{
-                        		displayMessage("Error, logic off");
-                        	}
-                        	//do month stuff
+                        	coolClock.addMonth(-1);
                         	break;
                         case "Day +": //12
-                        	if(displayClock && !(displayTimer) && !(displaySW)){
-                        		//do clock stuff
-                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
-                        		//do timer stuff
-                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
-                        		//do stopwatch stuff
-                        	} else{
-                        		displayMessage("Error, logic off");
-                        	}
-                        	//do day stuff
+                        	coolClock.addDay(1);
                         	break;
                         case "Day -": //13
-                        	if(displayClock && !(displayTimer) && !(displaySW)){
-                        		//do clock stuff
-                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
-                        		//do timer stuff
-                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
-                        		//do stopwatch stuff
-                        	} else{
-                        		displayMessage("Error, logic off");
-                        	}
-                        	//do day stuff
+                        	coolClock.addDay(-1);
                         	break;
                         case "Zoom in": //14
                         	if(displayClock && !(displayTimer) && !(displaySW)){
@@ -364,9 +328,6 @@ public class Control extends JFrame implements ActionListener
                         	}
                         	//stopwatch
                         	break;
-                     
-         
-                                
 			default:
 				displayMessage("ERROR: Unrecognized event");
 				break;

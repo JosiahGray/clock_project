@@ -20,6 +20,12 @@ public class CoolClockTimer extends TimerTask
 	*/
 	int time;
 	
+	/**
+	 * variables for the day and month. month has a value between 1 and 12. The value of day depends on the month (should reflect the real calendar for 2016).
+	 */
+	int day;
+	int month;
+	
 	
 	
 	/*
@@ -60,7 +66,9 @@ public class CoolClockTimer extends TimerTask
 	public CoolClockTimer()
 	{
 		myGUI = new Control(this);
-		time = 0;
+		time = 0;	//initialize to 12:00 midnight
+		month = 1;	//initialize to january 1st
+		day = 1;
 		stopWatchTime = 0; //stop watch time
 		timer = 0; //timer time
 		military_time = true;
@@ -221,8 +229,440 @@ public class CoolClockTimer extends TimerTask
  	*/
 	public void addTime(int amt)
 	{
-		time = ((time + amt) % 86400 + 86400) % 86400;
+		//time = ((time + amt) % 86400 + 86400) % 86400;
+		
+		//adjust time while keeping it within the bounds of 0-86400 and adjusting for day changeovers.
+		time += amt;
+		if(time > 86399)
+		{
+			day++;
+			time -= 86400;
+		}
+		if(time < 0)
+		{
+			day--;
+			time += 86400;
+		}
+		
+		//keep days and months within their respective bounds.
+		switch(month)
+		{
+		//january
+		case 1:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month = 12;
+				day = 31;
+			}
+			break;
+		//february
+		case 2:
+			if(day > 29)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//march
+		case 3:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 29;
+			}
+			break;
+		//april
+		case 4:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//may
+		case 5:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//june
+		case 6:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//july
+		case 7:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//august
+		case 8:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//september
+		case 9:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//october
+		case 10:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//november
+		case 11:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//december
+		case 12:
+			if(day > 31)
+			{
+				month = 1;
+				day = 31;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//default to january 1st in case of error
+		default:
+			month = 1;
+			day = 1;	
+		}
+		
 		refresh();
 	}
 	
+	/**
+	 * 	Takes in a change in the month and adjusts the month variable accordingly
+	 * 	@param 	amt the change in month
+	 *	@post 	the month is shifted by amt months and is still in the valid month range (1-12)
+	 */
+	public void addMonth(int amt)
+	{
+		//month = ((((month + amt - 1) % 12) + 12) % 12) + 1;
+		
+		// brute force method
+		month += amt;
+		if(month > 12)
+		{
+			month = 1;
+		}
+		if(month < 1)
+		{
+			month = 12;
+		}
+		
+		refresh();
+	}
+		
+	/**
+	 * 	Takes in a change in the day and adjusts the day variable accordingly
+	 * 	@param 	amt the change in day
+	 *	@post 	the day is shifted by amt days and is still in the valid day range (dependent on the month)
+	 */
+	public void addDay(int amt)
+	{
+		day += amt;
+		
+		switch(month)
+		{
+		//january
+		case 1:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month = 12;
+				day = 31;
+			}
+			break;
+		//february
+		case 2:
+			if(day > 29)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//march
+		case 3:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 29;
+			}
+			break;
+		//april
+		case 4:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//may
+		case 5:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//june
+		case 6:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//july
+		case 7:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//august
+		case 8:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//september
+		case 9:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//october
+		case 10:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//november
+		case 11:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//december
+		case 12:
+			if(day > 31)
+			{
+				month = 1;
+				day = 31;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//default to january 1st in case of error
+		default:
+			month = 1;
+			day = 1;	
+		}
+		
+		refresh();
+	}
+	
+	/**
+	 * 	Determines the day of the week (String) based on the current numberical month and day
+	 *	@return the current day of the week as a String
+	 */
+	public String getDayOfWeek()
+	{
+		String[] weekDays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		
+		int shift = 0;
+		String dayOfWeek = "Sunday";
+		
+		switch(month)
+		{
+		case 1:
+			shift = 4;
+			break;
+		case 2:
+			shift = 0;
+			break;
+		case 3:
+			shift = 1;
+			break;
+		case 4:
+			shift = 4;
+			break;
+		case 5:
+			shift = 6;
+			break;
+		case 6:
+			shift = 2;
+			break;
+		case 7:
+			shift = 4;
+			break;
+		case 8:
+			shift = 0;
+			break;
+		case 9:
+			shift = 3;
+			break;
+		case 10:
+			shift = 5;
+			break;
+		case 11:
+			shift = 1;
+			break;
+		case 12:
+			shift = 3;
+			break;
+		}
+		
+		dayOfWeek = weekDays[((day+shift)%7)];
+		return(dayOfWeek);
+	}
 }
