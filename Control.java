@@ -153,6 +153,12 @@ public class Control extends JFrame implements ActionListener
 	*/
 	public void actionPerformed(ActionEvent event)
 	{
+		//add booleans to determine which method the button implements for each function
+		boolean displayClock = true;
+		boolean displayTimer = false;
+		boolean displaySW = false;
+		
+		
 		switch(event.getActionCommand())
 		{
 			case "Hour +": //1
@@ -162,53 +168,179 @@ public class Control extends JFrame implements ActionListener
                                 coolClock.addTime(60);
 				break;
                         case "Seconds +": //3
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
                                 coolClock.addTime(1);
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                                 break;
                         case "Start/Pause": //4
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
                                 coolClock.togglePause();
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	} 
                                 break;
                         case "24 hour/12 hour": //5
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
                                 coolClock.toggleHourFormat();
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                                 break;
                         case "Hour -": //6
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
                                 coolClock.addTime(-3600);
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                                 break;
                         case "Minutes -": //7
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
                                 coolClock.addTime(-60);
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                                 break;
                         case "Seconds -": //8
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
                                 coolClock.addTime(-1);
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                                 break;  
                                 
                         case "Stopwatch": //9
                         	//toggle to stopwatch string
+                        	displaySW = true;
+                        	displayClock = false;
+                        	displayTimer = false;
                             //begin to wait for start or pause or reset
                         		break;
                         case "Month +": //10
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
+                        		//do clock stuff
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                         	//do month stuff
                         	break;
                         case "Month -": //11
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
+                        		//do clock stuff
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                         	//do month stuff
                         	break;
                         case "Day +": //12
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
+                        		//do clock stuff
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                         	//do day stuff
                         	break;
                         case "Day -": //13
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
+                        		//do clock stuff
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                         	//do day stuff
                         	break;
                         case "Zoom in": //14
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
+                        		//do clock stuff
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                         	//do zoom in stuff
                         	break;
                         case "Zoom out": //15
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
+                        		//do clock stuff
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                         	//do zoom out stuff
                         	break;
                         case "Show/Hide display": //16
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
+                        		//do clock stuff
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                         	//do display stuff
                         	break;
                         case "Timer"://17
                         	//do timer stuff
+                        	displayTimer = true;
+                        	displayClock = false;
+                        	displaySW = false;
                         	break;
-                        case "Stopwatch"://18
+                        case "Reset Stopwatch"://18
+                        	if(displayClock && !(displayTimer) && !(displaySW)){
+                        		//do clock stuff
+                        	} else if(!(displayClock)&& displayTimer && !(displaySW)){
+                        		//do timer stuff
+                        	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+                        		//do stopwatch stuff
+                        	} else{
+                        		displayMessage("Error, logic off");
+                        	}
                         	//stopwatch
                         	break;
                      
