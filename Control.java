@@ -155,30 +155,65 @@ public class Control extends JFrame implements ActionListener
 	{
 		switch(event.getActionCommand())
 		{
-			case "Hour +":
+			case "Hour +": //1
 				coolClock.addTime(3600);
 				break;
-			case "Minutes +":
+			case "Minutes +": //2
                                 coolClock.addTime(60);
 				break;
-                        case "Seconds +":
+                        case "Seconds +": //3
                                 coolClock.addTime(1);
                                 break;
-                        case "Start/Pause":
+                        case "Start/Pause": //4
                                 coolClock.togglePause();
                                 break;
-                        case "24 hour/12 hour":
+                        case "24 hour/12 hour": //5
                                 coolClock.toggleHourFormat();
                                 break;
-                        case "Hour -":
+                        case "Hour -": //6
                                 coolClock.addTime(-3600);
                                 break;
-                        case "Minutes -":
+                        case "Minutes -": //7
                                 coolClock.addTime(-60);
                                 break;
-                        case "Seconds -":
+                        case "Seconds -": //8
                                 coolClock.addTime(-1);
-                                break;                            
+                                break;  
+                                
+                        case "Stopwatch": //9
+                        	//toggle to stopwatch string
+                            //begin to wait for start or pause or reset
+                        		break;
+                        case "Month +": //10
+                        	//do month stuff
+                        	break;
+                        case "Month -": //11
+                        	//do month stuff
+                        	break;
+                        case "Day +": //12
+                        	//do day stuff
+                        	break;
+                        case "Day -": //13
+                        	//do day stuff
+                        	break;
+                        case "Zoom in": //14
+                        	//do zoom in stuff
+                        	break;
+                        case "Zoom out": //15
+                        	//do zoom out stuff
+                        	break;
+                        case "Show/Hide display": //16
+                        	//do display stuff
+                        	break;
+                        case "Timer"://17
+                        	//do timer stuff
+                        	break;
+                        case "Stopwatch"://18
+                        	//stopwatch
+                        	break;
+                     
+         
+                                
 			default:
 				displayMessage("ERROR: Unrecognized event");
 				break;
