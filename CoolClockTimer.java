@@ -438,7 +438,7 @@ public class CoolClockTimer extends TimerTask
 	/**
 	 * 	Takes in a change in the day and adjusts the day variable accordingly
 	 * 	@param 	amt the change in day
-	 *	@post 	the modaynth is shifted by amt days and is still in the valid day range (dependent on the month)
+	 *	@post 	the day is shifted by amt days and is still in the valid day range (dependent on the month)
 	 */
 	public void addDay(int amt)
 	{
@@ -609,5 +609,60 @@ public class CoolClockTimer extends TimerTask
 		}
 		
 		refresh();
+	}
+	
+	/**
+	 * 	Determines the day of the week (String) based on the current numberical month and day
+	 *	@return the current day of the week as a String
+	 */
+	public String getDayOfWeek()
+	{
+		String[] weekDays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		
+		int shift = 0;
+		String dayOfWeek = "Sunday";
+		
+		switch(month)
+		{
+		case 1:
+			shift = 4;
+			break;
+		case 2:
+			shift = 0;
+			break;
+		case 3:
+			shift = 1;
+			break;
+		case 4:
+			shift = 4;
+			break;
+		case 5:
+			shift = 6;
+			break;
+		case 6:
+			shift = 2;
+			break;
+		case 7:
+			shift = 4;
+			break;
+		case 8:
+			shift = 0;
+			break;
+		case 9:
+			shift = 3;
+			break;
+		case 10:
+			shift = 5;
+			break;
+		case 11:
+			shift = 1;
+			break;
+		case 12:
+			shift = 3;
+			break;
+		}
+		
+		dayOfWeek = weekDays[((day+shift)%7)];
+		return(dayOfWeek);
 	}
 }
