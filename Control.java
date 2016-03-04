@@ -41,8 +41,8 @@ public class Control extends JFrame implements ActionListener
 
 		//Set coolClock
 		coolClock = myClock;
-		
-		//Set layout (how panels are organized within frame) 
+
+		//Set layout (how panels are organized within frame)
 		//Alan, feel free to change this if need be
 		setLayout( new FlowLayout() );
 
@@ -55,10 +55,10 @@ public class Control extends JFrame implements ActionListener
 
 		//Puts the window in the middle of the screen
 		setLocationRelativeTo(null);
-		
+
 		//Make the window not resizable
 		setResizable(true);
-		
+
 		//Exit the application when the "X" button is pressed
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -80,15 +80,15 @@ public class Control extends JFrame implements ActionListener
 	    JButton addMonth = new JButton("Month +"); //4
 	    JButton addDay = new JButton("Day +"); //5
 	    JButton zoomIn = new JButton("Zoom In"); //6
-	    
+
 	    JButton toggleFormat = new JButton("24 hour/12 hour"); //7
-	    
+
 	    JButton timer = new JButton("Timer"); //8
 	    JButton stopWatch = new JButton("Stopwatch"); //9
-	    
-	    
-	    
-	    
+
+
+
+
 	    //Bottom Row
 	    JButton subHour = new JButton("Hour -"); //1
 	    JButton subMinute = new JButton("Minutes -"); //2
@@ -96,13 +96,13 @@ public class Control extends JFrame implements ActionListener
 	    JButton subMonth = new JButton("Month -"); //4
 	    JButton subDay = new JButton("Day -"); //5
 	    JButton zoomOut = new JButton("Zoom Out"); //6
-	    
+
 	    JButton toggleDisplay = new JButton("Show/Hide display"); //7 //also switch from stopwatch/timer
 	    JButton togglePause = new JButton("Start/Pause"); //8
 	    JButton resetSW = new JButton("Reset Stopwatch"); //9
-	    
-	    
-	    
+
+
+
 	    //Add actionListeners for the buttons
 	    addHour.addActionListener(this);
 	    addMinute.addActionListener(this);
@@ -113,7 +113,7 @@ public class Control extends JFrame implements ActionListener
 	    subMinute.addActionListener(this);
 	    subSecond.addActionListener(this);
 	    togglePause.addActionListener(this);
-	    
+
 	    //Add the buttons to our buttonPanel
 	    buttonPanel.add(addHour); //1
 	    buttonPanel.add(addMinute); //2
@@ -123,9 +123,9 @@ public class Control extends JFrame implements ActionListener
 	    buttonPanel.add(zoomIn); //6
 	    buttonPanel.add(toggleFormat); //7
 	    buttonPanel.add(timer); //8
-	    buttonPanel.add(stopWatch); //9 
-	    
-	     
+	    buttonPanel.add(stopWatch); //9
+
+
 	    buttonPanel.add(subHour);//1
 	    buttonPanel.add(subMinute); //2
 	   	buttonPanel.add(subSecond);//3
@@ -178,8 +178,8 @@ public class Control extends JFrame implements ActionListener
                                 break;
                         case "Seconds -": //8
                                 coolClock.addTime(-1);
-                                break;  
-                                
+                                break;
+
                         case "Stopwatch": //9
                         	//toggle to stopwatch string
                             //begin to wait for start or pause or reset
@@ -208,12 +208,9 @@ public class Control extends JFrame implements ActionListener
                         case "Timer"://17
                         	//do timer stuff
                         	break;
-                        case "Stopwatch"://18
-                        	//stopwatch
-                        	break;
-                     
-         
-                                
+
+
+
 			default:
 				displayMessage("ERROR: Unrecognized event");
 				break;
