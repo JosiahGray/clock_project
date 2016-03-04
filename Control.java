@@ -223,9 +223,9 @@ public class Control extends JFrame implements ActionListener
 	*	@param 	colon true if colon should be displayed, false if it should not
 	*	@param 	msg the message to be displayed next to the digit display (am/pm)
 	*/
-	public void setDisplay(int[] digits, boolean colon, String msg)
+	public void setDisplay(int[] digits, boolean colon, String msg, String timemsg)
 	{
-		displayPanel.setDisplay(digits, colon, msg);
+		displayPanel.setDisplay(digits, colon, msg, timemsg);
 	}
 
 	/**

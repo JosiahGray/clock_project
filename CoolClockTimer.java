@@ -19,16 +19,16 @@ public class CoolClockTimer extends TimerTask
 	*	The current time in seconds.  Always has a value between 0-86399 (86400 being the number of seconds in a standard 24 hour day).
 	*/
 	int time;
-	
-	
-	
+	String time_msg;
+
+
 	/*
 	 * expansion of clock class
-	 * current stop watch time. 
+	 * current stop watch time.
 	 */
 	int stopWatchTime;
 	int timer;
-	
+
 	/**
 	*	The instance of the primary GUI class Control, which inherits from JFrame.
 	*/
@@ -45,14 +45,14 @@ public class CoolClockTimer extends TimerTask
 	*	Represents whether time should be displayed in 24 hour (military time) format, or 12 hour am/pm format.  True indicates military format.
 	*/
 	boolean military_time;
-	
+
 	//clock expansion
 	// booleans for what mode it's on
 	boolean displayClock; //clock
 	boolean displaySW; //stopwatch
 	boolean displayTimer; //timer
-	
-	
+
+
 	/**
 	* 	Constructor which sets variables and creates a new instance of Control for display purposes.
  	* 	@post 	time is set to 0, military_time is set to true, pause is set to false, new Control instance myGUI instantiated
@@ -65,20 +65,20 @@ public class CoolClockTimer extends TimerTask
 		timer = 0; //timer time
 		military_time = true;
 		pause = false; //main clock pausing
-		
-		pauseStopWatch = true; //pauses stopwatch 
+
+		pauseStopWatch = true; //pauses stopwatch
 		pauseTimer = true; //pauses timer
-		
-		
+
+
 		//display
 		//start with clock
 		displayClock = true;
 		displaySW = false;
 		displayTimer = false;
-		
+
 
 	}
-	
+
 	/**
  	* 	This function is called every second by a Timer.  It calls refresh to update the display to the current state of the clock then adds 1 second to the time.
  	* 	@pre 	clock settings and variables have all been set
@@ -101,9 +101,9 @@ public class CoolClockTimer extends TimerTask
 	public void refresh()
 	{
 		int[] digits;
-		myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm()); //new int[] {1,2,0,0,0,0}
+		myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm(), time_msg); //new int[] {1,2,0,0,0,0}
 	}
-	
+
 	/**
 	*	Switches the pause flag to it's opposite
 	*	@post 	pause is set to the opposite value
@@ -119,9 +119,9 @@ public class CoolClockTimer extends TimerTask
 	public void toggleTimerPause(){
 		pauseTimer = !pauseTimer;
 	}
-	
-	
-	
+
+
+
 
 	/**
 	*	Switches the military time flag to it's opposite
@@ -132,7 +132,7 @@ public class CoolClockTimer extends TimerTask
 		military_time = !military_time;
 		refresh();
 	}
-	
+
 	/**
  	 * 	Converts seconds into the clock format
  	 * 	@return integer array that represents each digit of the clock
@@ -144,7 +144,7 @@ public class CoolClockTimer extends TimerTask
 		int seconds;
 		int mins;
 		int hours;
-		
+
 		if(military_time)
 		{
 			hours = total_seconds / 3600;
@@ -158,7 +158,7 @@ public class CoolClockTimer extends TimerTask
 			seconds = total_seconds;
 			digit_time[4] = seconds / 10;
 			digit_time[5] = seconds % 10;
-			
+
 		}
 		else
 		{
@@ -183,7 +183,7 @@ public class CoolClockTimer extends TimerTask
 				digit_time[1] = 2;
 			}
 		}
-		
+
 		/* For testing purposes, not needed for production level code.
 		for(int i = 0; i < 6; i++)
 		{
@@ -194,11 +194,11 @@ public class CoolClockTimer extends TimerTask
 			}
 		}
 		*/
-
+		time_msg = "" + digit_time[0] + digit_time[1] + ":" + digit_time[2] + digit_time[3] + ":" + digit_time[4] + digit_time[5] + " " + TwelveHourPm();
 		return digit_time;
-		
+
 	}
-	
+
 	/**
 	*	Returns the appropriate string to print on the display based on the current time and hour format (military_time)
 	*	@return the appropriate string to print
@@ -224,5 +224,5 @@ public class CoolClockTimer extends TimerTask
 		time = ((time + amt) % 86400 + 86400) % 86400;
 		refresh();
 	}
-	
+
 }

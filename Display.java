@@ -13,7 +13,7 @@ import java.awt.geom.*;
 /**
 *	A custom JPanel that displays the clock time and settings in a format similar to that of a 7 segment display.
 */
-public class Display extends JPanel 
+public class Display extends JPanel
 {
 
 	/**
@@ -31,23 +31,26 @@ public class Display extends JPanel
 	*/
 	String m_displayMsg;
 
+	String m_displayTime;
+
 	/**
 	*	Constructor.  Sets the display variables.
 	*	@post: 	m_displayDigits is intialized to an array of four 10s, m_display colon is initialized to false, and m_displayMsg is initialized to an empty String.
 	*/
-    public Display() 
+    public Display()
     {
        	//Set the display variables
 		m_displayDigits = new int[] {10, 10, 10, 10, 10, 10};
 		m_displayColon = false;
 		m_displayMsg = "";
+		m_displayTime = "";
     }
 
     /**
     *	Returns the preferred size of the Display
     *	@return the preferred size of the display
     */
-    public Dimension getPreferredSize() 
+    public Dimension getPreferredSize()
     {
         return new Dimension(1500, 400);
     }
@@ -69,6 +72,8 @@ public class Display extends JPanel
 		g2.fill(new Rectangle2D.Double(0, 0, 1500, 400));
 
 		g2.setColor(Color.RED);
+		g2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+		g2.drawString(m_displayTime, 700, 80);
 
 		//These are the coordinates for the vertical pieces of the 7 segment display
 		int xVertSeg[] = {20,  0,  0,  20, 40, 40};
@@ -91,53 +96,53 @@ public class Display extends JPanel
 
 			g.drawString(m_displayMsg, 1400, 80);
 
-		for(int digit = 0; digit<6; digit++)
-		{
-			boolean[][] sevenSeg = digitToArray(m_displayDigits[digit]);
-			int digitSpacing = 60 + digit * 225;
-			//Draw the vertical Segments
-			for(int xIter = 0; xIter < 2; xIter++)
-			{
-				int xOffset = digitSpacing + xIter * 120;
-				for(int yIter = 0; yIter < 2; yIter++)
-				{
-					if(sevenSeg[1][xIter*2+yIter])
-					{
-						int yOffset = 80 + yIter*120;
-						GeneralPath segment = new GeneralPath(GeneralPath.WIND_EVEN_ODD, xVertSeg.length);
-
-						segment.moveTo (xVertSeg[0]+xOffset, yVertSeg[0]+yOffset);
-
-						for (int i = 1; i < xVertSeg.length; i++) 
-						{
-						   	segment.lineTo(xVertSeg[i]+xOffset, yVertSeg[i]+yOffset);
-						}
-
-						segment.closePath();
-
-						g2.fill(segment);
-					}
-				}
-			}
-
-			//Draw the horizontal Segments
-			int xOffset = digitSpacing+30;
-			for(int yIter = 0; yIter < 3; yIter++)
-			{
-				int yOffset = 50 + yIter * 120;
-				if(sevenSeg[0][yIter])
-				{
-					GeneralPath segment = new GeneralPath(GeneralPath.WIND_EVEN_ODD, xHorzSeg.length);
-					segment.moveTo (xHorzSeg[0]+xOffset, yHorzSeg[0]+yOffset);
-					for (int i = 1; i < xHorzSeg.length; i++) 
-					{
-					         segment.lineTo(xHorzSeg[i]+xOffset, yHorzSeg[i]+yOffset);
-					}
-					segment.closePath();
-					g2.fill(segment);
-				}
-			}
-		}
+		// for(int digit = 0; digit<6; digit++)
+		// {
+		// 	boolean[][] sevenSeg = digitToArray(m_displayDigits[digit]);
+		// 	int digitSpacing = 60 + digit * 225;
+		// 	//Draw the vertical Segments
+		// // 	for(int xIter = 0; xIter < 2; xIter++)
+		// // 	{
+		// // 		int xOffset = digitSpacing + xIter * 120;
+		// // 		for(int yIter = 0; yIter < 2; yIter++)
+		// // 		{
+		// // 			if(sevenSeg[1][xIter*2+yIter])
+		// // 			{
+		// // 				int yOffset = 80 + yIter*120;
+		// // 				GeneralPath segment = new GeneralPath(GeneralPath.WIND_EVEN_ODD, xVertSeg.length);
+		// //
+		// // 				segment.moveTo (xVertSeg[0]+xOffset, yVertSeg[0]+yOffset);
+		// //
+		// // 				for (int i = 1; i < xVertSeg.length; i++)
+		// // 				{
+		// // 				   	segment.lineTo(xVertSeg[i]+xOffset, yVertSeg[i]+yOffset);
+		// // 				}
+		// //
+		// // 				segment.closePath();
+		// //
+		// // 				g2.fill(segment);
+		// // 			}
+		// // 		}
+		// // 	}
+		// //
+		// // 	//Draw the horizontal Segments
+		// // 	int xOffset = digitSpacing+30;
+		// // 	for(int yIter = 0; yIter < 3; yIter++)
+		// // 	{
+		// // 		int yOffset = 50 + yIter * 120;
+		// // 		if(sevenSeg[0][yIter])
+		// // 		{
+		// // 			GeneralPath segment = new GeneralPath(GeneralPath.WIND_EVEN_ODD, xHorzSeg.length);
+		// // 			segment.moveTo (xHorzSeg[0]+xOffset, yHorzSeg[0]+yOffset);
+		// // 			for (int i = 1; i < xHorzSeg.length; i++)
+		// // 			{
+		// // 			         segment.lineTo(xHorzSeg[i]+xOffset, yHorzSeg[i]+yOffset);
+		// // 			}
+		// // 			segment.closePath();
+		// // 			g2.fill(segment);
+		// // 		}
+		// // 	}
+		// // }
 	}
 
 	/**
@@ -146,11 +151,12 @@ public class Display extends JPanel
 	*	@param 	colon true if colon should be displayed, false if it should not
 	*	@param 	msg the message to be displayed next to the digit display (am/pm)
 	*/
-	public void setDisplay(int[] digits, boolean colon, String msg)
+	public void setDisplay(int[] digits, boolean colon, String msg, String timeStr)
 	{
 		m_displayDigits = digits.clone();
 		m_displayColon = colon;
 		m_displayMsg = msg;
+		m_displayTime = timeStr;
 
 		this.removeAll();
 		this.revalidate();
@@ -159,9 +165,9 @@ public class Display extends JPanel
 
 	/**
 	*	Associates a given digit with it's 7 segment display representation as a 2d array of booleans.
-	*	The array is organized as the first three horizontal segments descending and then the vertical segments moving down first then to the right. 
+	*	The array is organized as the first three horizontal segments descending and then the vertical segments moving down first then to the right.
 	*	Anything other than a digit 0-9 will result in the function returning a blank representation (use this to display nothing).
-	*	@param 	digit the digit to retrieve 7 segment representation of	
+	*	@param 	digit the digit to retrieve 7 segment representation of
 	*	@return a 2dimensional array of booleans representing the 7 segment representation of the given digit
 	*
 	*/
@@ -175,7 +181,7 @@ public class Display extends JPanel
 									{true, true, true, true}
 								};
 				break;
-			case 1:	sevenSeg = new boolean[][] {	
+			case 1:	sevenSeg = new boolean[][] {
 									{false, false, false},
 									{false, false, true, true}
 								};
