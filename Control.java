@@ -185,16 +185,16 @@ public class Control extends JFrame implements ActionListener
                             //begin to wait for start or pause or reset
                         		break;
                         case "Month +": //10
-                        	//do month stuff
+                        	coolClock.addMonth(1);
                         	break;
                         case "Month -": //11
-                        	//do month stuff
+                        	coolClock.addMonth(-1);
                         	break;
                         case "Day +": //12
-                        	//do day stuff
+                        	coolClock.addDay(1);
                         	break;
                         case "Day -": //13
-                        	//do day stuff
+                        	coolClock.addDay(-1);
                         	break;
                         case "Zoom in": //14
                         	//do zoom in stuff

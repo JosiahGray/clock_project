@@ -406,11 +406,208 @@ public class CoolClockTimer extends TimerTask
 		//default to january 1st in case of error
 		default:
 			month = 1;
-			day = 1;
-				
+			day = 1;	
 		}
 		
 		refresh();
 	}
 	
+	/**
+	 * 	Takes in a change in the month and adjusts the month variable accordingly
+	 * 	@param 	amt the change in month
+	 *	@post 	the month is shifted by amt months and is still in the valid month range (1-12)
+	 */
+	public void addMonth(int amt)
+	{
+		//month = (((month - 1 + amt) % 11 + 11) % 11)+1;
+		
+		// brute force method
+		month += amt;
+		if(month > 12)
+		{
+			month = 1;
+		}
+		if(month < 1)
+		{
+			month = 12;
+		}
+		
+		refresh();
+	}
+		
+	/**
+	 * 	Takes in a change in the day and adjusts the day variable accordingly
+	 * 	@param 	amt the change in day
+	 *	@post 	the modaynth is shifted by amt days and is still in the valid day range (dependent on the month)
+	 */
+	public void addDay(int amt)
+	{
+		day += amt;
+		
+		switch(month)
+		{
+		//january
+		case 1:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month = 12;
+				day = 31;
+			}
+			break;
+		//february
+		case 2:
+			if(day > 29)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//march
+		case 3:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 29;
+			}
+			break;
+		//april
+		case 4:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//may
+		case 5:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//june
+		case 6:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//july
+		case 7:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//august
+		case 8:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//september
+		case 9:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//october
+		case 10:
+			if(day > 31)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//november
+		case 11:
+			if(day > 30)
+			{
+				month++;
+				day = 1;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 31;
+			}
+			break;
+		//december
+		case 12:
+			if(day > 31)
+			{
+				month = 1;
+				day = 31;
+			}
+			if(day < 1)
+			{
+				month--;
+				day = 30;
+			}
+			break;
+		//default to january 1st in case of error
+		default:
+			month = 1;
+			day = 1;	
+		}
+		
+		refresh();
+	}
 }
