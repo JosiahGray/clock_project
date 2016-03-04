@@ -66,7 +66,9 @@ public class CoolClockTimer extends TimerTask
 	public CoolClockTimer()
 	{
 		myGUI = new Control(this);
-		time = 0;
+		time = 0;	//initialize to 12:00 midnight
+		month = 1;	//initialize to january 1st
+		day = 1;
 		stopWatchTime = 0; //stop watch time
 		timer = 0; //timer time
 		military_time = true;
@@ -401,6 +403,11 @@ public class CoolClockTimer extends TimerTask
 				day = 30;
 			}
 			break;
+		//default to january 1st in case of error
+		default:
+			month = 1;
+			day = 1;
+				
 		}
 		
 		refresh();
