@@ -419,7 +419,7 @@ public class CoolClockTimer extends TimerTask
 	 */
 	public void addMonth(int amt)
 	{
-		//month = (((month - 1 + amt) % 11 + 11) % 11)+1;
+		//month = ((((month + amt - 1) % 12) + 12) % 12) + 1;
 		
 		// brute force method
 		month += amt;
