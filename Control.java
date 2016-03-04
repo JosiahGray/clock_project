@@ -120,7 +120,7 @@ public class Control extends JFrame implements ActionListener
 	    zoomIn.addActionListener(this);
 	    zoomOut.addActionListener(this);
 	    toggleDisplay.addActionListener(this);
-	    resetSw.addActionListener(this);
+	    resetSW.addActionListener(this);
 	    addMonth.addActionListener(this);
 	    addDay.addActionListener(this);
 	    subMonth.addActionListener(this);
@@ -174,7 +174,15 @@ public class Control extends JFrame implements ActionListener
 		switch(event.getActionCommand())
 		{
 			case "Hour +": //1
-				coolClock.addTime(3600);
+				if(displayClock && !(displayTimer) && !(displaySW)){
+					coolClock.addTime(3600);
+				} else if(!(displayClock)&& displayTimer && !(displaySW)){
+            		//do timer stuff
+            	} else if (!(displayClock)&& !(displayTimer) && displaySW){
+            		//do stopwatch stuff
+            	} else{
+            		displayMessage("Error, logic off");
+            	}
 				break;
 			case "Minutes +": //2
                                 coolClock.addTime(60);
