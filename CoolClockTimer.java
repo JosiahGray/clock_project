@@ -20,6 +20,15 @@ public class CoolClockTimer extends TimerTask
 	*/
 	int time;
 	
+	
+	
+	/*
+	 * expansion of clock class
+	 * current stop watch time. 
+	 */
+	int stopWatchTime;
+	int timer;
+	
 	/**
 	*	The instance of the primary GUI class Control, which inherits from JFrame.
 	*/
@@ -29,11 +38,20 @@ public class CoolClockTimer extends TimerTask
 	*	Represents whether time incrementation should be paused, true indicating a paused state.
 	*/
 	boolean pause;
+	boolean pauseStopWatch;
+	boolean pauseTimer;
 
 	/**
 	*	Represents whether time should be displayed in 24 hour (military time) format, or 12 hour am/pm format.  True indicates military format.
 	*/
 	boolean military_time;
+	
+	//clock expansion
+	// booleans for what mode it's on
+	boolean displayClock; //clock
+	boolean displaySW; //stopwatch
+	boolean displayTimer; //timer
+	
 	
 	/**
 	* 	Constructor which sets variables and creates a new instance of Control for display purposes.
@@ -43,8 +61,22 @@ public class CoolClockTimer extends TimerTask
 	{
 		myGUI = new Control(this);
 		time = 0;
+		stopWatchTime = 0; //stop watch time
+		timer = 0; //timer time
 		military_time = true;
-		pause = false;
+		pause = false; //main clock pausing
+		
+		pauseStopWatch = true; //pauses stopwatch 
+		pauseTimer = true; //pauses timer
+		
+		
+		//display
+		//start with clock
+		displayClock = true;
+		displaySW = false;
+		displayTimer = false;
+		
+
 	}
 	
 	/**
@@ -57,6 +89,7 @@ public class CoolClockTimer extends TimerTask
 		if(!pause)
 		{
 			refresh();
+			//this controls time for clock
 			addTime(1);
 		}
 	}
@@ -79,6 +112,15 @@ public class CoolClockTimer extends TimerTask
 	{
 		pause = !pause;
 	}
+	//clock expansion
+	public void toggleSWPause(){
+		pauseStopWatch = !pauseStopWatch;
+	}
+	public void toggleTimerPause(){
+		pauseTimer = !pauseTimer;
+	}
+	
+	
 	
 
 	/**
