@@ -33,7 +33,7 @@ public class CoolClockTimer extends TimerTask
 	 * current stop watch time. 
 	 */
 	int stopWatchTime;
-	int timer;
+	int timerTime;
 	
 	/**
 	*	The instance of the primary GUI class Control, which inherits from JFrame.
@@ -70,7 +70,7 @@ public class CoolClockTimer extends TimerTask
 		month = 1;	//initialize to january 1st
 		day = 1;
 		stopWatchTime = 0; //stop watch time
-		timer = 0; //timer time
+		timerTime = 0; //timer time
 		military_time = true;
 		pause = false; //main clock pausing
 		
@@ -100,6 +100,14 @@ public class CoolClockTimer extends TimerTask
 			//this controls time for clock
 			addTime(1);
 		}
+		if(!pauseStopWatch){
+	
+			//control stopwatch
+		}
+		if(!pauseTimer){
+		
+			//control timer
+		}
 	}
 
 	/**
@@ -122,10 +130,23 @@ public class CoolClockTimer extends TimerTask
 	}
 	//clock expansion
 	public void toggleSWPause(){
+		
 		pauseStopWatch = !pauseStopWatch;
+		
 	}
 	public void toggleTimerPause(){
+		
 		pauseTimer = !pauseTimer;
+		
+	}
+	public void addSWTime(int amt){
+		//see if modulus is needed
+		stopWatchTime = stopWatchTime + amt;
+	}
+	public void addTimerTime(int amt){
+		
+		//see if modulus is needed
+		timerTime = timerTime + amt;
 	}
 	
 	
