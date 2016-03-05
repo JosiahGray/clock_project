@@ -86,6 +86,21 @@ public class CoolClockTimer extends TimerTask
 		
 
 	}
+	public void showClock(){
+		displayClock = true;
+		displaySW = false;
+		displayTimer = false;
+	}
+	public void showSW(){
+		displayClock = false;
+		displaySW = true;
+		displayTimer = false;
+	}
+	public void showTimer(){
+		displayClock = false;
+		displaySW = false;
+		displayTimer = true;
+	}
 	
 	/**
  	* 	This function is called every second by a Timer.  It calls refresh to update the display to the current state of the clock then adds 1 second to the time.
@@ -106,6 +121,7 @@ public class CoolClockTimer extends TimerTask
 		}
 		if(!pauseTimer){
 			if(timerTime > 0){
+				refresh();
 				timerTime--;
 			} else  { 
 				//make timer sound
@@ -122,13 +138,24 @@ public class CoolClockTimer extends TimerTask
 	public void refresh()
 	{
 		int[] digits;
-		myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm()); //new int[] {1,2,0,0,0,0}
+		if(displayTimer){
+			myGUI.setDisplay(TimerConvertSeconds(), true, "");
+		} else if(displaySW){
+			myGUI.setDisplay(SWConvertSeconds(), true, "");
+		} else{
+			myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm());
+		}//new int[] {1,2,0,0,0,0}
 	}
 	
 	/**
 	*	Switches the pause flag to it's opposite
 	*	@post 	pause is set to the opposite value
 	*/
+	public void resetSW(){
+		
+		stopWatchTime = 0;
+		
+	}
 	public void togglePause()
 	{
 		pause = !pause;
@@ -147,13 +174,13 @@ public class CoolClockTimer extends TimerTask
 	public void addSWTime(int amt){
 		//see if modulus is needed
 		//time = ((time + amt) % 86400 + 86400) % 86400;
-		stopWatchTime = ((stopWatchTime) % 356400 + 356400) % 356400;
+		stopWatchTime = ((stopWatchTime) % 360000 + 360000) % 360000;
 	}
 	public void addTimerTime(int amt){
 		
 		//see if modulus is needed
 		//time = ((time + amt) % 86400 + 86400) % 86400;
-		timerTime = ((timerTime + amt) % 356400 + 356400) % 356400;
+		timerTime = ((timerTime + amt) % 360000 + 360000) % 360000;
 	}
 	//converts stop watch seconds into clock format
 	public int[] SWConvertSeconds(){
