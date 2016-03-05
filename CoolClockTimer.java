@@ -105,7 +105,12 @@ public class CoolClockTimer extends TimerTask
 			//control stopwatch
 		}
 		if(!pauseTimer){
-		
+			if(timerTime > 0){
+				timerTime--;
+			} else  { 
+				//make timer sound
+				timerTime = 0;
+			}
 			//control timer
 		}
 	}
@@ -141,13 +146,36 @@ public class CoolClockTimer extends TimerTask
 	}
 	public void addSWTime(int amt){
 		//see if modulus is needed
-		stopWatchTime = stopWatchTime + amt;
+		//time = ((time + amt) % 86400 + 86400) % 86400;
+		stopWatchTime = ((stopWatchTime) % 356400 + 356400) % 356400;
 	}
 	public void addTimerTime(int amt){
 		
 		//see if modulus is needed
-		timerTime = timerTime + amt;
+		//time = ((time + amt) % 86400 + 86400) % 86400;
+		timerTime = ((timerTime + amt) % 356400 + 356400) % 356400;
 	}
+	//converts stop watch seconds into clock format
+	public int[] SWConvertSeconds(){
+		int[] digSWTime = {0,0,0,0,0,0,0};
+		int totalSWSeconds = stopWatchTime;
+		int seconds;
+		int mins;
+		int hours
+		hours = totalSWSeconds / 3600;
+		digSWTime[0] = hours / 10;
+		digSWTime[1] = hours % 10;
+		totalSWSeconds = totalSWSeconds - (hours * 3600);
+		mins = totalSWSeconds / 60;
+		digSWTime[2] = mins / 10;
+		digSWTime[3] = mins % 10;
+		totalSWSeconds = totalSWSeconds - (mins * 60);
+		seconds = totalSWSeconds;
+		digSWTime[4] = seconds / 10;
+		digSWTime[5] = seconds % 10;
+		return digSWTime;
+	}
+	
 	
 	
 	
