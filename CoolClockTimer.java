@@ -157,11 +157,11 @@ public class CoolClockTimer extends TimerTask
 	}
 	//converts stop watch seconds into clock format
 	public int[] SWConvertSeconds(){
-		int[] digSWTime = {0,0,0,0,0,0,0};
+		int[] digSWTime = {0,0,0,0,0,0};
 		int totalSWSeconds = stopWatchTime;
 		int seconds;
 		int mins;
-		int hours
+		int hours;
 		hours = totalSWSeconds / 3600;
 		digSWTime[0] = hours / 10;
 		digSWTime[1] = hours % 10;
@@ -174,6 +174,26 @@ public class CoolClockTimer extends TimerTask
 		digSWTime[4] = seconds / 10;
 		digSWTime[5] = seconds % 10;
 		return digSWTime;
+	}
+	public int[] TimerConvertSeconds(){
+		int[] digTimerTime = {0,0,0,0,0,0};
+		int totalTimerSeconds = timerTime;
+		int seconds;
+		int mins;
+		int hours;
+		hours = totalTimerSeconds / 3600;
+		digTimerTime[0] = hours / 10;
+		digTimerTime[1] = hours % 10;
+		totalTimerSeconds = totalTimerSeconds - (hours * 3600);
+		mins = totalTimerSeconds / 60;
+		digTimerTime[2] = mins / 10;
+		digTimerTime[3] = mins % 10;
+		totalTimerSeconds = totalTimerSeconds - (mins * 60);
+		seconds = totalTimerSeconds;
+		digTimerTime[4] = seconds / 10;
+		digTimerTime[5] = seconds % 10;
+		return digTimerTime;
+		
 	}
 	
 	
