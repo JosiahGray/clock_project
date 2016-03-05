@@ -25,6 +25,7 @@ public class CoolClockTimer extends TimerTask
 	 */
 	int day;
 	int month;
+	int timeExecuted;
 	
 	
 	
@@ -78,6 +79,8 @@ public class CoolClockTimer extends TimerTask
 		pauseTimer = true; //pauses timer
 		
 		
+		timeExecuted = 0;
+		
 		//display
 		//start with clock
 		displayClock = true;
@@ -108,21 +111,28 @@ public class CoolClockTimer extends TimerTask
  	*	@post 	the display reflects the status of the clock at the time this function was called and the time has been incremented by 1 second.
  	*/
 	public void run()
-	{
+	{ 
+		timeExecuted ++;
+		refresh();
 		if(!pause)
 		{
 			refresh();
 			//this controls time for clock
-			addTime(1);
+			//modding a counter variable by 100 since we update 100 times a second
+			if(timeExecuted % 100 == 0){
+				addTime(1);
+			}
 		}
 		if(!pauseStopWatch){
-	
-			//control stopwatch
+			refresh();
+			addSWTime(1);
 		}
 		if(!pauseTimer){
 			if(timerTime > 0){
 				refresh();
-				timerTime--;
+				if(timeExecuted % 100 == 0){
+					timerTime--;
+				}
 			} else  { 
 				//make timer sound
 				timerTime = 0;
@@ -172,34 +182,32 @@ public class CoolClockTimer extends TimerTask
 		
 	}
 	public void addSWTime(int amt){
-		//see if modulus is needed
-		//time = ((time + amt) % 86400 + 86400) % 86400;
-		stopWatchTime = ((stopWatchTime) % 360000 + 360000) % 360000;
+
+		stopWatchTime = ((stopWatchTime + amt) % 360000 + 360000) % 360000;
 	}
 	public void addTimerTime(int amt){
 		
-		//see if modulus is needed
-		//time = ((time + amt) % 86400 + 86400) % 86400;
+		//99 hours 59 minutes 59 seconds
 		timerTime = ((timerTime + amt) % 360000 + 360000) % 360000;
 	}
 	//converts stop watch seconds into clock format
 	public int[] SWConvertSeconds(){
 		int[] digSWTime = {0,0,0,0,0,0};
 		int totalSWSeconds = stopWatchTime;
+		int centiseconds;
 		int seconds;
-		int mins;
-		int hours;
-		hours = totalSWSeconds / 3600;
-		digSWTime[0] = hours / 10;
-		digSWTime[1] = hours % 10;
-		totalSWSeconds = totalSWSeconds - (hours * 3600);
-		mins = totalSWSeconds / 60;
-		digSWTime[2] = mins / 10;
-		digSWTime[3] = mins % 10;
-		totalSWSeconds = totalSWSeconds - (mins * 60);
-		seconds = totalSWSeconds;
-		digSWTime[4] = seconds / 10;
-		digSWTime[5] = seconds % 10;
+		int minutes;
+		minutes = totalSWSeconds / 6000;
+		digSWTime[0] = minutes / 10;
+		digSWTime[1] = minutes % 10;
+		totalSWSeconds = totalSWSeconds - (minutes * 6000);
+		seconds = totalSWSeconds / 100;
+		digSWTime[2] = seconds / 10;
+		digSWTime[3] = seconds % 10;
+		totalSWSeconds = totalSWSeconds - (seconds * 100);
+		centiseconds = totalSWSeconds;
+		digSWTime[4] = centiseconds / 10;
+		digSWTime[5] = centiseconds % 10;
 		return digSWTime;
 	}
 	public int[] TimerConvertSeconds(){

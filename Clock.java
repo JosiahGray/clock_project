@@ -25,6 +25,6 @@ public class Clock
 	{
 
 		Timer myTimer = new Timer();
-		myTimer.schedule(new CoolClockTimer(), 0, 1000);		
+		myTimer.schedule(new CoolClockTimer(), 0, 10);		
 	}
 }
