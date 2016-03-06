@@ -367,7 +367,7 @@ public class CoolClockTimer extends TimerTask
 			}
 		}
 		*/
-		time_msg = "" + digit_time[0] + digit_time[1] + ":" + digit_time[2] + digit_time[3] + ":" + digit_time[4] + digit_time[5] + " " + TwelveHourPm();
+		time_msg = "" + digit_time[0] + digit_time[1] + ":" + digit_time[2] + digit_time[3] + ":" + digit_time[4] + digit_time[5];
 		return digit_time;
 
 	}

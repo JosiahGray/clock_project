@@ -33,6 +33,8 @@ public class Display extends JPanel
 
 	String m_displayTime;
 
+	int m_strSize;
+
 	/**
 	*	Constructor.  Sets the display variables.
 	*	@post: 	m_displayDigits is intialized to an array of four 10s, m_display colon is initialized to false, and m_displayMsg is initialized to an empty String.
@@ -44,6 +46,7 @@ public class Display extends JPanel
 		m_displayColon = false;
 		m_displayMsg = "";
 		m_displayTime = "";
+		m_strSize = 300;
     }
 
     /**
@@ -66,14 +69,18 @@ public class Display extends JPanel
 	{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-
 		//Draw the background
 		g2.setColor(Color.BLACK);
 		g2.fill(new Rectangle2D.Double(0, 0, 1500, 400));
 
 		g2.setColor(Color.RED);
-		g2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 170));
-		g2.drawString(m_displayTime, 300, 200);
+		g2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, m_strSize));
+		FontMetrics fm = g2.getFontMetrics();
+		Rectangle2D r = fm.getStringBounds(m_displayTime, g2);
+		int x = (this.getWidth() - (int) r.getWidth()) / 2;
+		int y = (this.getHeight() - (int) r.getHeight()) / 2 + fm.getAscent();
+
+		g2.drawString(m_displayTime, x, y);
 
 		//These are the coordinates for the vertical pieces of the 7 segment display
 		int xVertSeg[] = {20,  0,  0,  20, 40, 40};
@@ -160,7 +167,7 @@ public class Display extends JPanel
 
 		this.removeAll();
 		this.revalidate();
-  		this.repaint();
+		this.repaint();
 	}
 
 	/**
@@ -233,5 +240,15 @@ public class Display extends JPanel
 				break;
 		}
 		return sevenSeg;
+	}
+
+	public void zoomIn()
+	{
+		if(m_strSize <= 300)
+			m_strSize += 100;
+	}
+	public void zoomOut()
+	{
+		m_strSize -= 100;
 	}
 }

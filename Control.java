@@ -84,7 +84,7 @@ public class Control extends JFrame implements ActionListener
 	    JButton toggleFormat = new JButton("24 hour/12 hour"); //7
 
 	    JButton timer = new JButton("Timer"); //8
-	     JButton showClock = new JButton("Clock");
+	    JButton showClock = new JButton("Clock");
 	    JButton stopWatch = new JButton("Stopwatch"); //9
 
 
@@ -108,7 +108,7 @@ public class Control extends JFrame implements ActionListener
 	    //Add actionListeners for the buttons
 	    addHour.addActionListener(this);
 	    addMinute.addActionListener(this);
-		addSecond.addActionListener(this);
+			addSecond.addActionListener(this);
 	    toggleFormat.addActionListener(this);
 	    showClock.addActionListener(this);
 	    subHour.addActionListener(this);
@@ -299,42 +299,45 @@ public class Control extends JFrame implements ActionListener
                         coolClock.addDay(-1);
                      }
                      break;
-                 case "Zoom in": //14
-                     if(displayClock){
+                 case "Zoom In": //14
 
-                        		//do clock stuff
-
-                     } else if(displayTimer){
-
-                        		//do timer stuff
-
-                     } else if (displaySW){
-
-                        		//do stopwatch stuff
-
-                     } else{
-                        		displayMessage("Error, logic off");
-                     }
-                        	//do zoom in stuff
+							 			displayPanel.zoomIn();
+                    //  if(displayClock){
+										//
+                    //     		//do clock stuff
+										//
+                    //  } else if(displayTimer){
+										//
+                    //     		//do timer stuff
+										//
+                    //  } else if (displaySW){
+										//
+                    //     		//do stopwatch stuff
+										//
+                    //  } else{
+                    //     		displayMessage("Error, logic off");
+                    //  }
+                    //     	do zoom in stuff
                      break;
-                 case "Zoom out": //15
-                      if(displayClock){
-
-                        		//do clock stuff
-
-                       } else if(displayTimer){
-
-                        		//do timer stuff
-
-                       } else if (displaySW){
-
-                        		//do stopwatch stuff
-
-                       } else{
-
-                        		displayMessage("Error, logic off");
-
-                       }
+                 case "Zoom Out": //15\
+								 			displayPanel.zoomOut();
+                      // if(displayClock){
+											//
+                      //   		//do clock stuff
+											//
+                      //  } else if(displayTimer){
+											//
+                      //   		//do timer stuff
+											//
+                      //  } else if (displaySW){
+											//
+                      //   		//do stopwatch stuff
+											//
+                      //  } else{
+											//
+                      //   		displayMessage("Error, logic off");
+											//
+                      //  }
                         	//do zoom out stuff
                        break;
                    case "Show/Hide display": //16
