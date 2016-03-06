@@ -7,9 +7,15 @@
 *
 */
 
+//for playing mp3
+//http://stackoverflow.com/questions/19603450/how-can-i-play-an-mp3-file
+
+
 import java.util.Timer;
 import java.util.TimerTask;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 /**
 *	A custom TimerTask that keeps track of the time and settings, running every second.  This class also uses the GUI Control object to display the information and get input from the user.
 */
@@ -27,7 +33,7 @@ public class CoolClockTimer extends TimerTask
 	int month;
 	int timeExecuted;
 	
-	
+	boolean timerSet;
 	
 	/*
 	 * expansion of clock class
@@ -87,6 +93,9 @@ public class CoolClockTimer extends TimerTask
 		displaySW = false;
 		displayTimer = false;
 		
+		//
+		timerSet = false;
+		
 
 	}
 	public void showClock(){
@@ -136,6 +145,18 @@ public class CoolClockTimer extends TimerTask
 			} else  { 
 				//make timer sound
 				timerTime = 0;
+				//if boolean is still false for turning off the alarm
+				try
+				 {
+					AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
+				 	Clip fc = AudioSystem.getClip();
+				 	fc.open(audioStream);
+				 	fc.start();
+				 	}
+				catch(Exception e)
+				{
+				 e.printStackTrace();
+				}
 			}
 			//control timer
 		}
@@ -165,6 +186,15 @@ public class CoolClockTimer extends TimerTask
 		
 		stopWatchTime = 0;
 		
+	}
+	public void resetTimer(){
+		//if there is still time on the timer
+		if(timerTime != 0){
+			timerTime = 0;
+			timerSet = false;
+		} else {
+			//set boolean to turn off alarm
+		}
 	}
 	public void togglePause()
 	{
