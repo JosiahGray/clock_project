@@ -86,7 +86,7 @@ public class Control extends JFrame implements ActionListener
 	    JButton timer = new JButton("Timer"); //8
 	     JButton showClock = new JButton("Clock");
 	    JButton stopWatch = new JButton("Stopwatch"); //9
-	   
+
 
 
 
@@ -101,7 +101,7 @@ public class Control extends JFrame implements ActionListener
 	    JButton toggleDisplay = new JButton("Show/Hide display"); //7 //also switch from stopwatch/timer
 	    JButton togglePause = new JButton("Start/Pause"); //
 	    JButton reset = new JButton("Stop/Reset"); //9
-	    
+
 
 
 
@@ -115,7 +115,7 @@ public class Control extends JFrame implements ActionListener
 	    subMinute.addActionListener(this);
 	    subSecond.addActionListener(this);
 	    togglePause.addActionListener(this);
-	    
+
 	    //clock expansion
 	    timer.addActionListener(this);
 	    stopWatch.addActionListener(this);
@@ -127,7 +127,7 @@ public class Control extends JFrame implements ActionListener
 	    addDay.addActionListener(this);
 	    subMonth.addActionListener(this);
 	    subDay.addActionListener(this);
-	    
+
 
 	    //Add the buttons to our buttonPanel
 	    buttonPanel.add(addHour); //1
@@ -160,7 +160,7 @@ public class Control extends JFrame implements ActionListener
 		//For pop up messages
 		popUpFrame = new JFrame("Dialogue");
 	}
-	
+
 			//add booleans to determine which method the button implements for each function
 		boolean displayClock = true;
 		boolean displayTimer = false;
@@ -173,97 +173,97 @@ public class Control extends JFrame implements ActionListener
 	*/
 	public void actionPerformed(ActionEvent event)
 	{
-	
-		
-		
+
+
+
 		switch(event.getActionCommand())
 		{
 			case "Hour +": //1
 				if(displayClock){
-					
+
 					coolClock.addTime(3600);
-					
+
 				} else if(displayTimer){
 
 					coolClock.addTimerTime(3600);
-					
-            	} 
+
+            	}
 				break;
 			case "Minutes +":
                if(displayClock){
-                					
+
                 	coolClock.addTime(60);
-                					
+
                 } else if(displayTimer){
 
 					coolClock.addTimerTime(60);
-                					
-                } 
+
+                }
 				break;
             case "Seconds +": //3
                if(displayClock){
-                        		
+
                     coolClock.addTime(1);
-                                
+
                 } else if(displayTimer){
-                        		
+
                     coolClock.addTimerTime(1);
-                        		
+
                 }
                 break;
              case "Start/Pause": //4
                  if(displayClock){
-                        		
+
                     coolClock.togglePause();
-                                
+
                  } else if(displayTimer){
-                        		
+
                     coolClock.toggleTimerPause();
-                        		
+
                  } else if (displaySW){
                     coolClock.toggleSWPause();
-                        		
-                 } 
+
+                 }
                  break;
               case "24 hour/12 hour": //5
                   if(displayClock){
-                       
+
                 	  coolClock.toggleHourFormat();
-                  } 
+                  }
                   break;
               case "Hour -": //6
                   if(displayClock){
-                        		
+
                      coolClock.addTime(-3600);
-                               
+
                    } else if(displayTimer){
-                        		
+
                       coolClock.addTimerTime(-3600);
-                        		
+
                    }
                    break;
                case "Minutes -": //7
                    if(displayClock){
-                        		
+
                        coolClock.addTime(-60);
-                                
+
                    } else if(displayTimer){
-                       		
+
                        coolClock.addTimerTime(-60);
-                        		
-                   } 
+
+                   }
                    break;
                case "Seconds -": //8
                    if(displayClock){
-                	   
+
                        coolClock.addTime(-1);
-                                
+
                     } else if(displayTimer){
-                    	
+
                        coolClock.addTimerTime(-1);
-                    	
+
                     }
-                    break;  
+                    break;
                 case "Stopwatch": //9
                      //toggle to stopwatch string
                      displaySW = true;
@@ -274,44 +274,44 @@ public class Control extends JFrame implements ActionListener
                      break;
                 case "Month +": //10
                      if(displayClock){
-                    	 
+
                        coolClock.addMonth(1);
-                        		
+
                      }
                      break;
                 case "Month -": //11
                      if(displayClock){
-                    	 
+
                        coolClock.addMonth(-1);
-                        		
+
                      }
                      break;
                 case "Day +": //12
                     if(displayClock){
-                    	
+
                        coolClock.addDay(1);
-                       
+
                     }
                     break;
                  case "Day -": //13
                     if(displayClock){
-                    	
+
                         coolClock.addDay(-1);
                      }
                      break;
                  case "Zoom in": //14
                      if(displayClock){
-                    	 
+
                         		//do clock stuff
-                    	 
+
                      } else if(displayTimer){
-                    	 
+
                         		//do timer stuff
-                    	 
+
                      } else if (displaySW){
-                    	 
+
                         		//do stopwatch stuff
-                    	 
+
                      } else{
                         		displayMessage("Error, logic off");
                      }
@@ -319,38 +319,38 @@ public class Control extends JFrame implements ActionListener
                      break;
                  case "Zoom out": //15
                       if(displayClock){
-                    	  
+
                         		//do clock stuff
-                    	  
+
                        } else if(displayTimer){
-                    	   
+
                         		//do timer stuff
-                    	   
+
                        } else if (displaySW){
-                    	   
+
                         		//do stopwatch stuff
-                    	   
+
                        } else{
-                    	   
+
                         		displayMessage("Error, logic off");
-                        		
+
                        }
                         	//do zoom out stuff
                        break;
                    case "Show/Hide display": //16
-                	   
+
                        if(displayClock){
-                    	   
+
                         		//do clock stuff
-                    	   
+
                        } else if(displayTimer){
-                    	   
+
                         		//do timer stuff
-                    	   
+
                        } else if (displaySW){
-                    	   
+
                         		//do stopwatch stuff
-                    	   
+
                        } else{
                         		displayMessage("Error, logic off");
                        }
@@ -365,9 +365,9 @@ public class Control extends JFrame implements ActionListener
                         	break;
                     case "Stop/Reset"://18
                         if(displaySW){
-                        	
+
                         	coolClock.resetSW();
-                        	
+
                         } if(displayTimer){
                         	coolClock.resetTimer();
                         }
@@ -378,7 +378,7 @@ public class Control extends JFrame implements ActionListener
                     	displaySW = false;
                     	coolClock.showClock();
                     	break;
-                    	
+
 			default:
 				displayMessage("ERROR: Unrecognized event");
 				break;
@@ -391,9 +391,9 @@ public class Control extends JFrame implements ActionListener
 	*	@param 	colon true if colon should be displayed, false if it should not
 	*	@param 	msg the message to be displayed next to the digit display (am/pm)
 	*/
-	public void setDisplay(int[] digits, boolean colon, String msg)
+	public void setDisplay(int[] digits, boolean colon, String msg, String timemsg)
 	{
-		displayPanel.setDisplay(digits, colon, msg);
+		displayPanel.setDisplay(digits, colon, msg, timemsg);
 	}
 
 	/**
