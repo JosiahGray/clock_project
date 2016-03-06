@@ -136,7 +136,7 @@ public class CoolClockTimer extends TimerTask
 		}
 		//if(!fc.isActive()){
 		//	alarmDone = true;
-		//}
+		}
 		
 	}
 	/**
