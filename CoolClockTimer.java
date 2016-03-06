@@ -34,6 +34,8 @@ public class CoolClockTimer extends TimerTask
 	int timeExecuted;
 	
 	boolean timerSet;
+	boolean alarmOff;
+	boolean alarmDone;
 	
 	/*
 	 * expansion of clock class
@@ -65,6 +67,8 @@ public class CoolClockTimer extends TimerTask
 	boolean displaySW; //stopwatch
 	boolean displayTimer; //timer
 	
+	int alarmDuration;
+	
 	
 	/**
 	* 	Constructor which sets variables and creates a new instance of Control for display purposes.
@@ -92,9 +96,12 @@ public class CoolClockTimer extends TimerTask
 		displayClock = true;
 		displaySW = false;
 		displayTimer = false;
+		alarmOff= false;
+		alarmDone = false;
 		
 		//
 		timerSet = false;
+		alarmDuration = 0;
 		
 
 	}
@@ -113,7 +120,25 @@ public class CoolClockTimer extends TimerTask
 		displaySW = false;
 		displayTimer = true;
 	}
-	
+	public void playAlarm(){
+		alarmDone = false;
+		try
+		{
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
+			Clip fc = AudioSystem.getClip();
+			fc.open(audioStream);
+			//https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/Clip.html#loop(int)
+			fc.start();
+	 	}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		//if(!fc.isActive()){
+		//	alarmDone = true;
+		//}
+		
+	}
 	/**
  	* 	This function is called every second by a Timer.  It calls refresh to update the display to the current state of the clock then adds 1 second to the time.
  	* 	@pre 	clock settings and variables have all been set
@@ -146,17 +171,10 @@ public class CoolClockTimer extends TimerTask
 				//make timer sound
 				timerTime = 0;
 				//if boolean is still false for turning off the alarm
-				try
-				 {
-					AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
-				 	Clip fc = AudioSystem.getClip();
-				 	fc.open(audioStream);
-				 	fc.start();
-				 	}
-				catch(Exception e)
-				{
-				 e.printStackTrace();
+				if(!alarmOff && alarmDone){
+					playAlarm();
 				}
+			
 			}
 			//control timer
 		}
@@ -194,6 +212,7 @@ public class CoolClockTimer extends TimerTask
 			timerSet = false;
 		} else {
 			//set boolean to turn off alarm
+			alarmOff=true;
 		}
 	}
 	public void togglePause()
