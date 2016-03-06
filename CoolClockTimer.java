@@ -265,6 +265,8 @@ public class CoolClockTimer extends TimerTask
 		centiseconds = totalSWSeconds;
 		digSWTime[4] = centiseconds / 10;
 		digSWTime[5] = centiseconds % 10;
+		time_msg = "" + digSWTime[0] + digSWTime[1] + ":" + digSWTime[2] + digSWTime[3] + ":" + digSWTime[4] + digSWTime[5];
+
 		return digSWTime;
 	}
 	public int[] TimerConvertSeconds(){
@@ -284,6 +286,8 @@ public class CoolClockTimer extends TimerTask
 		seconds = totalTimerSeconds;
 		digTimerTime[4] = seconds / 10;
 		digTimerTime[5] = seconds % 10;
+		time_msg = "" + digTimerTime[0] + digTimerTime[1] + ":" + digTimerTime[2] + digTimerTime[3] + ":" + digTimerTime[4] + digTimerTime[5];
+
 		return digTimerTime;
 
 	}
