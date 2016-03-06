@@ -57,7 +57,7 @@ public class Control extends JFrame implements ActionListener
 		setLocationRelativeTo(null);
 
 		//Make the window not resizable
-		setResizable(true);
+		setResizable(false);
 
 		//Exit the application when the "X" button is pressed
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

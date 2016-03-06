@@ -261,6 +261,8 @@ public class CoolClockTimer extends TimerTask
 		centiseconds = totalSWSeconds;
 		digSWTime[4] = centiseconds / 10;
 		digSWTime[5] = centiseconds % 10;
+		time_msg = "" + digSWTime[0] + digSWTime[1] + ":" + digSWTime[2] + digSWTime[3] + ":" + digSWTime[4] + digSWTime[5];
+
 		return digSWTime;
 	}
 	public int[] TimerConvertSeconds(){
@@ -280,6 +282,8 @@ public class CoolClockTimer extends TimerTask
 		seconds = totalTimerSeconds;
 		digTimerTime[4] = seconds / 10;
 		digTimerTime[5] = seconds % 10;
+		time_msg = "" + digTimerTime[0] + digTimerTime[1] + ":" + digTimerTime[2] + digTimerTime[3] + ":" + digTimerTime[4] + digTimerTime[5];
+
 		return digTimerTime;
 
 	}
@@ -775,7 +779,12 @@ public class CoolClockTimer extends TimerTask
 	public String getDayOfWeek()
 	{
 		String[] weekDays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-
+		int[] shifter = {4,0,1,4,6,2,4,0,3,5,1,3};
+		
+		//shorter method
+		return (weekDays[((day + shifter[month-1]) % 7)]);
+		
+		/*brute force method
 		int shift = 0;
 		String dayOfWeek = "Sunday";
 
@@ -821,5 +830,6 @@ public class CoolClockTimer extends TimerTask
 
 		dayOfWeek = weekDays[((day+shift)%7)];
 		return(dayOfWeek);
+		*/
 	}
 }
