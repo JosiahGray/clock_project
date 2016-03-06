@@ -84,8 +84,9 @@ public class Control extends JFrame implements ActionListener
 	    JButton toggleFormat = new JButton("24 hour/12 hour"); //7
 
 	    JButton timer = new JButton("Timer"); //8
+	     JButton showClock = new JButton("Clock");
 	    JButton stopWatch = new JButton("Stopwatch"); //9
-	    JButton showClock = new JButton("Clock");
+	   
 
 
 
@@ -98,8 +99,8 @@ public class Control extends JFrame implements ActionListener
 	    JButton zoomOut = new JButton("Zoom Out"); //6
 
 	    JButton toggleDisplay = new JButton("Show/Hide display"); //7 //also switch from stopwatch/timer
-	    JButton togglePause = new JButton("Start/Pause"); //8
-	    JButton resetSW = new JButton("Reset Stopwatch"); //9
+	    JButton togglePause = new JButton("Start/Pause"); //
+	    JButton reset = new JButton("Stop/Reset"); //9
 	    
 
 
@@ -121,7 +122,7 @@ public class Control extends JFrame implements ActionListener
 	    zoomIn.addActionListener(this);
 	    zoomOut.addActionListener(this);
 	    toggleDisplay.addActionListener(this);
-	    resetSW.addActionListener(this);
+	    reset.addActionListener(this);
 	    addMonth.addActionListener(this);
 	    addDay.addActionListener(this);
 	    subMonth.addActionListener(this);
@@ -148,7 +149,7 @@ public class Control extends JFrame implements ActionListener
 	    buttonPanel.add(zoomOut); //6
 	    buttonPanel.add(toggleDisplay); //7
 	    buttonPanel.add(togglePause); //8
-	    buttonPanel.add(resetSW);//9
+	    buttonPanel.add(reset);//9
 
 	    //Add the buttonPanel to our JFrame
 	    this.getContentPane().add(buttonPanel);
@@ -186,10 +187,7 @@ public class Control extends JFrame implements ActionListener
 
 					coolClock.addTimerTime(3600);
 					
-            	} else{
-            		
-            		displayMessage("Error, logic off");
-            	}
+            	} 
 				break;
 			case "Minutes +":
                if(displayClock){
@@ -200,10 +198,7 @@ public class Control extends JFrame implements ActionListener
 
 					coolClock.addTimerTime(60);
                 					
-                } else{
-                            		
-            	   displayMessage("Error, logic off");
-               }
+                } 
 				break;
             case "Seconds +": //3
                if(displayClock){
@@ -214,9 +209,6 @@ public class Control extends JFrame implements ActionListener
                         		
                     coolClock.addTimerTime(1);
                         		
-                } else{
-                        		
-                    displayMessage("Error, logic off");
                 }
                 break;
              case "Start/Pause": //4
@@ -231,9 +223,6 @@ public class Control extends JFrame implements ActionListener
                  } else if (displaySW){
                     coolClock.toggleSWPause();
                         		
-                 } else{
-                        		
-                     displayMessage("Error, logic off");
                  } 
                  break;
               case "24 hour/12 hour": //5
@@ -251,11 +240,8 @@ public class Control extends JFrame implements ActionListener
                         		
                       coolClock.addTimerTime(-3600);
                         		
-                   } else{
-                        		
-                      displayMessage("Error, logic off");
                    }
-                                break;
+                   break;
                case "Minutes -": //7
                    if(displayClock){
                         		
@@ -263,25 +249,19 @@ public class Control extends JFrame implements ActionListener
                                 
                    } else if(displayTimer){
                        		
-                        coolClock.addTimerTime(-60);
+                       coolClock.addTimerTime(-60);
                         		
-                   } else{
-                        displayMessage("Error, logic off");
-                   }
+                   } 
                    break;
                case "Seconds -": //8
                    if(displayClock){
                 	   
-                          coolClock.addTime(-1);
+                       coolClock.addTime(-1);
                                 
                     } else if(displayTimer){
                     	
-                           coolClock.addTimerTime(-1);
+                       coolClock.addTimerTime(-1);
                     	
-                    } else{
-                    	
-                        displayMessage("Error, logic off");
-                        		
                     }
                     break;  
                 case "Stopwatch": //9
@@ -383,11 +363,13 @@ public class Control extends JFrame implements ActionListener
                         	//update CoolClockEnd
                         	coolClock.showTimer();
                         	break;
-                    case "Reset Stopwatch"://18
+                    case "Stop/Reset"://18
                         if(displaySW){
                         	
                         	coolClock.resetSW();
                         	
+                        } if(displayTimer){
+                        	coolClock.resetTimer();
                         }
                        break;
                     case "Clock":
