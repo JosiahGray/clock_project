@@ -783,7 +783,12 @@ public class CoolClockTimer extends TimerTask
 	public String getDayOfWeek()
 	{
 		String[] weekDays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-
+		int[] shifter = {4,0,1,4,6,2,4,0,3,5,1,3};
+		
+		//shorter method
+		return (weekDays[((day + shifter[month-1]) % 7)]);
+		
+		/*brute force method
 		int shift = 0;
 		String dayOfWeek = "Sunday";
 
@@ -829,5 +834,6 @@ public class CoolClockTimer extends TimerTask
 
 		dayOfWeek = weekDays[((day+shift)%7)];
 		return(dayOfWeek);
+		*/
 	}
 }
