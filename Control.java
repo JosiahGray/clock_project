@@ -57,7 +57,7 @@ public class Control extends JFrame implements ActionListener
 		setLocationRelativeTo(null);
 
 		//Make the window not resizable
-		setResizable(true);
+		setResizable(false);
 
 		//Exit the application when the "X" button is pressed
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,6 +84,7 @@ public class Control extends JFrame implements ActionListener
 	    JButton toggleFormat = new JButton("24 hour/12 hour"); //7
 
 	    JButton timer = new JButton("Timer"); //8
+	     JButton showClock = new JButton("Clock");
 	    JButton stopWatch = new JButton("Stopwatch"); //9
 
 
@@ -98,8 +99,9 @@ public class Control extends JFrame implements ActionListener
 	    JButton zoomOut = new JButton("Zoom Out"); //6
 
 	    JButton toggleDisplay = new JButton("Show/Hide display"); //7 //also switch from stopwatch/timer
-	    JButton togglePause = new JButton("Start/Pause"); //8
-	    JButton resetSW = new JButton("Reset Stopwatch"); //9
+	    JButton togglePause = new JButton("Start/Pause"); //
+	    JButton reset = new JButton("Stop/Reset"); //9
+
 
 
 
@@ -108,11 +110,24 @@ public class Control extends JFrame implements ActionListener
 	    addMinute.addActionListener(this);
 		addSecond.addActionListener(this);
 	    toggleFormat.addActionListener(this);
-
+	    showClock.addActionListener(this);
 	    subHour.addActionListener(this);
 	    subMinute.addActionListener(this);
 	    subSecond.addActionListener(this);
 	    togglePause.addActionListener(this);
+
+	    //clock expansion
+	    timer.addActionListener(this);
+	    stopWatch.addActionListener(this);
+	    zoomIn.addActionListener(this);
+	    zoomOut.addActionListener(this);
+	    toggleDisplay.addActionListener(this);
+	    reset.addActionListener(this);
+	    addMonth.addActionListener(this);
+	    addDay.addActionListener(this);
+	    subMonth.addActionListener(this);
+	    subDay.addActionListener(this);
+
 
 	    //Add the buttons to our buttonPanel
 	    buttonPanel.add(addHour); //1
@@ -124,7 +139,7 @@ public class Control extends JFrame implements ActionListener
 	    buttonPanel.add(toggleFormat); //7
 	    buttonPanel.add(timer); //8
 	    buttonPanel.add(stopWatch); //9
-
+	    buttonPanel.add(showClock);
 
 	    buttonPanel.add(subHour);//1
 	    buttonPanel.add(subMinute); //2
@@ -134,7 +149,7 @@ public class Control extends JFrame implements ActionListener
 	    buttonPanel.add(zoomOut); //6
 	    buttonPanel.add(toggleDisplay); //7
 	    buttonPanel.add(togglePause); //8
-	    buttonPanel.add(resetSW);//9
+	    buttonPanel.add(reset);//9
 
 	    //Add the buttonPanel to our JFrame
 	    this.getContentPane().add(buttonPanel);
@@ -146,6 +161,11 @@ public class Control extends JFrame implements ActionListener
 		popUpFrame = new JFrame("Dialogue");
 	}
 
+			//add booleans to determine which method the button implements for each function
+		boolean displayClock = true;
+		boolean displayTimer = false;
+		boolean displaySW = false;
+
 	/**
 	*	Handles GUI event responses such as button presses.
 	*	@param	event the event that has occurred
@@ -153,63 +173,211 @@ public class Control extends JFrame implements ActionListener
 	*/
 	public void actionPerformed(ActionEvent event)
 	{
+
+
+
 		switch(event.getActionCommand())
 		{
 			case "Hour +": //1
-				coolClock.addTime(3600);
-				break;
-			case "Minutes +": //2
-                                coolClock.addTime(60);
-				break;
-                        case "Seconds +": //3
-                                coolClock.addTime(1);
-                                break;
-                        case "Start/Pause": //4
-                                coolClock.togglePause();
-                                break;
-                        case "24 hour/12 hour": //5
-                                coolClock.toggleHourFormat();
-                                break;
-                        case "Hour -": //6
-                                coolClock.addTime(-3600);
-                                break;
-                        case "Minutes -": //7
-                                coolClock.addTime(-60);
-                                break;
-                        case "Seconds -": //8
-                                coolClock.addTime(-1);
-                                break;
+				if(displayClock){
 
-                        case "Stopwatch": //9
-                        	//toggle to stopwatch string
-                            //begin to wait for start or pause or reset
-                        		break;
-                        case "Month +": //10
-                        	coolClock.addMonth(1);
-                        	break;
-                        case "Month -": //11
-                        	coolClock.addMonth(-1);
-                        	break;
-                        case "Day +": //12
-                        	coolClock.addDay(1);
-                        	break;
-                        case "Day -": //13
-                        	coolClock.addDay(-1);
-                        	break;
-                        case "Zoom in": //14
+					coolClock.addTime(3600);
+
+				} else if(displayTimer){
+
+					coolClock.addTimerTime(3600);
+
+            	}
+				break;
+			case "Minutes +":
+               if(displayClock){
+
+                	coolClock.addTime(60);
+
+                } else if(displayTimer){
+
+					coolClock.addTimerTime(60);
+
+                }
+				break;
+            case "Seconds +": //3
+               if(displayClock){
+
+                    coolClock.addTime(1);
+
+                } else if(displayTimer){
+
+                    coolClock.addTimerTime(1);
+
+                }
+                break;
+             case "Start/Pause": //4
+                 if(displayClock){
+
+                    coolClock.togglePause();
+
+                 } else if(displayTimer){
+
+                    coolClock.toggleTimerPause();
+
+                 } else if (displaySW){
+                    coolClock.toggleSWPause();
+
+                 }
+                 break;
+              case "24 hour/12 hour": //5
+                  if(displayClock){
+
+                	  coolClock.toggleHourFormat();
+                  }
+                  break;
+              case "Hour -": //6
+                  if(displayClock){
+
+                     coolClock.addTime(-3600);
+
+                   } else if(displayTimer){
+
+                      coolClock.addTimerTime(-3600);
+
+                   }
+                   break;
+               case "Minutes -": //7
+                   if(displayClock){
+
+                       coolClock.addTime(-60);
+
+                   } else if(displayTimer){
+
+                       coolClock.addTimerTime(-60);
+
+                   }
+                   break;
+               case "Seconds -": //8
+                   if(displayClock){
+
+                       coolClock.addTime(-1);
+
+                    } else if(displayTimer){
+
+                       coolClock.addTimerTime(-1);
+
+                    }
+                    break;
+                case "Stopwatch": //9
+                     //toggle to stopwatch string
+                     displaySW = true;
+                     displayClock = false;
+                     displayTimer = false;
+                     //update coolClock
+                     coolClock.showSW();
+                     break;
+                case "Month +": //10
+                     if(displayClock){
+
+                       coolClock.addMonth(1);
+
+                     }
+                     break;
+                case "Month -": //11
+                     if(displayClock){
+
+                       coolClock.addMonth(-1);
+
+                     }
+                     break;
+                case "Day +": //12
+                    if(displayClock){
+
+                       coolClock.addDay(1);
+
+                    }
+                    break;
+                 case "Day -": //13
+                    if(displayClock){
+
+                        coolClock.addDay(-1);
+                     }
+                     break;
+                 case "Zoom in": //14
+                     if(displayClock){
+
+                        		//do clock stuff
+
+                     } else if(displayTimer){
+
+                        		//do timer stuff
+
+                     } else if (displaySW){
+
+                        		//do stopwatch stuff
+
+                     } else{
+                        		displayMessage("Error, logic off");
+                     }
                         	//do zoom in stuff
-                        	break;
-                        case "Zoom out": //15
+                     break;
+                 case "Zoom out": //15
+                      if(displayClock){
+
+                        		//do clock stuff
+
+                       } else if(displayTimer){
+
+                        		//do timer stuff
+
+                       } else if (displaySW){
+
+                        		//do stopwatch stuff
+
+                       } else{
+
+                        		displayMessage("Error, logic off");
+
+                       }
                         	//do zoom out stuff
-                        	break;
-                        case "Show/Hide display": //16
-                        	//do display stuff
-                        	break;
-                        case "Timer"://17
+                       break;
+                   case "Show/Hide display": //16
+
+                       if(displayClock){
+
+                        		//do clock stuff
+
+                       } else if(displayTimer){
+
+                        		//do timer stuff
+
+                       } else if (displaySW){
+
+                        		//do stopwatch stuff
+
+                       } else{
+                        		displayMessage("Error, logic off");
+                       }
+                       break;
+                    case "Timer"://17
                         	//do timer stuff
+                        	displayTimer = true;
+                        	displayClock = false;
+                        	displaySW = false;
+                        	//update CoolClockEnd
+                        	coolClock.showTimer();
                         	break;
+                    case "Stop/Reset"://18
+                        if(displaySW){
 
+                        	coolClock.resetSW();
 
+                        } if(displayTimer){
+                        	coolClock.resetTimer();
+                        }
+                       break;
+                    case "Clock":
+                    	displayClock = true;
+                    	displayTimer = false;
+                    	displaySW = false;
+                    	coolClock.showClock();
+                    	break;
 
 			default:
 				displayMessage("ERROR: Unrecognized event");
@@ -223,9 +391,9 @@ public class Control extends JFrame implements ActionListener
 	*	@param 	colon true if colon should be displayed, false if it should not
 	*	@param 	msg the message to be displayed next to the digit display (am/pm)
 	*/
-	public void setDisplay(int[] digits, boolean colon, String msg)
+	public void setDisplay(int[] digits, boolean colon, String msg, String timemsg)
 	{
-		displayPanel.setDisplay(digits, colon, msg);
+		displayPanel.setDisplay(digits, colon, msg, timemsg);
 	}
 
 	/**

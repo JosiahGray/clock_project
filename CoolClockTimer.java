@@ -7,9 +7,15 @@
 *
 */
 
+//for playing mp3
+//http://stackoverflow.com/questions/19603450/how-can-i-play-an-mp3-file
+
+
 import java.util.Timer;
 import java.util.TimerTask;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 /**
 *	A custom TimerTask that keeps track of the time and settings, running every second.  This class also uses the GUI Control object to display the information and get input from the user.
 */
@@ -19,22 +25,26 @@ public class CoolClockTimer extends TimerTask
 	*	The current time in seconds.  Always has a value between 0-86399 (86400 being the number of seconds in a standard 24 hour day).
 	*/
 	int time;
-	
+	String time_msg;
+
 	/**
 	 * variables for the day and month. month has a value between 1 and 12. The value of day depends on the month (should reflect the real calendar for 2016).
 	 */
 	int day;
 	int month;
-	
-	
-	
+	int timeExecuted;
+
+	boolean timerSet;
+	boolean alarmOff;
+	boolean alarmDone;
+
 	/*
 	 * expansion of clock class
-	 * current stop watch time. 
+	 * current stop watch time.
 	 */
 	int stopWatchTime;
-	int timer;
-	
+	int timerTime;
+
 	/**
 	*	The instance of the primary GUI class Control, which inherits from JFrame.
 	*/
@@ -51,14 +61,16 @@ public class CoolClockTimer extends TimerTask
 	*	Represents whether time should be displayed in 24 hour (military time) format, or 12 hour am/pm format.  True indicates military format.
 	*/
 	boolean military_time;
-	
+
 	//clock expansion
 	// booleans for what mode it's on
 	boolean displayClock; //clock
 	boolean displaySW; //stopwatch
 	boolean displayTimer; //timer
-	
-	
+
+	int alarmDuration;
+
+
 	/**
 	* 	Constructor which sets variables and creates a new instance of Control for display purposes.
  	* 	@post 	time is set to 0, military_time is set to true, pause is set to false, new Control instance myGUI instantiated
@@ -70,23 +82,64 @@ public class CoolClockTimer extends TimerTask
 		month = 1;	//initialize to january 1st
 		day = 1;
 		stopWatchTime = 0; //stop watch time
-		timer = 0; //timer time
+		timerTime = 0; //timer time
 		military_time = true;
 		pause = false; //main clock pausing
-		
-		pauseStopWatch = true; //pauses stopwatch 
+
+		pauseStopWatch = true; //pauses stopwatch
 		pauseTimer = true; //pauses timer
-		
-		
+
+
+		timeExecuted = 0;
+
 		//display
 		//start with clock
 		displayClock = true;
 		displaySW = false;
 		displayTimer = false;
-		
+		alarmOff= false;
+		alarmDone = false;
+
+		//
+		timerSet = false;
+		alarmDuration = 0;
+
 
 	}
-	
+	public void showClock(){
+		displayClock = true;
+		displaySW = false;
+		displayTimer = false;
+	}
+	public void showSW(){
+		displayClock = false;
+		displaySW = true;
+		displayTimer = false;
+	}
+	public void showTimer(){
+		displayClock = false;
+		displaySW = false;
+		displayTimer = true;
+	}
+	public void playAlarm(){
+		alarmDone = false;
+		try
+		{
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
+			Clip fc = AudioSystem.getClip();
+			fc.open(audioStream);
+			//https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/Clip.html#loop(int)
+			fc.start();
+	 	}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		//if(!fc.isActive()){
+		//	alarmDone = true;
+		//}
+
+	}
 	/**
  	* 	This function is called every second by a Timer.  It calls refresh to update the display to the current state of the clock then adds 1 second to the time.
  	* 	@pre 	clock settings and variables have all been set
@@ -94,13 +147,46 @@ public class CoolClockTimer extends TimerTask
  	*/
 	public void run()
 	{
+		timeExecuted ++;
+		refresh();
 		if(!pause)
 		{
 			refresh();
 			//this controls time for clock
-			addTime(1);
+			//modding a counter variable by 100 since we update 100 times a second
+			if(timeExecuted % 100 == 0){
+				addTime(1);
+			}
+		}
+		if(!pauseStopWatch){
+			refresh();
+			addSWTime(1);
+		}
+		if(!pauseTimer){
+			if(timerTime > 0){
+				refresh();
+				if(timeExecuted % 100 == 0){
+					timerTime--;
+				}
+			} else  {
+				//make timer sound
+				timerTime = 0;
+				//if boolean is still false for turning off the alarm
+				if(!alarmOff && alarmDone){
+					playAlarm();
+				}
+
+			}
+			//control timer
 		}
 	}
+
+
+
+
+
+
+
 
 	/**
 	*	Updates the display according to the current time and display settings
@@ -109,27 +195,106 @@ public class CoolClockTimer extends TimerTask
 	public void refresh()
 	{
 		int[] digits;
-		myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm()); //new int[] {1,2,0,0,0,0}
+		if(displayTimer){
+			myGUI.setDisplay(TimerConvertSeconds(), true, "", time_msg);
+		} else if(displaySW){
+			myGUI.setDisplay(SWConvertSeconds(), true, "", time_msg);
+		} else{
+			myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm(), time_msg);
+		}//new int[] {1,2,0,0,0,0}
 	}
-	
+
 	/**
 	*	Switches the pause flag to it's opposite
 	*	@post 	pause is set to the opposite value
 	*/
+	public void resetSW(){
+
+		stopWatchTime = 0;
+
+	}
+	public void resetTimer(){
+		//if there is still time on the timer
+		if(timerTime != 0){
+			timerTime = 0;
+			timerSet = false;
+		} else {
+			//set boolean to turn off alarm
+			alarmOff=true;
+		}
+	}
 	public void togglePause()
 	{
 		pause = !pause;
 	}
 	//clock expansion
 	public void toggleSWPause(){
+
 		pauseStopWatch = !pauseStopWatch;
+
 	}
 	public void toggleTimerPause(){
+
 		pauseTimer = !pauseTimer;
+
 	}
-	
-	
-	
+	public void addSWTime(int amt){
+
+		stopWatchTime = ((stopWatchTime + amt) % 360000 + 360000) % 360000;
+	}
+	public void addTimerTime(int amt){
+
+		//99 hours 59 minutes 59 seconds
+		timerTime = ((timerTime + amt) % 360000 + 360000) % 360000;
+	}
+	//converts stop watch seconds into clock format
+	public int[] SWConvertSeconds(){
+		int[] digSWTime = {0,0,0,0,0,0};
+		int totalSWSeconds = stopWatchTime;
+		int centiseconds;
+		int seconds;
+		int minutes;
+		minutes = totalSWSeconds / 6000;
+		digSWTime[0] = minutes / 10;
+		digSWTime[1] = minutes % 10;
+		totalSWSeconds = totalSWSeconds - (minutes * 6000);
+		seconds = totalSWSeconds / 100;
+		digSWTime[2] = seconds / 10;
+		digSWTime[3] = seconds % 10;
+		totalSWSeconds = totalSWSeconds - (seconds * 100);
+		centiseconds = totalSWSeconds;
+		digSWTime[4] = centiseconds / 10;
+		digSWTime[5] = centiseconds % 10;
+		time_msg = "" + digSWTime[0] + digSWTime[1] + ":" + digSWTime[2] + digSWTime[3] + ":" + digSWTime[4] + digSWTime[5];
+
+		return digSWTime;
+	}
+	public int[] TimerConvertSeconds(){
+		int[] digTimerTime = {0,0,0,0,0,0};
+		int totalTimerSeconds = timerTime;
+		int seconds;
+		int mins;
+		int hours;
+		hours = totalTimerSeconds / 3600;
+		digTimerTime[0] = hours / 10;
+		digTimerTime[1] = hours % 10;
+		totalTimerSeconds = totalTimerSeconds - (hours * 3600);
+		mins = totalTimerSeconds / 60;
+		digTimerTime[2] = mins / 10;
+		digTimerTime[3] = mins % 10;
+		totalTimerSeconds = totalTimerSeconds - (mins * 60);
+		seconds = totalTimerSeconds;
+		digTimerTime[4] = seconds / 10;
+		digTimerTime[5] = seconds % 10;
+		time_msg = "" + digTimerTime[0] + digTimerTime[1] + ":" + digTimerTime[2] + digTimerTime[3] + ":" + digTimerTime[4] + digTimerTime[5];
+
+		return digTimerTime;
+
+	}
+
+
+
+
 
 	/**
 	*	Switches the military time flag to it's opposite
@@ -140,7 +305,7 @@ public class CoolClockTimer extends TimerTask
 		military_time = !military_time;
 		refresh();
 	}
-	
+
 	/**
  	 * 	Converts seconds into the clock format
  	 * 	@return integer array that represents each digit of the clock
@@ -152,7 +317,7 @@ public class CoolClockTimer extends TimerTask
 		int seconds;
 		int mins;
 		int hours;
-		
+
 		if(military_time)
 		{
 			hours = total_seconds / 3600;
@@ -166,7 +331,7 @@ public class CoolClockTimer extends TimerTask
 			seconds = total_seconds;
 			digit_time[4] = seconds / 10;
 			digit_time[5] = seconds % 10;
-			
+
 		}
 		else
 		{
@@ -191,7 +356,7 @@ public class CoolClockTimer extends TimerTask
 				digit_time[1] = 2;
 			}
 		}
-		
+
 		/* For testing purposes, not needed for production level code.
 		for(int i = 0; i < 6; i++)
 		{
@@ -202,11 +367,11 @@ public class CoolClockTimer extends TimerTask
 			}
 		}
 		*/
-
+		time_msg = "" + digit_time[0] + digit_time[1] + ":" + digit_time[2] + digit_time[3] + ":" + digit_time[4] + digit_time[5] + " " + TwelveHourPm();
 		return digit_time;
-		
+
 	}
-	
+
 	/**
 	*	Returns the appropriate string to print on the display based on the current time and hour format (military_time)
 	*	@return the appropriate string to print
@@ -230,7 +395,7 @@ public class CoolClockTimer extends TimerTask
 	public void addTime(int amt)
 	{
 		//time = ((time + amt) % 86400 + 86400) % 86400;
-		
+
 		//adjust time while keeping it within the bounds of 0-86400 and adjusting for day changeovers.
 		time += amt;
 		if(time > 86399)
@@ -243,7 +408,7 @@ public class CoolClockTimer extends TimerTask
 			day--;
 			time += 86400;
 		}
-		
+
 		//keep days and months within their respective bounds.
 		switch(month)
 		{
@@ -406,12 +571,12 @@ public class CoolClockTimer extends TimerTask
 		//default to january 1st in case of error
 		default:
 			month = 1;
-			day = 1;	
+			day = 1;
 		}
-		
+
 		refresh();
 	}
-	
+
 	/**
 	 * 	Takes in a change in the month and adjusts the month variable accordingly
 	 * 	@param 	amt the change in month
@@ -420,7 +585,7 @@ public class CoolClockTimer extends TimerTask
 	public void addMonth(int amt)
 	{
 		//month = ((((month + amt - 1) % 12) + 12) % 12) + 1;
-		
+
 		// brute force method
 		month += amt;
 		if(month > 12)
@@ -431,10 +596,10 @@ public class CoolClockTimer extends TimerTask
 		{
 			month = 12;
 		}
-		
+
 		refresh();
 	}
-		
+
 	/**
 	 * 	Takes in a change in the day and adjusts the day variable accordingly
 	 * 	@param 	amt the change in day
@@ -443,7 +608,7 @@ public class CoolClockTimer extends TimerTask
 	public void addDay(int amt)
 	{
 		day += amt;
-		
+
 		switch(month)
 		{
 		//january
@@ -605,12 +770,12 @@ public class CoolClockTimer extends TimerTask
 		//default to january 1st in case of error
 		default:
 			month = 1;
-			day = 1;	
+			day = 1;
 		}
-		
+
 		refresh();
 	}
-	
+
 	/**
 	 * 	Determines the day of the week (String) based on the current numberical month and day
 	 *	@return the current day of the week as a String
@@ -618,10 +783,10 @@ public class CoolClockTimer extends TimerTask
 	public String getDayOfWeek()
 	{
 		String[] weekDays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-		
+
 		int shift = 0;
 		String dayOfWeek = "Sunday";
-		
+
 		switch(month)
 		{
 		case 1:
@@ -661,7 +826,7 @@ public class CoolClockTimer extends TimerTask
 			shift = 3;
 			break;
 		}
-		
+
 		dayOfWeek = weekDays[((day+shift)%7)];
 		return(dayOfWeek);
 	}
