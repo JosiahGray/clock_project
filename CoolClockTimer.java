@@ -39,7 +39,7 @@ public class CoolClockTimer extends TimerTask
 	boolean alarmOff;
 	boolean alarmDone;
 	boolean stopAlarm;
-
+	
 
 	/**
 	 * Current time of the stopwatch
@@ -49,8 +49,8 @@ public class CoolClockTimer extends TimerTask
 	 * Current time of the timer
 	 */
 	int timerTime;
-
-
+	
+	
 	//separate
 	int alarmTime;
 	/**
@@ -87,8 +87,6 @@ public class CoolClockTimer extends TimerTask
 
 	int alarmDuration;
 	boolean firstPass;
-	AudioInputStream audioStream;
-	Clip fc;
 
 	/**
 	* 	Constructor which sets variables and creates a new instance of Control for display purposes.
@@ -120,12 +118,10 @@ public class CoolClockTimer extends TimerTask
 
 		//
 		timerSet = false;
-		alarmDuration = 0;
+		alarmDuration = 300;
 		alarmTime = 0;
 		stopAlarm = false;
 		firstPass = true;
-		audioStream = null;
-		fc = null;
 
 	}
 	/**
@@ -162,40 +158,28 @@ public class CoolClockTimer extends TimerTask
 	 * This function is called by control to change booleans so that all operations take place on clock
 	 * @pre timer has been set and time has expired
 	 * @post plays an alarm indicating timer time has expired
-	 * @param Stop is boolean if sound should be stopped
-	 * @param firstPass is boolean if playAlarm is being called for the first time since time expired
 	 */
-	public void playAlarm(boolean Stop, boolean firstPass){
-		//try
-		//{
-			//AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
-				//Clip fc = AudioSystem.getClip();
-
-
-			if(!Stop && (firstPass || fc.getMicrosecondPosition() == 18000000)){
-				//fc.open(audioStream);
-				//https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/Clip.html#loop(int)
+	public void playAlarm(){
+		try
+		{
+				AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("GoalHorn.wav"));
+				Clip fc = AudioSystem.getClip();
+				fc.open(audioStream);
 				fc.start();
-				
-			}
-			else if(Stop){
-				alarmOff = true;
-				pauseTimer = true;
-			}
-	 	//}
-		//catch(Exception e)
-		//{
-		//	e.printStackTrace();
-
-
+	 	}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+	
+        }
 	}
 	public void disableDisplay(){
 		displayClock = false;
 		displaySW = false;
 		displayTimer = false;
 	}
-
-
+	
+	
 	/**
  	* 	This function is called every second by a Timer.  It calls refresh to update the display to the current state of the clock then adds 1 second to the time.
  	* 	@pre 	clock settings and variables have all been set
@@ -203,7 +187,7 @@ public class CoolClockTimer extends TimerTask
  	*/
 	public void run()
 	{
-
+		
 		timeExecuted ++;
 		refresh();
 		//if clock is not paused
@@ -232,18 +216,12 @@ public class CoolClockTimer extends TimerTask
 				//make timer sound
 				//if boolean is still false for turning off the alarm
 				if(!alarmOff){
-					if(!stopAlarm && (alarmDuration == 300 || firstPass)){
-						playAlarm(stopAlarm, firstPass, "GoalHorn.wav");
+					if(!stopAlarm && alarmDuration == 300){
+						playAlarm();
 						alarmDuration = 0;
-						firstPass = false;
-					} else if(stopAlarm){
-						playAlarm(stopAlarm, firstPass, "Silence.wav");
-						
-					} else{
-						playAlarm(stopAlarm, firstPass);
-
-					}
+					} 
 				}
+				alarmDuration ++;
 
 			}
 			//control timer
@@ -270,7 +248,7 @@ public class CoolClockTimer extends TimerTask
 			//if clock should be displayed
 		} else if(displayClock){
 			myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm(), time_msg, date_msg);
-			//if display is disabled
+			//if display is disabled 
 		} else{
 			myGUI.setDisplay(ConvertSeconds(), true, "", "", "");
 		}
@@ -297,7 +275,7 @@ public class CoolClockTimer extends TimerTask
 			timerTime = 0;
 			timerSet = false;
 			pauseTimer = true;
-
+			
 		} else {
 			//set boolean to turn off alarm
 			stopAlarm = true;
@@ -331,7 +309,7 @@ public class CoolClockTimer extends TimerTask
 
 	}
 	/**
- 	* 	Takes in a change in the time and converts that into centiseconds. Stopwatch can go up to 59 minutes, 59 seconds, 99 centiseconds
+ 	* 	Takes in a change in the time and converts that into centiseconds. Stopwatch can go up to 59 minutes, 59 seconds, 99 centiseconds 
  	* 	@param 	amt the change in time
  	*	@post 	the stop watch time is shifted by amt seconds and is still in the valid centisecond range (0-359999)
  	*/
@@ -340,7 +318,7 @@ public class CoolClockTimer extends TimerTask
 		stopWatchTime = ((stopWatchTime + amt) % 360000 + 360000) % 360000;
 	}
 	/**
- 	* 	Takes in a change in the time and converts that into seconds. Stopwatch can go up to 99 hours, 59 minutes, 59 seconds
+ 	* 	Takes in a change in the time and converts that into seconds. Stopwatch can go up to 99 hours, 59 minutes, 59 seconds 
  	* 	@param 	amt the change in time
  	*	@post 	the stop watch time is shifted by amt seconds and is still in the valid second range (0-359999)
  	*/
@@ -477,7 +455,6 @@ public class CoolClockTimer extends TimerTask
 			}
 		}
 		*/
-		//Sets the time_msg and date_msg strings to the correct time/date.
 		time_msg = "" + digit_time[0] + digit_time[1] + ":" + digit_time[2] + digit_time[3] + ":" + digit_time[4] + digit_time[5];
 		date_msg = "    " + getDayOfWeek() + ", "+ day + "/" + month + "/16";
 		return digit_time;
