@@ -33,6 +33,8 @@ public class Display extends JPanel
 
 	String m_displayTime;
 
+	String m_displayDate;
+
 	int m_strSize;
 
 	/**
@@ -46,6 +48,7 @@ public class Display extends JPanel
 		m_displayColon = false;
 		m_displayMsg = "";
 		m_displayTime = "";
+		m_displayDate = "";
 		m_strSize = 300;
     }
 
@@ -82,26 +85,28 @@ public class Display extends JPanel
 
 		g2.drawString(m_displayTime, x, y);
 
-		//These are the coordinates for the vertical pieces of the 7 segment display
-		int xVertSeg[] = {20,  0,  0,  20, 40, 40};
-		int yVertSeg[] = { 0, 20, 80, 100, 80, 20};
+		// //These are the coordinates for the vertical pieces of the 7 segment display
+		// int xVertSeg[] = {20,  0,  0,  20, 40, 40};
+		// int yVertSeg[] = { 0, 20, 80, 100, 80, 20};
+		//
+		// //These are the coordinates for the horizontal pieces of the 7 segment display
+		// int xHorzSeg[] = {0,  20, 80, 100, 80, 20};
+		// int yHorzSeg[] = {20,  0,  0,  20, 40, 40};
+		//
+		// if(m_displayColon)
+		// {
+		// 	g.fillOval(462, 100, 30, 30);
+		// 	g.fillOval(462, 250, 30, 30);
+		//
+		// 	g.fillOval(912, 100, 30, 30);
+		// 	g.fillOval(912, 250, 30, 30);
+		// }
 
-		//These are the coordinates for the horizontal pieces of the 7 segment display
-		int xHorzSeg[] = {0,  20, 80, 100, 80, 20};
-		int yHorzSeg[] = {20,  0,  0,  20, 40, 40};
+			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, m_strSize/10));
 
-		if(m_displayColon)
-		{
-			g.fillOval(462, 100, 30, 30);
-			g.fillOval(462, 250, 30, 30);
+			g.drawString(m_displayMsg, x + 47*m_strSize/10, y - 8*m_strSize/10);
 
-			g.fillOval(912, 100, 30, 30);
-			g.fillOval(912, 250, 30, 30);
-		}
-
-			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-
-			g.drawString(m_displayMsg, 1400, 80);
+			g.drawString(m_displayDate, x + m_strSize/10, y + m_strSize/10);
 /*
 		for(int digit = 0; digit<6; digit++)
 		{
@@ -158,12 +163,13 @@ public class Display extends JPanel
 	*	@param 	colon true if colon should be displayed, false if it should not
 	*	@param 	msg the message to be displayed next to the digit display (am/pm)
 	*/
-	public void setDisplay(int[] digits, boolean colon, String msg, String timeStr)
+	public void setDisplay(int[] digits, boolean colon, String msg, String timeStr, String dateStr)
 	{
 		m_displayDigits = digits.clone();
 		m_displayColon = colon;
 		m_displayMsg = msg;
 		m_displayTime = timeStr;
+		m_displayDate = dateStr;
 
 		this.removeAll();
 		this.revalidate();
@@ -244,11 +250,12 @@ public class Display extends JPanel
 
 	public void zoomIn()
 	{
-		if(m_strSize <= 300)
-			m_strSize += 100;
+		if(m_strSize < 300)
+			m_strSize += 20;
 	}
 	public void zoomOut()
 	{
-		m_strSize -= 100;
+		if(m_strSize > 20)
+		m_strSize -= 20;
 	}
 }

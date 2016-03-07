@@ -26,6 +26,7 @@ public class CoolClockTimer extends TimerTask
 	*/
 	int time;
 	String time_msg;
+	String date_msg;
 
 	/**
 	 * variables for the day and month. month has a value between 1 and 12. The value of day depends on the month (should reflect the real calendar for 2016).
@@ -121,6 +122,11 @@ public class CoolClockTimer extends TimerTask
 		displaySW = false;
 		displayTimer = true;
 	}
+	public void disableDisplay(){
+		displayClock = false;
+		displaySW = false;
+		displayTimer = false;
+	}
 	public void playAlarm(){
 		alarmDone = false;
 		try
@@ -196,12 +202,15 @@ public class CoolClockTimer extends TimerTask
 	{
 		int[] digits;
 		if(displayTimer){
-			myGUI.setDisplay(TimerConvertSeconds(), true, "", time_msg);
+			myGUI.setDisplay(TimerConvertSeconds(), true, "", time_msg, "");
 		} else if(displaySW){
-			myGUI.setDisplay(SWConvertSeconds(), true, "", time_msg);
+			myGUI.setDisplay(SWConvertSeconds(), true, "", time_msg, "");
+		} else if(displayClock){
+			myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm(), time_msg, date_msg);
 		} else{
-			myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm(), time_msg);
-		}//new int[] {1,2,0,0,0,0}
+			myGUI.setDisplay(ConvertSeconds(), true, "", "", "");
+		}
+		//new int[] {1,2,0,0,0,0}
 	}
 
 	/**
@@ -368,6 +377,7 @@ public class CoolClockTimer extends TimerTask
 		}
 		*/
 		time_msg = "" + digit_time[0] + digit_time[1] + ":" + digit_time[2] + digit_time[3] + ":" + digit_time[4] + digit_time[5];
+		date_msg = "    " + getDayOfWeek() + ", "+ day + "/" + month + "/16";
 		return digit_time;
 
 	}
@@ -784,10 +794,10 @@ public class CoolClockTimer extends TimerTask
 	{
 		String[] weekDays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		int[] shifter = {4,0,1,4,6,2,4,0,3,5,1,3};
-		
+
 		//shorter method
 		return (weekDays[((day + shifter[month-1]) % 7)]);
-		
+
 		/*brute force method
 		int shift = 0;
 		String dayOfWeek = "Sunday";
