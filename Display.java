@@ -33,6 +33,10 @@ public class Display extends JPanel
 
 	String m_displayTime;
 
+	String m_displayDate;
+
+	int m_strSize;
+
 	/**
 	*	Constructor.  Sets the display variables.
 	*	@post: 	m_displayDigits is intialized to an array of four 10s, m_display colon is initialized to false, and m_displayMsg is initialized to an empty String.
@@ -44,6 +48,8 @@ public class Display extends JPanel
 		m_displayColon = false;
 		m_displayMsg = "";
 		m_displayTime = "";
+		m_displayDate = "";
+		m_strSize = 300;
     }
 
     /**
@@ -66,35 +72,41 @@ public class Display extends JPanel
 	{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-
 		//Draw the background
 		g2.setColor(Color.BLACK);
 		g2.fill(new Rectangle2D.Double(0, 0, 1500, 400));
 
 		g2.setColor(Color.RED);
-		g2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 170));
-		g2.drawString(m_displayTime, 300, 200);
+		g2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, m_strSize));
+		FontMetrics fm = g2.getFontMetrics();
+		Rectangle2D r = fm.getStringBounds(m_displayTime, g2);
+		int x = (this.getWidth() - (int) r.getWidth()) / 2;
+		int y = (this.getHeight() - (int) r.getHeight()) / 2 + fm.getAscent();
 
-		//These are the coordinates for the vertical pieces of the 7 segment display
-		int xVertSeg[] = {20,  0,  0,  20, 40, 40};
-		int yVertSeg[] = { 0, 20, 80, 100, 80, 20};
+		g2.drawString(m_displayTime, x, y);
 
-		//These are the coordinates for the horizontal pieces of the 7 segment display
-		int xHorzSeg[] = {0,  20, 80, 100, 80, 20};
-		int yHorzSeg[] = {20,  0,  0,  20, 40, 40};
+		// //These are the coordinates for the vertical pieces of the 7 segment display
+		// int xVertSeg[] = {20,  0,  0,  20, 40, 40};
+		// int yVertSeg[] = { 0, 20, 80, 100, 80, 20};
+		//
+		// //These are the coordinates for the horizontal pieces of the 7 segment display
+		// int xHorzSeg[] = {0,  20, 80, 100, 80, 20};
+		// int yHorzSeg[] = {20,  0,  0,  20, 40, 40};
+		//
+		// if(m_displayColon)
+		// {
+		// 	g.fillOval(462, 100, 30, 30);
+		// 	g.fillOval(462, 250, 30, 30);
+		//
+		// 	g.fillOval(912, 100, 30, 30);
+		// 	g.fillOval(912, 250, 30, 30);
+		// }
 
-		if(m_displayColon)
-		{
-			g.fillOval(462, 100, 30, 30);
-			g.fillOval(462, 250, 30, 30);
+			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, m_strSize/10));
 
-			g.fillOval(912, 100, 30, 30);
-			g.fillOval(912, 250, 30, 30);
-		}
+			g.drawString(m_displayMsg, x + 47*m_strSize/10, y - 8*m_strSize/10);
 
-			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-
-			g.drawString(m_displayMsg, 1400, 80);
+			g.drawString(m_displayDate, x + m_strSize/10, y + m_strSize/10);
 /*
 		for(int digit = 0; digit<6; digit++)
 		{
@@ -151,16 +163,17 @@ public class Display extends JPanel
 	*	@param 	colon true if colon should be displayed, false if it should not
 	*	@param 	msg the message to be displayed next to the digit display (am/pm)
 	*/
-	public void setDisplay(int[] digits, boolean colon, String msg, String timeStr)
+	public void setDisplay(int[] digits, boolean colon, String msg, String timeStr, String dateStr)
 	{
 		m_displayDigits = digits.clone();
 		m_displayColon = colon;
 		m_displayMsg = msg;
 		m_displayTime = timeStr;
+		m_displayDate = dateStr;
 
 		this.removeAll();
 		this.revalidate();
-  		this.repaint();
+		this.repaint();
 	}
 
 	/**
@@ -233,5 +246,16 @@ public class Display extends JPanel
 				break;
 		}
 		return sevenSeg;
+	}
+
+	public void zoomIn()
+	{
+		if(m_strSize < 300)
+			m_strSize += 20;
+	}
+	public void zoomOut()
+	{
+		if(m_strSize > 20)
+		m_strSize -= 20;
 	}
 }

@@ -31,6 +31,8 @@ public class Control extends JFrame implements ActionListener
 	*/
 	CoolClockTimer coolClock;
 
+	int lastType;
+
 	/**
 	*	Constructor.  Initializes the GUI, GUI components, and necessary variables with appropriate settings.
 	*	@param myClock an instance of the CoolClockTimer that created this Control object, used for passing UI information (button presses) to the clock controller
@@ -84,7 +86,7 @@ public class Control extends JFrame implements ActionListener
 	    JButton toggleFormat = new JButton("24 hour/12 hour"); //7
 
 	    JButton timer = new JButton("Timer"); //8
-	     JButton showClock = new JButton("Clock");
+	    JButton showClock = new JButton("Clock");
 	    JButton stopWatch = new JButton("Stopwatch"); //9
 
 
@@ -108,7 +110,7 @@ public class Control extends JFrame implements ActionListener
 	    //Add actionListeners for the buttons
 	    addHour.addActionListener(this);
 	    addMinute.addActionListener(this);
-		addSecond.addActionListener(this);
+			addSecond.addActionListener(this);
 	    toggleFormat.addActionListener(this);
 	    showClock.addActionListener(this);
 	    subHour.addActionListener(this);
@@ -165,6 +167,7 @@ public class Control extends JFrame implements ActionListener
 		boolean displayClock = true;
 		boolean displayTimer = false;
 		boolean displaySW = false;
+		boolean disableDisplay = false;
 
 	/**
 	*	Handles GUI event responses such as button presses.
@@ -179,204 +182,220 @@ public class Control extends JFrame implements ActionListener
 		switch(event.getActionCommand())
 		{
 			case "Hour +": //1
-				if(displayClock){
+				if(displayClock && !disableDisplay){
 
 					coolClock.addTime(3600);
 
-				} else if(displayTimer){
+				} else if(displayTimer && !disableDisplay){
 
 					coolClock.addTimerTime(3600);
 
             	}
 				break;
 			case "Minutes +":
-               if(displayClock){
+               if(displayClock && !disableDisplay){
 
                 	coolClock.addTime(60);
 
-                } else if(displayTimer){
+                } else if(displayTimer && !disableDisplay){
 
 					coolClock.addTimerTime(60);
 
                 }
 				break;
             case "Seconds +": //3
-               if(displayClock){
+               if(displayClock && !disableDisplay){
 
                     coolClock.addTime(1);
 
-                } else if(displayTimer){
+                } else if(displayTimer && !disableDisplay){
 
                     coolClock.addTimerTime(1);
 
                 }
                 break;
              case "Start/Pause": //4
-                 if(displayClock){
+                 if(displayClock && !disableDisplay){
 
                     coolClock.togglePause();
 
-                 } else if(displayTimer){
+                 } else if(displayTimer && !disableDisplay){
 
                     coolClock.toggleTimerPause();
 
-                 } else if (displaySW){
+                 } else if (displaySW && !disableDisplay){
                     coolClock.toggleSWPause();
 
                  }
                  break;
               case "24 hour/12 hour": //5
-                  if(displayClock){
+                  if(displayClock && !disableDisplay){
 
                 	  coolClock.toggleHourFormat();
                   }
                   break;
               case "Hour -": //6
-                  if(displayClock){
+                  if(displayClock && !disableDisplay){
 
                      coolClock.addTime(-3600);
 
-                   } else if(displayTimer){
+                   } else if(displayTimer && !disableDisplay){
 
                       coolClock.addTimerTime(-3600);
 
                    }
                    break;
                case "Minutes -": //7
-                   if(displayClock){
+                   if(displayClock && !disableDisplay){
 
                        coolClock.addTime(-60);
 
-                   } else if(displayTimer){
+                   } else if(displayTimer && !disableDisplay){
 
                        coolClock.addTimerTime(-60);
 
                    }
                    break;
                case "Seconds -": //8
-                   if(displayClock){
+                   if(displayClock && !disableDisplay){
 
                        coolClock.addTime(-1);
 
-                    } else if(displayTimer){
+                    } else if(displayTimer && !disableDisplay){
 
                        coolClock.addTimerTime(-1);
 
                     }
                     break;
                 case "Stopwatch": //9
-                     //toggle to stopwatch string
-                     displaySW = true;
-                     displayClock = false;
-                     displayTimer = false;
-                     //update coolClock
-                     coolClock.showSW();
+										 if(!disableDisplay) {
+	                     //toggle to stopwatch string
+	                     displaySW = true;
+	                     displayClock = false;
+	                     displayTimer = false;
+	                     //update coolClock
+	                     coolClock.showSW();
+										 }
                      break;
                 case "Month +": //10
-                     if(displayClock){
+                     if(displayClock && !disableDisplay){
 
                        coolClock.addMonth(1);
 
                      }
                      break;
                 case "Month -": //11
-                     if(displayClock){
+                     if(displayClock && !disableDisplay){
 
                        coolClock.addMonth(-1);
 
                      }
                      break;
                 case "Day +": //12
-                    if(displayClock){
+                    if(displayClock && !disableDisplay){
 
                        coolClock.addDay(1);
 
                     }
                     break;
                  case "Day -": //13
-                    if(displayClock){
+											if(displayClock && !disableDisplay){
 
-                        coolClock.addDay(-1);
-                     }
+											  coolClock.addDay(-1);
+											}
+                      break;
+                 case "Zoom In": //14
+									 		if(!disableDisplay)
+								 				displayPanel.zoomIn();
+
                      break;
-                 case "Zoom in": //14
-                     if(displayClock){
+                 case "Zoom Out": //15\
+									 		if(!disableDisplay)
+									 			displayPanel.zoomOut();
 
-                        		//do clock stuff
-
-                     } else if(displayTimer){
-
-                        		//do timer stuff
-
-                     } else if (displaySW){
-
-                        		//do stopwatch stuff
-
-                     } else{
-                        		displayMessage("Error, logic off");
-                     }
-                        	//do zoom in stuff
-                     break;
-                 case "Zoom out": //15
-                      if(displayClock){
-
-                        		//do clock stuff
-
-                       } else if(displayTimer){
-
-                        		//do timer stuff
-
-                       } else if (displaySW){
-
-                        		//do stopwatch stuff
-
-                       } else{
-
-                        		displayMessage("Error, logic off");
-
-                       }
-                        	//do zoom out stuff
                        break;
                    case "Show/Hide display": //16
+									 		if(displayClock){
+												lastType = 1;
+											}
+											else if(displayTimer) {
+												lastType = 2;
+											}
+											else if(displaySW) {
+												lastType = 3;
+											}
+											// else
+											// 	lastType = 1;
 
-                       if(displayClock){
+									 		if(disableDisplay) {
+												if(lastType == 1) {
+													displayClock = true;
+													displayTimer = false;
+													displaySW = false;
+													disableDisplay = false;
+													coolClock.showClock();
+												}
+												else if(lastType == 2) {
+													//do timer stuff
+													displayTimer = true;
+													displayClock = false;
+													displaySW = false;
+													disableDisplay = false;
+													//update CoolClockEnd
+													coolClock.showTimer();
+												}
+												else if(lastType == 3) {
+													//toggle to stopwatch string
+													displaySW = true;
+													displayClock = false;
+													displayTimer = false;
+													disableDisplay = false;
+													//update coolClock
+													coolClock.showSW();
+												}
+												// else {
+												// 	displayClock = true;
+												// 	displayTimer = false;
+												// 	displaySW = false;
+												// 	coolClock.showClock();
+												// }
 
-                        		//do clock stuff
-
-                       } else if(displayTimer){
-
-                        		//do timer stuff
-
-                       } else if (displaySW){
-
-                        		//do stopwatch stuff
-
-                       } else{
-                        		displayMessage("Error, logic off");
-                       }
+											}
+											else
+											{
+												displayClock = false;
+	                    	displayTimer = false;
+	                    	displaySW = false;
+												disableDisplay = true;
+												coolClock.disableDisplay();
+											}
                        break;
                     case "Timer"://17
-                        	//do timer stuff
-                        	displayTimer = true;
-                        	displayClock = false;
-                        	displaySW = false;
-                        	//update CoolClockEnd
-                        	coolClock.showTimer();
+													if(!disableDisplay) {
+		                        	//do timer stuff
+		                        	displayTimer = true;
+		                        	displayClock = false;
+		                        	displaySW = false;
+		                        	//update CoolClockEnd
+		                        	coolClock.showTimer();
+													}
                         	break;
                     case "Stop/Reset"://18
-                        if(displaySW){
+                        if(displaySW && !disableDisplay){
 
                         	coolClock.resetSW();
 
-                        } if(displayTimer){
+                        } if(displayTimer && !disableDisplay){
                         	coolClock.resetTimer();
                         }
                        break;
                     case "Clock":
-                    	displayClock = true;
-                    	displayTimer = false;
-                    	displaySW = false;
-                    	coolClock.showClock();
+											if(!disableDisplay) {
+	                    	displayClock = true;
+	                    	displayTimer = false;
+	                    	displaySW = false;
+	                    	coolClock.showClock();
+											}
                     	break;
 
 			default:
@@ -391,9 +410,9 @@ public class Control extends JFrame implements ActionListener
 	*	@param 	colon true if colon should be displayed, false if it should not
 	*	@param 	msg the message to be displayed next to the digit display (am/pm)
 	*/
-	public void setDisplay(int[] digits, boolean colon, String msg, String timemsg)
+	public void setDisplay(int[] digits, boolean colon, String msg, String timemsg, String datemsg)
 	{
-		displayPanel.setDisplay(digits, colon, msg, timemsg);
+		displayPanel.setDisplay(digits, colon, msg, timemsg, datemsg);
 	}
 
 	/**
