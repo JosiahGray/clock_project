@@ -7,6 +7,17 @@
 *  @since 2016-02-14
 */
 
+/**
+ * Sources Cited
+ * for playing mp3:
+ * http://stackoverflow.com/questions/19603450/how-can-i-play-an-mp3-file
+ * for adding font:
+ * http://stackoverflow.com/questions/16761630/font-createfont-set-color-and-size-java-awt-font
+ * font used:
+ * 7-segment and 14-segment Font DSEG7 Family
+ */
+
+
 import java.util.Timer;
 import java.util.TimerTask;
 

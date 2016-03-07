@@ -7,8 +7,6 @@
 *
 */
 
-//for playing mp3
-//http://stackoverflow.com/questions/19603450/how-can-i-play-an-mp3-file
 
 
 import java.util.Timer;
@@ -61,7 +59,13 @@ public class CoolClockTimer extends TimerTask
 	*	Represents whether time incrementation should be paused, true indicating a paused state.
 	*/
 	boolean pause;
+	/**
+	*	Represents whether stopwatch incrementation should be paused, true indicating a paused state.
+	*/
 	boolean pauseStopWatch;
+	/**
+	*	Represents whether timer incrementation should be paused, true indicating a paused state.
+	*/
 	boolean pauseTimer;
 
 	/**
@@ -83,9 +87,10 @@ public class CoolClockTimer extends TimerTask
 	 * boolean determining if timer is currently being displayed
 	 */
 	boolean displayTimer; //timer
-
+	/**
+	 * int determining how many centiseconds have passed since alarm started playing in order to loop
+	 */
 	int alarmDuration;
-	boolean firstPass;
 
 	/**
 	* 	Constructor which sets variables and creates a new instance of Control for display purposes.
@@ -170,6 +175,10 @@ public class CoolClockTimer extends TimerTask
 	
         }
 	}
+	/**
+	 * sets all display functions to false so strings will not be drawn while display is hidden
+	 * @post all display booleans set to false
+	 */
 	public void disableDisplay(){
 		displayClock = false;
 		displaySW = false;
