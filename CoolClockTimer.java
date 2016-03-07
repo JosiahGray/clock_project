@@ -37,14 +37,21 @@ public class CoolClockTimer extends TimerTask
 	boolean timerSet;
 	boolean alarmOff;
 	boolean alarmDone;
+	boolean stopAlarm;
+	
 
-	/*
-	 * expansion of clock class
-	 * current stop watch time.
+	/**
+	 * Current time of the stopwatch
 	 */
 	int stopWatchTime;
+	/**
+	 * Current time of the timer
+	 */
 	int timerTime;
-
+	
+	
+	//separate
+	int alarmTime;
 	/**
 	*	The instance of the primary GUI class Control, which inherits from JFrame.
 	*/
@@ -64,12 +71,23 @@ public class CoolClockTimer extends TimerTask
 
 	//clock expansion
 	// booleans for what mode it's on
+	/**
+	 * boolean determining if clock is currently being displayed
+	 */
 	boolean displayClock; //clock
+	/**
+	 * boolean determining if stopwatch is currently being displayed
+	 */
 	boolean displaySW; //stopwatch
+	/**
+	 * boolean determining if timer is currently being displayed
+	 */
 	boolean displayTimer; //timer
 
 	int alarmDuration;
-
+	boolean firstPass;
+	AudioInputStream audioStream;
+	Clip fc;
 
 	/**
 	* 	Constructor which sets variables and creates a new instance of Control for display purposes.
@@ -89,7 +107,6 @@ public class CoolClockTimer extends TimerTask
 		pauseStopWatch = true; //pauses stopwatch
 		pauseTimer = true; //pauses timer
 
-
 		timeExecuted = 0;
 
 		//display
@@ -103,38 +120,72 @@ public class CoolClockTimer extends TimerTask
 		//
 		timerSet = false;
 		alarmDuration = 0;
-
+		alarmTime = 0;
+		stopAlarm = false;
+		firstPass = true;
+		audioStream = null;
+		fc = null;
 
 	}
+	/**
+	 * This function is called by control to change booleans so that all operations take place on clock
+	 * @pre clock settings and variables have all been set
+	 * @post all further operations will take place on the clock
+	 */
 	public void showClock(){
 		displayClock = true;
 		displaySW = false;
 		displayTimer = false;
 	}
+	/**
+	 * This function is called by control to change booleans so that all operations take place on stopwatch
+	 * @pre stopwatch settings and variables have all been set
+	 * @post all further operations will take place on the stopwatch
+	 */
 	public void showSW(){
 		displayClock = false;
 		displaySW = true;
 		displayTimer = false;
 	}
+	/**
+	 * This function is called by control to change booleans so that all operations take place on timer
+	 * @pre timerlock settings and variables have all been set
+	 * @post all further operations will take place on the timer
+	 */
 	public void showTimer(){
 		displayClock = false;
 		displaySW = false;
 		displayTimer = true;
 	}
-	public void playAlarm(){
-		alarmDone = false;
-		try
-		{
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
-			Clip fc = AudioSystem.getClip();
-			fc.open(audioStream);
-			//https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/Clip.html#loop(int)
-			fc.start();
-	 	}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+	/**
+	 * This function is called by control to change booleans so that all operations take place on clock
+	 * @pre timer has been set and time has expired
+	 * @post plays an alarm indicating timer time has expired
+	 * @param Stop is boolean if sound should be stopped
+	 * @param firstPass is boolean if playAlarm is being called for the first time since time expired 
+	 */
+	public void playAlarm(boolean Stop, boolean firstPass){
+		//try
+		//{
+			//AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
+				//Clip fc = AudioSystem.getClip();
+				
+			
+			if(!Stop && (firstPass || fc.getMicrosecondPosition() == 18000000)){
+				//fc.open(audioStream);
+				//https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/Clip.html#loop(int)
+				fc.start();
+			}
+			else if(Stop){
+				fc.stop();
+				alarmOff = true;
+				pauseTimer = true;
+			}
+	 	//}
+		//catch(Exception e)
+		//{
+		//	e.printStackTrace();
+		//}
 	}
 	/**
  	* 	This function is called every second by a Timer.  It calls refresh to update the display to the current state of the clock then adds 1 second to the time.
@@ -143,8 +194,10 @@ public class CoolClockTimer extends TimerTask
  	*/
 	public void run()
 	{
+		
 		timeExecuted ++;
 		refresh();
+		//if clock is not paused
 		if(!pause)
 		{
 			refresh();
@@ -154,31 +207,42 @@ public class CoolClockTimer extends TimerTask
 				addTime(1);
 			}
 		}
+		//if stop watch hasn't been paused
 		if(!pauseStopWatch){
 			refresh();
 			addSWTime(1);
 		}
+		//if timer hasn't been paused
 		if(!pauseTimer){
 			if(timerTime > 0){
 				refresh();
 				if(timeExecuted % 100 == 0){
 					timerTime--;
 				}
-			} else  {
+			} else{
 				//make timer sound
-				timerTime = 0;
 				//if boolean is still false for turning off the alarm
-				if(!alarmOff && alarmDone){
-					playAlarm();
+				try{
+					audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
+					fc = AudioSystem.getClip();
+					fc.open(audioStream);
+				} catch(Exception e){
+					e.printStackTrace();
+				}
+				if(!alarmOff){
+					if(!stopAlarm){
+						playAlarm(stopAlarm, firstPass);
+						firstPass = false;
+					} else{
+						playAlarm(stopAlarm, firstPass);
+						
+					}
 				}
 
 			}
 			//control timer
 		}
 	}
-
-
-
 
 
 
@@ -191,59 +255,95 @@ public class CoolClockTimer extends TimerTask
 	public void refresh()
 	{
 		int[] digits;
+		//if timer should be displayed
 		if(displayTimer){
 			myGUI.setDisplay(TimerConvertSeconds(), true, "", time_msg);
+			//if stop watch should be displayed
 		} else if(displaySW){
 			myGUI.setDisplay(SWConvertSeconds(), true, "", time_msg);
+			//if clock should be displayed
 		} else{
 			myGUI.setDisplay(ConvertSeconds(), true, TwelveHourPm(), time_msg);
 		}//new int[] {1,2,0,0,0,0}
 	}
 
 	/**
-	*	Switches the pause flag to it's opposite
-	*	@post 	pause is set to the opposite value
+	*	Sets stopwatch time to zero and pauses stop watch until started again
+	*	@post 	stopWatchTime set to zero. pauseStopWatch set to true
 	*/
 	public void resetSW(){
 
 		stopWatchTime = 0;
+		pauseStopWatch = true;
 
 	}
+	/**
+	*	Sets timer time to zero and pauses timer until started again or if time has expired on timer, turns off alarm
+	*	@post 	timerTime set to zero. pauseTimer set to true. timerSet set to false. Or if time expired, stopAlarm set to true
+	*/
 	public void resetTimer(){
 		//if there is still time on the timer
 		if(timerTime != 0){
 			timerTime = 0;
 			timerSet = false;
+			pauseTimer = true;
+			
 		} else {
 			//set boolean to turn off alarm
-			alarmOff=true;
+			stopAlarm = true;
 		}
 	}
+	/**
+	*	Switches the pause flag to it's opposite
+	*	@post 	pause is set to the opposite value
+	*/
 	public void togglePause()
 	{
 		pause = !pause;
 	}
 	//clock expansion
+	/**
+	*	Switches the pauseStopWatch flag to it's opposite
+	*	@post 	pauseStopWatch is set to the opposite value
+	*/
 	public void toggleSWPause(){
 
 		pauseStopWatch = !pauseStopWatch;
 
 	}
+	/**
+	*	Switches the pauseTimer flag to it's opposite
+	*	@post 	pauseTimer is set to the opposite value
+	*/
 	public void toggleTimerPause(){
 
 		pauseTimer = !pauseTimer;
 
 	}
+	/**
+ 	* 	Takes in a change in the time and converts that into centiseconds. Stopwatch can go up to 59 minutes, 59 seconds, 99 centiseconds 
+ 	* 	@param 	amt the change in time
+ 	*	@post 	the stop watch time is shifted by amt seconds and is still in the valid centisecond range (0-359999)
+ 	*/
 	public void addSWTime(int amt){
 
 		stopWatchTime = ((stopWatchTime + amt) % 360000 + 360000) % 360000;
 	}
+	/**
+ 	* 	Takes in a change in the time and converts that into seconds. Stopwatch can go up to 99 hours, 59 minutes, 59 seconds 
+ 	* 	@param 	amt the change in time
+ 	*	@post 	the stop watch time is shifted by amt seconds and is still in the valid second range (0-359999)
+ 	*/
 	public void addTimerTime(int amt){
 
 		//99 hours 59 minutes 59 seconds
 		timerTime = ((timerTime + amt) % 360000 + 360000) % 360000;
 	}
 	//converts stop watch seconds into clock format
+	/**
+ 	 * 	Converts centiseconds into the stopwatch
+ 	 * 	@return integer array that represents each digit of the stop watch
+ 	 */
 	public int[] SWConvertSeconds(){
 		int[] digSWTime = {0,0,0,0,0,0};
 		int totalSWSeconds = stopWatchTime;
@@ -265,6 +365,10 @@ public class CoolClockTimer extends TimerTask
 
 		return digSWTime;
 	}
+	/**
+ 	 * 	Converts seconds into the timer format
+ 	 * 	@return integer array that represents each digit of the timer
+ 	 */
 	public int[] TimerConvertSeconds(){
 		int[] digTimerTime = {0,0,0,0,0,0};
 		int totalTimerSeconds = timerTime;
