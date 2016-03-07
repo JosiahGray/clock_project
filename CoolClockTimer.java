@@ -278,6 +278,7 @@ public class CoolClockTimer extends TimerTask
 
 		return digSWTime;
 	}
+	//converts timer seconds into clock format
 	public int[] TimerConvertSeconds(){
 		int[] digTimerTime = {0,0,0,0,0,0};
 		int totalTimerSeconds = timerTime;
@@ -376,6 +377,7 @@ public class CoolClockTimer extends TimerTask
 			}
 		}
 		*/
+		//Sets the time_msg and date_msg strings to the correct time/date.
 		time_msg = "" + digit_time[0] + digit_time[1] + ":" + digit_time[2] + digit_time[3] + ":" + digit_time[4] + digit_time[5];
 		date_msg = "    " + getDayOfWeek() + ", "+ day + "/" + month + "/16";
 		return digit_time;
