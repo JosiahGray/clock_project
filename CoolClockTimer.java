@@ -36,7 +36,6 @@ public class CoolClockTimer extends TimerTask
 	int timeExecuted;
 
 	boolean timerSet;
-	boolean alarmOff;
 	boolean alarmDone;
 	boolean stopAlarm;
 	
@@ -113,7 +112,6 @@ public class CoolClockTimer extends TimerTask
 		displayClock = true;
 		displaySW = false;
 		displayTimer = false;
-		alarmOff= false;
 		alarmDone = false;
 
 		//
@@ -121,7 +119,6 @@ public class CoolClockTimer extends TimerTask
 		alarmDuration = 300;
 		alarmTime = 0;
 		stopAlarm = false;
-		firstPass = true;
 
 	}
 	/**
@@ -215,12 +212,15 @@ public class CoolClockTimer extends TimerTask
 			} else{
 				//make timer sound
 				//if boolean is still false for turning off the alarm
-				if(!alarmOff){
 					if(!stopAlarm && alarmDuration == 300){
+						
 						playAlarm();
 						alarmDuration = 0;
-					} 
-				}
+					} else if(stopAlarm){ 
+						alarmDuration = 299;
+						stopAlarm = false;
+						pauseTimer = true;
+					}
 				alarmDuration ++;
 
 			}
