@@ -30,6 +30,9 @@ public class Control extends JFrame implements ActionListener
 	*	Instance of the CoolClockTimer for passing UI interaction information
 	*/
 	CoolClockTimer coolClock;
+	/**
+	 * 	Integer to keep track of last mode used before display was hidden
+	 */
 
 	int lastType;
 

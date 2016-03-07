@@ -23,6 +23,9 @@ public class CoolClockTimer extends TimerTask
 	*	The current time in seconds.  Always has a value between 0-86399 (86400 being the number of seconds in a standard 24 hour day).
 	*/
 	int time;
+	/**
+	 *  Strings that contain formatted date and time.
+	 */
 	String time_msg;
 	String date_msg;
 
@@ -32,7 +35,10 @@ public class CoolClockTimer extends TimerTask
 	int day;
 	int month;
 	int timeExecuted;
-
+	
+	/**
+	 * variables determining the state of the timer alarm
+	 */
 	boolean timerSet;
 	boolean alarmDone;
 	boolean stopAlarm;
@@ -94,7 +100,8 @@ public class CoolClockTimer extends TimerTask
 
 	/**
 	* 	Constructor which sets variables and creates a new instance of Control for display purposes.
- 	* 	@post 	time is set to 0, military_time is set to true, pause is set to false, new Control instance myGUI instantiated
+ 	* 	@post 	all times set to 0, month set to 1, day set to 1,  military_time is set to true, all pauses set to false, new Control instance myGUI instantiated, set displayClock to true and all other displays set to false, set alarmDone to false
+ 	* 	@post	timerSet to false, alarmDuration set to max 300, alarmTime is 0, stopAlarm set to false
     */
 	public CoolClockTimer()
 	{
@@ -339,6 +346,7 @@ public class CoolClockTimer extends TimerTask
 	//converts stop watch seconds into clock format
 	/**
  	 * 	Converts centiseconds into the stopwatch
+ 	 *  @post time_msg is set to the formatted time string
  	 * 	@return integer array that represents each digit of the stop watch
  	 */
 	public int[] SWConvertSeconds(){
@@ -364,6 +372,7 @@ public class CoolClockTimer extends TimerTask
 	}
 	/**
  	 * 	Converts seconds into the timer format
+ 	 *  @post time_msg is set to the formatted time string
  	 * 	@return integer array that represents each digit of the timer
  	 */
 	public int[] TimerConvertSeconds(){
@@ -405,6 +414,7 @@ public class CoolClockTimer extends TimerTask
 
 	/**
  	 * 	Converts seconds into the clock format
+ 	 *  @post time_msg and date_msg are set to the formatted time and date strings
  	 * 	@return integer array that represents each digit of the clock
  	 */
 	public int[] ConvertSeconds()

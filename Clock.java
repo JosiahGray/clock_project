@@ -15,6 +15,7 @@
  * http://stackoverflow.com/questions/16761630/font-createfont-set-color-and-size-java-awt-font
  * font used:
  * 7-segment and 14-segment Font DSEG7 Family
+ * 	-website: www.keshikan.net
  */
 
 
@@ -29,7 +30,7 @@ public class Clock
 	/**
 	*  The main method of the Clock program
 	*  <p>
-	*  Creates a Timer and schedules it to execute a custom TimerTask (CoolClockTimer) every second.
+	*  Creates a Timer and schedules it to execute a custom TimerTask (CoolClockTimer) every 1/100th second.
 	*  @param 	args command-line arguments
 	*/
 	public static void main(String[] args)

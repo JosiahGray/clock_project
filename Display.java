@@ -29,17 +29,23 @@ public class Display extends JPanel
 	boolean m_displayColon;
 
 	/**
-	*	Represents the string to draw next to the clock display (am/pm).
+	*	Represents the strings to draw to represent clock components: am/pm, time, and date
 	*/
 	String m_displayMsg;
 
 	String m_displayTime;
 
 	String m_displayDate;
+	/**
+	 *  Represents size of font
+	 */
 
 	int m_strSize;
+	/**
+	 *  Holds font used
+	 */
 
-  Font DSEG14MR;
+	Font DSEG14MR;
 
 	/**
 	*	Constructor.  Sets the display variables.
@@ -176,6 +182,8 @@ public class Display extends JPanel
 	*	@param 	digits a four digit number to be displayed on the clock face
 	*	@param 	colon true if colon should be displayed, false if it should not
 	*	@param 	msg the message to be displayed next to the digit display (am/pm)
+	*	@param 	timeStr the message that has the formatted time
+	*	@param 	dateStr the message that has the formatted date
 	*/
 	public void setDisplay(int[] digits, boolean colon, String msg, String timeStr, String dateStr)
 	{
@@ -262,11 +270,19 @@ public class Display extends JPanel
 		return sevenSeg;
 	}
 
+	/**
+	 * Will increase the font size by 20 until size hits 280
+	 * @post font is increased by 20  
+	 */
 	public void zoomIn()
 	{
 		if(m_strSize < 280)
 			m_strSize += 20;
 	}
+	/**
+	 * Will decrease the font size by 20 until size hits 20
+	 * @post font is decreased by 20
+	 */
 	public void zoomOut()
 	{
 		if(m_strSize > 20)
