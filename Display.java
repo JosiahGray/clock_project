@@ -56,7 +56,7 @@ public class Display extends JPanel
 			m_strSize = 280;
 
 			try {
-				DSEG7MR = Font.createFont(Font.TRUETYPE_FONT, new File("DSEG7Modern-Regular.ttf"));
+				DSEG7MR = Font.createFont(Font.TRUETYPE_FONT, new File("DSEG14Modern-Regular.ttf"));
 				DSEG7MR = DSEG7MR.deriveFont(Font.PLAIN, m_strSize);
 			} catch (IOException|FontFormatException e) {
 					 //Handle exception
@@ -117,11 +117,10 @@ public class Display extends JPanel
 		// 	g.fillOval(912, 100, 30, 30);
 		// 	g.fillOval(912, 250, 30, 30);
 		// }
-			DSEG7MR = DSEG7MR.deriveFont(Font.PLAIN, m_strSize/10);
-			g2.setFont(DSEG7MR);
-			g.drawString(m_displayMsg, x + 47*m_strSize/10, y - 8*m_strSize/10);
-
-			g.drawString(m_displayDate, x + m_strSize/10, y + m_strSize/10);
+			DSEG7MR = DSEG7MR.deriveFont(Font.PLAIN, 2*m_strSize/10);
+			g.setFont(DSEG7MR);
+			g.drawString(m_displayMsg, x + 47*m_strSize/10, y + 5*m_strSize/21);
+			g.drawString(m_displayDate, x + 4*m_strSize/3, y + 5*m_strSize/21);
 /*
 		for(int digit = 0; digit<6; digit++)
 		{
@@ -265,7 +264,7 @@ public class Display extends JPanel
 
 	public void zoomIn()
 	{
-		if(m_strSize < 300)
+		if(m_strSize < 280)
 			m_strSize += 20;
 	}
 	public void zoomOut()
