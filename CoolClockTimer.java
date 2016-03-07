@@ -165,29 +165,30 @@ public class CoolClockTimer extends TimerTask
 	 * @param Stop is boolean if sound should be stopped
 	 * @param firstPass is boolean if playAlarm is being called for the first time since time expired 
 	 */
-	public void playAlarm(boolean Stop, boolean firstPass){
-		//try
-		//{
-			//AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
-				//Clip fc = AudioSystem.getClip();
-				
+	public void playAlarm(boolean Stop, boolean firstPass, String song){
+		try
+			{
+				AudioInputStream audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource(song));
+				fc = AudioSystem.getClip();
 			
-			if(!Stop && (firstPass || fc.getMicrosecondPosition() == 18000000)){
-				//fc.open(audioStream);
+			if((!Stop) || song == "Silence.wav"){
+				System.out.println("HI FRIEND");
+				fc.open(audioStream);
 				//https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/Clip.html#loop(int)
 				fc.start();
+				
 			}
 			else if(Stop){
-				fc.stop();
 				alarmOff = true;
 				pauseTimer = true;
 			}
-	 	//}
-		//catch(Exception e)
-		//{
-		//	e.printStackTrace();
+	 	}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 	
         }
+	}
 	public void disableDisplay(){
 		displayClock = false;
 		displaySW = false;
@@ -230,19 +231,13 @@ public class CoolClockTimer extends TimerTask
 			} else{
 				//make timer sound
 				//if boolean is still false for turning off the alarm
-				try{
-					audioStream = AudioSystem.getAudioInputStream(this.getClass().getResource("01_The_Final_Countdown_1.wav"));
-					fc = AudioSystem.getClip();
-					fc.open(audioStream);
-				} catch(Exception e){
-					e.printStackTrace();
-				}
 				if(!alarmOff){
-					if(!stopAlarm){
-						playAlarm(stopAlarm, firstPass);
+					if(!stopAlarm && (alarmDuration == 300 || firstPass)){
+						playAlarm(stopAlarm, firstPass, "GoalHorn.wav");
+						alarmDuration = 0;
 						firstPass = false;
-					} else{
-						playAlarm(stopAlarm, firstPass);
+					} else if(stopAlarm){
+						playAlarm(stopAlarm, firstPass, "Silence.wav");
 						
 					}
 				}
