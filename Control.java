@@ -407,8 +407,10 @@ public class Control extends JFrame implements ActionListener
 	/**
 	*	Calls setDisplay in displayPanel
 	*	@param 	digits a four digit number to be displayed on the clock face
-	*	@param 	colon true if colon should be displayed, false if it should not
+	*	@param 	colon true if colon should be displayed, false if it should not - deprecated
 	*	@param 	msg the message to be displayed next to the digit display (am/pm)
+	*	@param 	timemsg the time for the various modes in the correct string format
+	*	@param 	datemsg the day of the week and the date
 	*/
 	public void setDisplay(int[] digits, boolean colon, String msg, String timemsg, String datemsg)
 	{
