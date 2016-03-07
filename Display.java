@@ -39,7 +39,7 @@ public class Display extends JPanel
 
 	int m_strSize;
 
-  Font DSEG7MR;
+  Font DSEG14MR;
 
 	/**
 	*	Constructor.  Sets the display variables.
@@ -56,8 +56,8 @@ public class Display extends JPanel
 			m_strSize = 280;
 
 			try {
-				DSEG7MR = Font.createFont(Font.TRUETYPE_FONT, new File("DSEG14Modern-Regular.ttf"));
-				DSEG7MR = DSEG7MR.deriveFont(Font.PLAIN, m_strSize);
+				DSEG14MR = Font.createFont(Font.TRUETYPE_FONT, new File("DSEG14Modern-Regular.ttf"));
+				DSEG14MR = DSEG14MR.deriveFont(Font.PLAIN, m_strSize);
 			} catch (IOException|FontFormatException e) {
 					 //Handle exception
 			}
@@ -90,10 +90,10 @@ public class Display extends JPanel
 		g2.setColor(Color.BLACK);
 		g2.fill(new Rectangle2D.Double(0, 0, 1500, 400));
 
-		DSEG7MR = DSEG7MR.deriveFont(Font.PLAIN, m_strSize);
+		DSEG14MR = DSEG14MR.deriveFont(Font.PLAIN, m_strSize);
 		g2.setColor(Color.RED);
 		// g2.registerFont(DSEG7MR);
-		g2.setFont(DSEG7MR);
+		g2.setFont(DSEG14MR);
 		FontMetrics fm = g2.getFontMetrics();
 		Rectangle2D r = fm.getStringBounds(m_displayTime, g2);
 		int x = (this.getWidth() - (int) r.getWidth()) / 2;
@@ -117,8 +117,8 @@ public class Display extends JPanel
 		// 	g.fillOval(912, 100, 30, 30);
 		// 	g.fillOval(912, 250, 30, 30);
 		// }
-			DSEG7MR = DSEG7MR.deriveFont(Font.PLAIN, 2*m_strSize/10);
-			g.setFont(DSEG7MR);
+			DSEG14MR = DSEG14MR.deriveFont(Font.PLAIN, 2*m_strSize/10);
+			g.setFont(DSEG14MR);
 			g.drawString(m_displayMsg, x + 47*m_strSize/10, y + 5*m_strSize/21);
 			g.drawString(m_displayDate, x + 4*m_strSize/3, y + 5*m_strSize/21);
 /*
