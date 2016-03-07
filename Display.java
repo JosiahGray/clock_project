@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.Font;
 import java.awt.geom.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
 *	A custom JPanel that displays the clock time and settings in a format similar to that of a 7 segment display.
@@ -37,6 +39,8 @@ public class Display extends JPanel
 
 	int m_strSize;
 
+  Font DSEG7MR;
+
 	/**
 	*	Constructor.  Sets the display variables.
 	*	@post: 	m_displayDigits is intialized to an array of four 10s, m_display colon is initialized to false, and m_displayMsg is initialized to an empty String.
@@ -44,13 +48,22 @@ public class Display extends JPanel
     public Display()
     {
        	//Set the display variables
-		m_displayDigits = new int[] {10, 10, 10, 10, 10, 10};
-		m_displayColon = false;
-		m_displayMsg = "";
-		m_displayTime = "";
-		m_displayDate = "";
-		m_strSize = 300;
+			m_displayDigits = new int[] {10, 10, 10, 10, 10, 10};
+			m_displayColon = false;
+			m_displayMsg = "";
+			m_displayTime = "";
+			m_displayDate = "";
+			m_strSize = 280;
+
+			try {
+				DSEG7MR = Font.createFont(Font.TRUETYPE_FONT, new File("DSEG7Modern-Regular.ttf"));
+				DSEG7MR = DSEG7MR.deriveFont(Font.PLAIN, m_strSize);
+			} catch (IOException|FontFormatException e) {
+					 //Handle exception
+			}
+
     }
+
 
     /**
     *	Returns the preferred size of the Display
@@ -71,13 +84,16 @@ public class Display extends JPanel
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+
 		Graphics2D g2 = (Graphics2D) g;
 		//Draw the background
 		g2.setColor(Color.BLACK);
 		g2.fill(new Rectangle2D.Double(0, 0, 1500, 400));
 
+		DSEG7MR = DSEG7MR.deriveFont(Font.PLAIN, m_strSize);
 		g2.setColor(Color.RED);
-		g2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, m_strSize));
+		// g2.registerFont(DSEG7MR);
+		g2.setFont(DSEG7MR);
 		FontMetrics fm = g2.getFontMetrics();
 		Rectangle2D r = fm.getStringBounds(m_displayTime, g2);
 		int x = (this.getWidth() - (int) r.getWidth()) / 2;
@@ -101,9 +117,8 @@ public class Display extends JPanel
 		// 	g.fillOval(912, 100, 30, 30);
 		// 	g.fillOval(912, 250, 30, 30);
 		// }
-
-			g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, m_strSize/10));
-
+			DSEG7MR = DSEG7MR.deriveFont(Font.PLAIN, m_strSize/10);
+			g2.setFont(DSEG7MR);
 			g.drawString(m_displayMsg, x + 47*m_strSize/10, y - 8*m_strSize/10);
 
 			g.drawString(m_displayDate, x + m_strSize/10, y + m_strSize/10);
